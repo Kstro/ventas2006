@@ -546,7 +546,10 @@ class DiagnosticoController extends Controller
         //         )->setParameters(array('exp'=>$exp,'fecha'=>$fecha,'nomestudio'=>$estudio));
         //         $estudios = $query->getResult();
 
-
+        $session = new Session();
+        $session->start();
+        $areaaa = $session->get('area');
+        echo "area: ".$areaaa;
         if($estudio=="0" && $fecha==0){
             
             $query = $em->createQuery(
