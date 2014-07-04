@@ -519,9 +519,7 @@ class DiagnosticoController extends Controller
         // $this->get('hnrsircim.bitacora.controller:indexAction');
         
         //Devuelve todos los estudios del paciente
-
-
-
+        
         // $query = $em->createQuery(
         //             'SELECT c
         //             FROM    hnrsircimBundle:Estudio e, hnrsircimBundle:EstudioArea ea,
