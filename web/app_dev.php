@@ -10,7 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 // Feel free to remove this, extend it, or make something more sophisticated.
 if (isset($_SERVER['HTTP_CLIENT_IP'])
     || isset($_SERVER['HTTP_X_FORWARDED_FOR'])
-    || !in_array(@$_SERVER['REMOTE_ADDR'], array('127.0.0.1', '127.0.0.10', 'fe80::1', '::1'))
+    || !in_array(@$_SERVER['REMOTE_ADDR'], array('127.0.0.1', '127.0.0.10','192.168.1.2','192.168.1.15','192.168.1.3','192.168.1.8','192.168.1.4','192.168.1.5',
+    	'192.168.1.20','192.168.1.21', '192.168.1.7','192.168.1.5','192.168.1.6','192.168.117.130', 'fe80::1', '::1'))
 ) {
     header('HTTP/1.0 403 Forbidden');
     exit('You are not allowed to access this file. Check '.basename(__FILE__).' for more information.');

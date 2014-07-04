@@ -1,43 +1,322 @@
 {% extends 'hnrsircimBundle::Layout.html.twig' %}
 
+{% block stylesheets %}
+   {{ parent() }}
+   {# <link href="{{ asset('bundles/hnrsircim/js/jquery-ui-1.10.3.custom/css/custom-theme/jquery-ui-1.10.3.custom.css') }}" rel="stylesheet" type="text/css" /> #}
+   <link href="{{ asset('bundles/hnrsircim/js/Zebra_Datepicker-master/public/css/metallic.css') }}" rel="stylesheet" type="text/css" /> 
+{% endblock %}
+
+{% block javascripts %}
+   {{ parent() }}
+   {# <script type="text/javascript" src="{{ asset('bundles/hnrsircim/js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js') }}" ></script> #}
+   <script type="text/javascript" src="{{ asset('bundles/hnrsircim/js/Zebra_Datepicker-master/public/javascript/zebra_datepicker.js') }}" ></script>   
+{% endblock %}
+
+{% block lista_modulos %}
+    {% for modulo in modulos %}
+        <li><a href="{{ path(modulo.osUrl, { 'login': usuario }) }}">{{modulo}}</a></li>
+    {% endfor %}
+{% endblock %}
+
+{% block mod_activo %} Registro de estudios {% endblock %}   
+
+
+
+{% block configuracion %}
+    
+    <a id="conf_cuenta" href="{{ path('usuario_cuenta', { 'login':login,'opc':'0' }) }}">Configuración de cuenta</a>
+
+{% endblock %}
+
+{% block nombre_usr %}
+    <label id="{{ usuario }}">
+        {{ usuario }}
+    </label> 
+{% endblock %}
+
+{% block botones_modulo %} 
+    <div class="menu_grupo"> 
+        <button class="btn btn_destacado" id="buscar" title="Buscar"></button>
+        <button class="btn btn_destacado" id="nuevo" title="Nuevo registro" onclick="location.href='{{ path('estudioradiologico_new',{'login':login}) }}'"></button>        
+    </div>
+
+    <div class="menu_grupo"> 
+        {# <button class="btn btn_regular btn_hoy" title="Hoy" onclick="alert('{{"now"|date('d-m-Y')}}')">Hoy</button> #}       
+        <button class="btn btn_regular btn_hoy" title="Hoy">Hoy</button>    
+    </div>
+
+    <div id="busqueda">
+        <form>
+         <table>
+           <tr>
+             <td>
+                 Paciente :
+             </td>
+             <td>
+                 <input type="text" id="busq_registro"/>
+             </td>  
+           </tr>
+           <tr>
+             <td>
+                 <input type="checkbox" name="checkbox" id="checkbox_id2" value="value"/>
+                 <label for="checkbox_id2"><span></span>Estudio :</label>
+             </td>
+             <td>
+                 <select name="Single-line ListBox example" id="busq_estudio">
+                    <option value="1">Ultrasonografía</option>
+                    <option value="2">Tránsito intestinal</option>
+                    <option value="96">Tomografía axial computarizada</option>
+                 </select>
+             </td>
+           </tr>
+           <tr>
+             <td>
+                 <input type="checkbox" name="checkbox" id="checkbox_id3" value="value"/>
+                 <label for="checkbox_id3"><span></span>Rango de fechas :</label>
+                     {#<select id="busq_modo" name="Single-line ListBox example">
+                       <option value="1">Rango de Fechas</option>                       
+                     </select>#}
+                 
+             </td>
+             <td>
+                 <input type="text" id="busq_fecha1" class="fecha_rango"/> - <input type="text" id="busq_fecha2" class="fecha_rango"/>
+             </td>
+           </tr>
+           <tr>
+             <td>          
+                <button id="cancelar" class="btn btn_regular btn_hoy"  title="Cancelar">Cancelar</button>
+                <button id="guardar" class="btn btn_regular citas_pac" title="Aplicar">Aplicar</button>
+             </td>    
+           </tr>  
+         </table>
+        </form>
+    </div>
+{% endblock %}
+
 {% block body -%}
-    <h1>EstudioRadiologico list</h1>
+    <div id="div_left">
+        <input id="cal" type="hidden"></input>
+    </div>
 
-    <table class="records_list">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Eredadpaciente</th>
-                <th>Idempleado</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('estudioradiologico_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.erEdadPaciente }}</td>
-                <td>{{ entity.idempleado }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('estudioradiologico_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('estudioradiologico_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div id="estudios">
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Registro</th>
+                    <th>Nombre</th>
+                    <th>Edad</th>
+                    <th>Estudio</th>
+                    <th>Técnico</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% set time = '00:00' %}
+            {% for key,entity in entities %}
+                <tr>
+                    {# <td><a href="{{ path('estudioradiologico_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td> #}
+                    {% if entity.idSolicitud.soHora|date('H:i') > time %}
+                        {% set time = entity.idSolicitud.soHora|date('H:i') %}
+                        {% if entity.idSolicitud.soHora|date('H:i')[:2] < '12' %}
+                            <td class="indicador_hora">{{ time }} am</td>
+                        {% elseif entity.idSolicitud.soHora|date('H:i')[:2] == '12' %}
+                            <td class="indicador_hora">{{ time }} pm</td>
+                        {% else %}    
+                            <td class="indicador_hora">{{ time[:2] - 12 }}:{{ time[3:2] }} pm</td>
+                        {% endif %}
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                        
+                    <td>{{ entity.idSolicitud.idMntExpediente }}</td>
+                    <td>{{ attribute(pacientes, key) }}</td>
+                    <td>{{ entity.erEdadPaciente }} años</td>
+                    <td>{{ entity.idSolicitud.getEstudioArea().getIdEstudio() }}</td>
+                    {#<td>{{ entity.idempleado }}</td> #}
+                    {% if attribute(empleados, key)|length > 26 %} 
+                        <td>{{ attribute(empleados, key)[:26] }}...</td>
+                    {% else %}    
+                        <td>{{ attribute(empleados, key) }}</td>
+                    {% endif %}
+                    <td class="td_list">
+                        <div class="wrapper">
+                            <button class="btn_list edit" title="Editar" onclick="location.href='{{ path('estudioradiologico_edit', { 'id': entity.id,'login':login }) }}';"></button>
+                            <button class="btn_list view" title="Consultar" onclick="location.href='{{ path('estudioradiologico_show', { 'id': entity.id, 'nombre': attribute(pacientes, key), 'tecnico': attribute(empleados, key),'login':login }) }}';"></button>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
 
-        <ul>
-        <li>
-            <a href="{{ path('estudioradiologico_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
-    {% endblock %}
+{% block script %}
+    <script>
+        var login = $('#nombre_usr label').attr('id');
+        $(document).ready(function() {
+           var date = new Date();
+           
+           $('#cal_next').empty();
+           $('#cal_next').append(convertir_dia(date.getDay())+', '+date.getDate()+' '+convertir_mes(date.getMonth())+' '+date.getFullYear());
+           
+           $('#cal').Zebra_DatePicker({
+                always_visible: $('#div_left'),
+                show_clear_date: false,
+                show_select_today: false,
+                onSelect: function(dateText,inst) {
+                          var date = new Date(dateText.substring(0,4),(dateText.substring(5,7)-1),dateText.substring(8));
+                          
+                          $('#cal_next').empty();
+                          $('#cal_next').append(convertir_dia(date.getDay())+', '+date.getDate()+' '+convertir_mes(date.getMonth())+' '+date.getFullYear());
+                          
+                          var href = Routing.generate('estudioradiologico_dia', {date: date.getFullYear() +'-'+ (date.getMonth()+1) +'-'+ date.getDate(), login:login});
+                          $('#estudios').load(href);
+                          
+                          //consultar_cita();
+                          //alert(date.getUTCDate()-date.getDay());
+                        }
+           });
+           
+           $('#busq_fecha1').Zebra_DatePicker({
+                format: 'Y-m-d',
+                pair: $('#busq_fecha2')
+           });
+           $('#busq_fecha2').Zebra_DatePicker({
+                direction: 1,
+                show_clear_date: false,
+                show_select_today: false,
+           });
+        });
+        
+        $('.btn_hoy').click(function(){
+            var date = new Date();
+            
+            $('#cal_next').empty();
+            $('#cal_next').append(convertir_dia(date.getDay())+', '+date.getDate()+' '+convertir_mes(date.getMonth())+' '+date.getFullYear());
+            
+            var href = Routing.generate('estudioradiologico_dia', {date: date.getFullYear() +'-'+ (date.getMonth()+1) +'-'+ date.getDate(),login:login});
+            $('#estudios').load(href);
+            
+            if( date.getDate() < 10 ){
+                $dia = '0'+ date.getUTCDate();                
+            }
+            else{
+                $dia = date.getDate();
+            }            
+            if( (date.getMonth()+1) < 10 ){
+                $mes = '0' + (date.getUTCMonth()+1);                
+            }
+            else{
+                $mes = date.getMonth()+1;
+            }
+            
+            $("#cal").val(date.getFullYear() +'-'+ $mes +'-'+ $dia).data('Zebra_DatePicker').show();
+            //$("#cal").val('2013-08-04').data('Zebra_DatePicker').show();
+            //consultar_cita();
+        });
+        
+        function convertir_dia($dia){            
+            switch($dia){
+                case 0: $dia = 'Domingo';   break;
+                case 1: $dia = 'Lunes';     break;
+                case 2: $dia = 'Martes';    break;
+                case 3: $dia = 'Miercoles'; break;
+                case 4: $dia = 'Jueves';    break;
+                case 5: $dia = 'Viernes';   break;
+                case 6: $dia = 'Sábado';    break;    
+            }
+            return $dia;
+        }
+        function convertir_mes($mes){            
+            switch($mes){
+                case 0:  $mes = 'Enero';      break;
+                case 1:  $mes = 'Febrero';    break;
+                case 2:  $mes = 'Marzo';      break;
+                case 3:  $mes = 'Abril';      break;
+                case 4:  $mes = 'Mayo';       break;
+                case 5:  $mes = 'Junio';      break;
+                case 6:  $mes = 'Julio';      break;
+                case 7:  $mes = 'Agosto';     break;
+                case 8:  $mes = 'Septiembre'; break;
+                case 9:  $mes = 'Octubre';    break;
+                case 10: $mes = 'Noviembre';  break;
+                case 11: $mes = 'Diciembre';  break;    
+            }
+            return $mes;
+        }
+        
+
+/************************************************************************************/
+/************************* Busqueda de citas por paciente ***************************/
+/************************************************************************************/    
+    
+        $('#botones_modulo').on('click','#buscar',function(){
+            var div = $('#busqueda');
+            //alert(div.css('visibility'));
+	    if( div.css('visibility') == 'hidden' ){
+	        div.css('visibility','visible');
+            }    
+	    else{
+	        div.css('visibility','hidden');
+                $('#busqueda form').trigger('reset');
+            }
+	});
+        
+        $('#botones_modulo').on('click','.citas_pac',function(){
+          var query = 'SELECT esrad FROM hnrsircimBundle:EstudioRadiologico esrad'+
+                      ' JOIN esrad.idSolicitud sol'+
+                      ' JOIN sol.idEstudioArea area'+
+                         ' WHERE sol.id = esrad.idSolicitud'+
+                         ' AND area.idArea = :area';
+          
+          if($('#busq_registro').val() != ''){
+            //query = 'select * from solicitud where id_mnt_expediente = \''+$('#busq_registro').val()+'\'';
+            query += ' AND sol.idMntExpediente = \''+ $('#busq_registro').val() +'\'';
+            
+            if($('#busqueda').find('#checkbox_id2').is(':checked'))
+                query += ' and sol.idEstudioArea = '+ $('#busq_estudio').val();
+            if($('#busqueda').find('#checkbox_id3').is(':checked')){
+                var fecha1 = new Date($('#busq_fecha1').val());
+                var fecha2 = new Date($('#busq_fecha2').val());
+                if (fecha1 < fecha2){
+                    query += ' and sol.soFecha between \''+ $('#busq_fecha1').val() +'\' and \''+ $('#busq_fecha2').val() +'\'';
+                }
+                else{
+                    mensaje_error('Ingrese un rango de fechas valido !');
+                    return false;
+                }                    
+            }
+                        
+            query += ' ORDER BY sol.soFecha DESC, sol.soHora DESC';
+            
+            var href = Routing.generate('estudios_paciente', {query: query, registro: $('#busq_registro').val(),login:login});
+            $('#area_trabajo').load(href);
+            
+            $('#cal_next').empty();            
+            $('#botones_modulo').empty().append(
+                    '<div class="menu_grupo">'+                    
+                    '<button class="btn btn_regular btn_hoy" id="cancelar" title="Volver">Volver</button>'+
+                    '</div>' 
+            );
+          }
+          else{
+            mensaje_error('Ingrese el Número de registro de un paciente !');  
+          }
+          //alert(query);
+          return false;
+        });
+        
+        
+        $('#botones_modulo').on('click','#busqueda #cancelar',function(){
+            var div = $('#busqueda');
+            div.css('visibility','hidden');
+            
+            $('#busqueda form').trigger('reset');
+            
+            return false;
+        });
+        
+    </script>
+{% endblock %}

@@ -1,28 +1,205 @@
 {% extends 'hnrsircimBundle::Layout.html.twig' %}
 
-{% block body -%}
-    <h1>Cita edit</h1>
+{% block stylesheets %}
+   {{ parent() }}
+   <link href="{{ asset('bundles/hnrsircim/js/Zebra_Datepicker-master/public/css/metallic.css') }}" rel="stylesheet" type="text/css" /> 
+{% endblock %}
+   
+{% block javascripts %}
+   {{ parent() }}   
+   <script type="text/javascript" src="{{ asset('bundles/hnrsircim/js/Zebra_Datepicker-master/public/javascript/zebra_datepicker.js') }}" ></script>   
+{% endblock %}
 
-    <form action="{{ path('cita_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-        <input type="hidden" name="_method" value="PUT" />
-        {{ form_widget(edit_form) }}
-        <p>
-            <button type="submit">Edit</button>
-        </p>
+{% block mod_activo %} Programación de citas {% endblock %} 
+
+{% block nombre_usr %}
+    <label id="{{ login }}">
+        {{ login }}
+    </label> 
+{% endblock %} 
+
+{% block botones_modulo %} 
+    <div class="menu_grupo"> 
+        <button class="btn btn_regular btn_hoy" id="cancelar" title="Cancelar" onclick="location.href='{{ path('cita',{'login':login}) }}';">Cancelar</button>
+        <button type="submit" class="btn btn_regular" id="guardar" title="Guardar" onclick="document.getElementById('actualizar_cita').submit();">Guardar</button>        
+    </div>
+{% endblock %}
+
+{% block body -%}
+    
+    <form id="actualizar_cita" class="form_cita" action="{{ path('cita_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+        <input type="hidden" name="_method" value="PUT" /> 
+        {# form_widget(form) #}
+        {{ form_errors(edit_form) }}
+        <table>
+          <tr>
+            <td colspan="2" class="separador" id="paciente"> Paciente </td>
+          </tr>
+          <tr>
+            <td class="label"> {{ form_label(edit_form.idSolicitud.idMntExpediente) }} </td>
+            <td> {{ form_widget(edit_form.idSolicitud.idMntExpediente) }} </td>
+          </tr>
+          <tr>
+            <td class="label"> {{ form_label(edit_form.idSolicitud.Nombre) }} </td>
+            <td> {{ form_widget(edit_form.idSolicitud.Nombre) }} </td>
+          </tr>
+          <tr>
+            <td class="label"> {{ form_label(edit_form.ciEdadPaciente) }} </td>
+            <td> {{ form_widget(edit_form.ciEdadPaciente) }} </td>
+          </tr>
+          <tr>
+            <td class="label"> {{ form_label(edit_form.idSolicitud.idMntAtenAreaModEstab) }} </td>
+            <td> {{ form_widget(edit_form.idSolicitud.idMntAtenAreaModEstab) }} </td>
+          </tr>
+          <tr>
+            <td colspan="2" class="separador" id="estudio"> Estudio </td>
+          </tr>
+          <tr>
+            <td class="label"> {{ form_label(edit_form.idSolicitud.EstudioArea) }} </td>       
+            <td> {{ form_widget(edit_form.idSolicitud.EstudioArea) }} </td>
+          </tr>
+          <tr>
+            <td class="label"> {{ form_label(edit_form.idSolicitud.soRegion) }} </td>    
+            <td> {{ form_widget(edit_form.idSolicitud.soRegion) }} </td>    
+          </tr>
+          <tr>
+            <td class="label"> {{ form_label(edit_form.idSolicitud.soPosicion) }} </td>
+            <td> {{ form_widget(edit_form.idSolicitud.soPosicion) }} </td>
+          </tr>
+          <tr>
+            <td colspan="2" class="separador" id="horario"> Horario </td>
+          </tr>
+          <tr>
+            <td class="label"> {{ form_label(edit_form.idSolicitud.soFecha) }} </td>
+            <td> {{ form_widget(edit_form.idSolicitud.soFecha) }} </td>
+          </tr>
+          <tr>
+            <td class="label"> {{ form_label(edit_form.idSolicitud.soHora) }} </td>  
+            <td> {{ form_widget(edit_form.idSolicitud.soHora) }} </td>  
+          </tr>
+          <tr>
+            <td class="label"> {{ form_label(edit_form.ciEstado) }} </td>  
+            <td> {{ form_widget(edit_form.ciEstado) }} </td>  
+          </tr>
+        </table>
+        {# form_row(form.idSolicitud.soTipo) #}  
+        {{ form_rest(edit_form) }}
     </form>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('cita') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('cita_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
 {% endblock %}
+
+{% block script %}
+    <script>
+    $(document).ready( function(){
+       
+        $parameters = '?numExpediente=' + $('#hnr_sircimbundle_citatype_idSolicitud_idMntExpediente').val();
+            
+        $.getJSON(Routing.generate('get_infopaciente')+$parameters,
+            function(data) {
+                $.each(data.regs, function(indice, reg) {
+                    $('#hnr_sircimbundle_citatype_idSolicitud_Nombre').val( reg.Nombre );                            
+                });
+            });
+            
+        $.getJSON(Routing.generate('get_dias')+'?idEstudio=' + $('select[id$="_idSolicitud_EstudioArea"]').val(),
+            function(data) {
+                var x='1,2,3,4,5,6,0,';
+                $.each(data.regs, function(indice, reg) {
+                    switch(reg.hoDia){
+                        case 'Lunes'    : index = x.indexOf('1'); break;
+                        case 'Martes'   : index = x.indexOf('2'); break;
+                        case 'Miercoles': index = x.indexOf('3'); break;
+                        case 'Jueves'   : index = x.indexOf('4'); break;
+                        case 'Viernes'  : index = x.indexOf('5'); break; 
+                        case 'Sabado'   : index = x.indexOf('6'); break; 
+                        case 'Domingo'  : index = x.indexOf('0'); break;
+                    }
+                    x = x.substring(0, index) + x.substring(index+2, x.length);                             
+                });
+
+                $('.date').Zebra_DatePicker({
+                    direction: true,
+                    disabled_dates: ['* * * '+x]
+                });
+            });
+        
+    });
+    
+    //Listas desplegables y actualizacion de calendario
+    $('select[id$="_idSolicitud_EstudioArea"]').change(function() {
+        
+        $('select[id$="_idSolicitud_soRegion"]').children().remove();
+        $('select[id$="_idSolicitud_soRegion"]').append('<option value="">Seleccione...</option>');
+        $('select[id$="_idSolicitud_soPosicion"]').children().remove();
+        $('select[id$="_idSolicitud_soPosicion"]').append('<option value="">Seleccione...</option>');
+        
+        if( $(this).find("option:selected").text() == 'Seleccione...'){
+            $('select[id$="_idSolicitud_soRegion"]').attr('disabled',true);
+            $('select[id$="_idSolicitud_soPosicion"]').attr('disabled',true);
+            document.getElementById("hnr_sircimbundle_citatype_idSolicitud_soFecha").disabled = true;
+            $('button.Zebra_DatePicker_Icon').addClass('Zebra_DatePicker_Icon_Disabled');
+        }
+        else{    
+            $parameters = '?nomEstudio=' + $(this).find("option:selected").text();
+
+            $.getJSON(Routing.generate('get_regiones')+$parameters,
+                        function(data) {
+                            $.each(data.regs, function(indice, reg) {
+                                $('select[id$="_idSolicitud_soRegion"]').append('<option value="' + reg.reNombre + '">' + reg.reNombre + '</option>');                       
+                            });
+                        });
+
+            $.getJSON(Routing.generate('get_posiciones')+$parameters,
+                        function(data) {
+                            $.each(data.regs, function(indice, reg) {
+                                $('select[id$="_idSolicitud_soPosicion"]').append('<option value="' + reg.poNombre + '">' + reg.poNombre + '</option>');                       
+                            });
+                        });
+
+            $.getJSON(Routing.generate('get_dias')+'?idEstudio=' + $(this).val(),
+                        function(data) {
+                            var x='1,2,3,4,5,6,0,';
+                            $.each(data.regs, function(indice, reg) {
+                                switch(reg.hoDia){
+                                   case 'Lunes':     
+                                       index = x.indexOf('1');
+                                   break;
+                                   case 'Martes':    
+                                       index = x.indexOf('2');
+                                   break;
+                                   case 'Miercoles': 
+                                       index = x.indexOf('3');
+                                   break;
+                                   case 'Jueves': 
+                                       index = x.indexOf('4');
+                                   break;
+                                   case 'Viernes':
+                                       index = x.indexOf('5');
+                                   break;
+                                   case 'Sabado': 
+                                       index = x.indexOf('6');
+                                   break;
+                                   case 'Domingo':   
+                                       index = x.indexOf('0');
+                                   break;
+                                }
+                                 x = x.substring(0, index) + x.substring(index+2, x.length);                             
+                            });
+
+                            $('.date').Zebra_DatePicker({
+                                direction: true,
+                                disabled_dates: ['* * * '+x]
+                            });
+                        });
+
+            $('select[id$="_idSolicitud_soRegion"]').removeAttr('disabled');
+            $('select[id$="_idSolicitud_soPosicion"]').removeAttr('disabled');
+            document.getElementById("hnr_sircimbundle_citatype_idSolicitud_soFecha").disabled = false;
+        }
+        
+    });
+    
+    
+    </script>
+{% endblock %}
+        

@@ -1,46 +1,211 @@
-{% extends '::base.html.twig' %}
+{% extends 'hnrsircimBundle::Layout.html.twig' %}
 
-{% block body -%}
-    <h1>Diagnostico list</h1>
+{% block javascripts %}
+    {{parent()}}
+    <script type="text/javascript" src="{{ asset('bundles/hnrsircim/js/Zebra_Datepicker-master/public/javascript/zebra_datepicker(bitacora).js') }}" ></script>   
+<script type="text/javascript" src="{{ asset('bundles/hnrsircim/js/sub_ventana.js') }}" ></script>
+<script type="text/javascript" src="{{ asset('bundles/hnrsircim/js/Modulos/expediente/buscar_paciente.js') }}" ></script>   
+{% endblock %}
 
-    <table class="records_list">
-        <thead>
+
+{% block stylesheets %}
+   {{ parent() }}
+   {# <link href="{{ asset('bundles/hnrsircim/js/jquery-ui-1.10.3.custom/css/custom-theme/jquery-ui-1.10.3.custom.css') }}" rel="stylesheet" type="text/css" /> #}
+   <link href="{{ asset('bundles/hnrsircim/js/Zebra_Datepicker-master/public/css/default.css') }}" rel="stylesheet" type="text/css" /> 
+   
+{% endblock %}
+
+
+
+
+
+{% block configuracion %}
+    
+    <a id="conf_cuenta" href="{{ path('usuario_cuenta', { 'login':login,'opc':'0' }) }}">Configuración de cuenta</a>
+
+{% endblock %}
+
+{% block lista_modulos %}
+    {% for modulo in modulos %}
+        <li><a href="{{ path(modulo.osUrl, { 'login': usuario.usLogin }) }}">{{modulo}}</a></li>
+    {% endfor %}
+{% endblock %}
+
+
+{% block nombre_usr %}
+    <label id="{{ usuario.usLogin }}">
+        {{ usuario.usLogin }}
+    </label> 
+{% endblock %} 
+
+{% block mod_activo %} 
+    
+    Módulo de transcripción
+
+{% endblock %} 
+
+
+
+
+ 
+{% block botones_modulo %}
+    <div class="menu_grupo">
+        <button href="{# {{ path('transcripcion_new') }} #}" id="buscar" class="btn btn_destacado"></button>
+    </div>
+    
+    <div class="menu_grupo">
+        <input type="text" name="toggle" id="historial" class="textos">
+    </div>
+    <div class="menu_grupo">
+        <label href="{{ asset('bundles/hnrsircim/img/loading.gif') }}" id="exp_label">Expediente:</label>
+    </div>
+    <div id="opc_busqueda">
+        <table class="tbl_busqueda" align="center">
             <tr>
-                <th>Id</th>
-                <th>Diresultado</th>
-                <th>Diconclusion</th>
-                <th>Idempleado</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('diagnostico_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.diResultado }}</td>
-                <td>{{ entity.diConclusion }}</td>
-                {# <td>{{ entity.idEstudioRadiologico.getIdSolicitud().getIdEstudioArea().getIdEstudio() }}</td> #}
-                <td>{{ entity.idempleado }}</td>    
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('diagnostico_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('diagnostico_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+                <td colspan="2">
+                    Realizar búsqueda por:
                 </td>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            <tr>
+                <td>
+                    Estudio:
+                </td>
+                <td>
+                    <select type="text" name="toggle" id="desplegable_busqueda_trans" class="desplegable">
+                            <option value="0">Seleccione un estudio...</option>
+                        {% for estudio in estudios %}
+                            <option value="{{estudio.esNombre}}">{{estudio.esNombre}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Fecha:
+                </td>
 
-        <ul>
-        <li>
-            <a href="{{ path('diagnostico_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
-    {% endblock %}
+                <td>
+                    <input type="text" class="textos regular date" id="fecha_busqueda_trans" name="toggle" >
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button class="buscar_transcripcion guardar">Buscar</button>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+
+
+
+{% endblock %}
+
+
+{% block body -%}
+
+<br><br>
+
+
+<div id="contenedor-medio">
+
+<div id="paciente_historial">
+              
+                        
+     
+</div>                 
+                        
+     
+</div>                    
+
+{% endblock %}
+
+
+{% block emergente %}
+
+<div id="deshabilitar"></div>
+    
+
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+
+
+    
+    var login = $('#nombre_usr label').attr('id');
+
+    $('#historial').keyup(function(event){
+
+        if(event.keyCode!=13){
+            event.preventDefault();
+        }
+        else{
+            if($('#expediente').val()==''){
+                mensaje_error("Ingrese expediente de paciente...");
+            }
+            else{
+                var parameters = $(this).val();
+                var estudio=0;
+                var fecha=0;                
+                
+                $('.primero').removeClass('checked');    
+                $('.ultimo').removeClass('checked');    
+                $('#paciente_historial').html('<div id="cargando"><img src={{ asset('bundles/hnrsircim/img/loading.gif') }}><div>');
+                $('#opc_busqueda').hide();
+                $('#paciente_historial').load(Routing.generate('diagnostico_trans', { exp: parameters, estudio: estudio, fecha: fecha, login: login }));
+            }
+        }
+    });
+     
+
+
+  $('.pacientes_estudios a').click(function(event) {
+        /* Act on the event */
+        alert('dvfd');
+        return false;
+    });
+
+  $('.buscar_transcripcion').click(function(event) {
+      /* Act on the event */
+        var expediente = $('#historial').val(); 
+        var estudio = $('#desplegable_busqueda_trans').val();
+        var fecha = $('#fecha_busqueda_trans').val();
+        
+        if(fecha=='')
+            fecha=0;
+        if(estudio=='')
+            estudio=0;
+        if(expediente==''){
+            mensaje_error("Ingrese expediente de paciente...");
+            $('#expediente').addClass('errorform'); 
+        }
+        else{
+            if(fecha==0 && estudio==0){
+                mensaje_error("Seleccione un parametro para realizar la búsqueda");
+                $('#fecha_busqueda_trans').addClass('errorform'); 
+                $('#desplegable_busqueda_trans').addClass('errorform'); 
+            }
+            else{
+                 //alert(estudio+fecha);
+                // $('#paciente_historial').html('<div id="cargando"><img src={{ asset('bundles/hnrsircim/img/loading.gif') }}><div>');
+
+                $('#paciente_historial').load(Routing.generate('diagnostico_trans', { exp: expediente, estudio:estudio,fecha:fecha,login:login }));
+                $('#opc_busqueda').toggle('fast');
+                
+        
+                // label.closest('.menu_grupo').find("label").removeClass('checked'); 
+                $('.primero').removeClass('checked'); 
+                $('#input_cita').prop('checked', false); 
+                $('.ultimo').addClass('checked'); 
+                $('#input_estudio').prop('checked', true); 
+            
+                  
+            }
+        }
+  });
+
+
+
+</script>
+{% endblock %}

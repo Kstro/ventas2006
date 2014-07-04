@@ -4,17 +4,20 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <!--
-    <parameters>
-        <parameter key="hnrsircim.example.class">hnr\sircimBundle\Example</parameter>
-    </parameters>
+    
+    <!-- <parameters> -->
+        <!-- <parameter key="hnrsircim.example.class">hnr\sircimBundle\Example</parameter> -->
+        <!-- <parameter key="hnrsircim.controller.bitacora.class">hnr\sircimBundle\Controller\BitacoraController</parameter> -->
+    <!-- </parameters> -->
 
-    <services>
-        <service id="hnrsircim.example" class="%hnrsircim.example.class%">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
-        </service>
-    </services>
-    -->
+    <!-- <services> -->
+        <!-- <service id="hnrsircim.bitacora.controller" class="%hnrsircim.controller.bitacora.class%"/> -->
+            <!-- <argument type="service" id="service_id" /> -->
+            <!-- <argument type="service" id="hnrsircim.bitacora.controller" /> -->
+            <!-- <argument>plain_value</argument> -->
+            <!-- <argument>%login%</argument> -->
+            <!-- <argument>%mensaje%</argument> -->
+        <!-- </service> -->
+    <!-- </services> -->
+    
 </container>

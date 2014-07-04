@@ -11,30 +11,38 @@ class UsuarioType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('usLogin',null, array('label'=>'Login'))
-            ->add('usCorreo','email', array('label'=>'Correo'))
+            
+            ->add('usCorreo','email', array('label'=>'Email','attr'=>array('class'=>'textos')))
+            ->add('usLogin',null, array('label'=>'Login',
+                'max_length'=>15,
+                'attr'=>array('class'=>'textos')))
             ->add('usContrasena', 'repeated', array(
                     'type' => 'password',
+                    'first_name'=>'pass',
+                    'second_name'=>'confirm',
+
                     'invalid_message' => 'Las contraseñas deben ser iguales.',
-                    'options' => array('attr' => array('class' => 'password-field')),
+
+                    'options' => array('attr' => array('class' => 'textos')),
                     'required' => true,
-                    'first_options'  => array('label' => 'Contraseña'),
-                    'second_options' => array('label' => 'Repetir contraseña')))
+
+                    'first_options'  => array('label' => ' '),
+                    'second_options' => array('label' => ' ')))
+
+            ->add('placas','collection',array(
+                'type' => new UsuarioRolType(),
+                'label'=>' ',
+                'by_reference' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+                ))            
             // ->add('usActualizarContrasena')
 
 
-            // ->add('usEstadoActivo', 'checkbox', array(
-            //         'required'  => true,
-            //         'attr' => array('name' => 'check',
-            //                         'id' => 'slideThree',
-            //                         'value' => 'None'
-            //         )))
+            // ->add('usEstadoActivo')
 
 
-            // ->add('usEstadoBloqueado', 'checkbox', array(
-            //         'label'     => 'Bloqueado/Desbloqueado',
-            //         'required'  => true,
-            //         'attr' => array('class' => 'slide2')))
+            // ->add('usEstadoBloqueado')
 
             // ->add('idempleado')
             // ->add('usUsuarioCreacion')

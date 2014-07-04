@@ -11,8 +11,13 @@ class RolOpcionSistemaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('idRol')
-            ->add('idOpcionSistema')
+            // ->add('idRol')
+            ->add('idOpcionSistema',null,array(
+                'label'=>' ',
+                'required'=>true,
+                'empty_value'=>'Seleccione un módulo...',
+                'attr'=>array('class'=>'desplegable') 
+                ))
         ;
     }
 

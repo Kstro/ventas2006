@@ -1,17 +1,43 @@
 <?php
 
 namespace hnr\sircimBundle\Entity;
-
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Rol
  *
  * @ORM\Table(name="rol")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="hnr\sircimBundle\Repositorio\RolRepository")
  */
 class Rol
 {
+
+    /**
+     * @ORM\OneToMany(targetEntity="RolOpcionSistema", mappedBy="idRol", cascade={"persist", "remove"})
+     */
+    protected $placas;
+
+    public function __construct()
+    {
+        //$this->placas = array(new EstudioRadTamPlaca(), new EstudioRadTamPlaca());
+        $this->placas = new ArrayCollection();
+    }           
+
+    public function getPlacas()
+    {
+        return $this->placas;
+    }
+
+    public function setPlacas(\Doctrine\Common\Collections\Collection $placas)
+    {
+        $this->placas = $placas;
+        foreach ($placas as $placa) {
+            $placa->setIdRol($this);
+        }
+    }
+
+
     /**
      * @var integer
      *
@@ -272,5 +298,9 @@ class Rol
     public function getRoFechaModificacion()
     {
         return $this->roFechaModificacion;
+    }
+
+    public function __tostring(){
+        return $this->roNombre;
     }
 }

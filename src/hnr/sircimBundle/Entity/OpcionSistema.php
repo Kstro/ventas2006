@@ -29,7 +29,12 @@ class OpcionSistema
      */
     private $osNombre;
 
-
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="os_url", type="string", length=50, nullable=false)
+     */
+    private $osUrl;
 
     /**
      * Get id
@@ -62,5 +67,33 @@ class OpcionSistema
     public function getOsNombre()
     {
         return $this->osNombre;
+    }
+
+    /**
+     * Set osUrl
+     *
+     * @param string $osUrl
+     * @return OpcionSistema
+     */
+    public function setOsUrl($osUrl)
+    {
+        $this->osUrl = $osUrl;
+    
+        return $this;
+    }
+
+    /**
+     * Get osUrl
+     *
+     * @return string 
+     */
+    public function getOsUrl()
+    {
+        return $this->osUrl;
+    }
+
+    public function __toString(){
+        return $this->osNombre;
+
     }
 }

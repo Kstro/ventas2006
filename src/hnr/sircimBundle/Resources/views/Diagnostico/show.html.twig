@@ -1,46 +1,108 @@
-{% extends '::base.html.twig' %}
 
+ 
 {% block body -%}
-    <h1>Diagnostico</h1>
-
-    <table class="record_properties">
+    
+<div id="contenido">
+    <div id="transcripcion_estudios_consulta">
+    <div>
+            <div>
+                
+                {{ entity.idEstudioRadiologico.getIdSolicitud.getEstudioArea.getIdEstudio() }}
+            </div>
+            <div>
+                {{ entity.idEstudioRadiologico.getIdSolicitud.getsoFecha()|date('d/m/Y') }}
+                    {%if entity.idEstudioRadiologico.getIdSolicitud.getsoHora()|date('H') <= 12 %}
+                - {{ entity.idEstudioRadiologico.getIdSolicitud.getsoHora()|date('H:i') }} a.m.
+                {%else %}
+                - {{ entity.idEstudioRadiologico.getIdSolicitud.getsoHora()|date('H:i')-12 }}{{ entity.idEstudioRadiologico.getIdSolicitud.getsoHora()|date(':i')}} p.m.
+                {% endif %}
+            </div>
+            <div><a href="" id="cerrar_link"><img src={{ asset('bundles/hnrsircim/imagenes/cerrar.png') }} /></a></div>
+        </div>
+        <br><br>
+    <div class="titulo2" id="radiologo">
+    <table>
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
+                <td>Medico Radiologo:
+                
+                {% for empl in empl %}
+                    {{empl.Nombre}}  
+                {% endfor %}
+                
+                </td>
             </tr>
-            <tr>
-                <th>Diresultado</th>
-                <td>{{ entity.diResultado }}</td>
-            </tr>
-            <tr>
-                <th>Diconclusion</th>
-                <td>{{ entity.diConclusion }}</td>
-            </tr>
-            <tr>
-                <th>Idempleado</th>
-                <td>{{ entity.idempleado }}</td>
-            </tr>
-        </tbody>
     </table>
+    </div>
+            <div class="titulo2" id="resultado">
+            <table>
+                <tr>
+                    <td>
+                        Resultado: 
+                    </td>
+                </tr>  
+                <tr> <td>{{ entity.diResultado }}</td></tr>
+                
+            </table>                
+        </div>
+           <div class="titulo2" id="conclusion">
+            <table>
+                <tr>
+                    <td>
+                        Conclusión:
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{ entity.diConclusion }}</td>
+                </tr>
+            </table>                
+        </div>
+          {% for num in num_registro  %}
+        <div id="titulo2_botones">
+            <button onclick=" window.open ('{{ path('_report_paciente', { 'report_name': 'transcripcion' , 'report_format': 'pdf' , 'registro': num.getidMntExpediente , 'estudio_radiologico': entity.idEstudioRadiologico.getId() , 'nombre': num.getidMntExpediente ~ "\\" ~ entity.idEstudioRadiologico.getIdSolicitud.getEstudioArea.getIdEstudio.getesAbreviatura ~ "\\" ~ entity.idEstudioRadiologico.getIdSolicitud.getsoFecha()|date('d-m-Y') ~ "\\" ~  entity.idEstudioRadiologico.getIdSolicitud.getsoHora()|date('H:i')  }) }}', '_blank');" >Exportar</button>
+        </div>
+       {% endfor %}
+				 
+       
+ </tbody>
+    </div>
+   
+<div id="popup_box_exp"></div>
+<div id="popup_box"></div>
+<div id="popup_box_cupo"></div>
+<div id="deshabilitar"></div>
+{% endblock %}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('diagnostico') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('diagnostico_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('diagnostico_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+{% block script %}
+    
+
+<script type="text/javascript">
+
+
+jQuery(document).ready(function() {
+
+    $('#cancelar').click(function(event) {
+        /* Act on the event */
+        $('#deshabilitar').fadeOut('fast');
+        $('#popup_box_exp').fadeOut('fast');
+        return false;
+    });
+
+    $('#cerrar_link').click(function(event) {
+        /* Act on the event */
+        $('#deshabilitar').fadeOut('fast');
+        $('#popup_box_exp').fadeOut('fast');
+        return false;
+    });
+
+
+});
+
+    
+
+</script>
+
+
+
+
 {% endblock %}

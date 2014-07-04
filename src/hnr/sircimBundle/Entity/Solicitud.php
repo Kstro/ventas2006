@@ -3,6 +3,7 @@
 namespace hnr\sircimBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Solicitud
@@ -35,7 +36,14 @@ class Solicitud
      * @ORM\Column(name="so_fecha", type="date", nullable=false)
      */
     private $soFecha;
-
+    
+    /**
+     * @var \Time
+     *
+     * @ORM\Column(name="so_hora", type="time", nullable=false)
+     */
+    private $soHora;
+    
     /**
      * @var string
      *
@@ -48,19 +56,19 @@ class Solicitud
      *
      * @ORM\Column(name="so_posicion", type="text", nullable=false)
      */
-    private $soPosicion;
+    private$soPosicion;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="id_mnt_expediente", type="bigint", nullable=false)
+     * @ORM\Column(name="id_mnt_expediente", type="string", length=10, nullable=false)
      */
-    private $idMntExpediente;
+    private$idMntExpediente;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="id_mnt_aten_area_mod_estab", type="integer", nullable=true)
+     * @ORM\Column(name="id_mnt_aten_area_mod_estab", type="string", length=100, nullable=true)
      */
     private $idMntAtenAreaModEstab;
 
@@ -132,6 +140,29 @@ class Solicitud
         return $this->soFecha;
     }
 
+    /**
+     * Set soHora
+     *
+     * @param \Time $soHora
+     * @return Solicitud
+     */
+    public function setSoHora($soHora)
+    {
+        $this->soHora = $soHora;
+    
+        return $this;
+    }
+    
+    /**
+     * Get soHora
+     *
+     * @return \Time 
+     */
+    public function getSoHora()
+    {
+        return $this->soHora;
+    }
+    
     /**
      * Set soRegion
      *
@@ -225,14 +256,19 @@ class Solicitud
     }
 
     /**
-     * Set idEstudioArea
+     * @Assert\Type(type="hnr\sircimBundle\Entity\EstudioArea")
+     */
+    protected $EstudioArea;
+
+    /**
+     * Set EstudioArea
      *
-     * @param \hnr\sircimBundle\Entity\EstudioArea $idEstudioArea
+     * @param \hnr\sircimBundle\Entity\EstudioArea $EstudioArea
      * @return Solicitud
      */
-    public function setIdEstudioArea(\hnr\sircimBundle\Entity\EstudioArea $idEstudioArea = null)
+    public function setEstudioArea(\hnr\sircimBundle\Entity\EstudioArea $EstudioArea = null)
     {
-        $this->idEstudioArea = $idEstudioArea;
+        $this->idEstudioArea = $EstudioArea;
     
         return $this;
     }
@@ -242,8 +278,14 @@ class Solicitud
      *
      * @return \hnr\sircimBundle\Entity\EstudioArea 
      */
-    public function getIdEstudioArea()
+    public function getEstudioArea()
     {
         return $this->idEstudioArea;
     }
+    
+    
+    public function __toString() {
+        return $this->idMntExpediente;
+    }
+    
 }

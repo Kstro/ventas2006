@@ -2,16 +2,52 @@
 
 namespace hnr\sircimBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 /**
  * EstudioArea
  *
  * @ORM\Table(name="estudio_area")
- * @ORM\Entity(repositoryClass="hnr\sircimBundle\Repositorio\EstudioAreaRepository")
+ * @ORM\Entity(repositoryClass="hnr\sircimBundle\Entity\EstudioAreaRepository")
  */
 class EstudioArea
 {
+
+    /**
+     * @ORM\OneToMany(targetEntity="Horario", mappedBy="idEstudioArea", cascade={"persist"})
+     */
+    protected $placas;
+
+    public function __construct()
+    {
+        $this->placas = new ArrayCollection();
+        
+    }           
+
+    public function getPlacas()
+    {
+        return $this->placas;
+    }
+
+    public function setPlacas($placas)
+    {
+        $this->placas = $placas;
+        
+        foreach ($placas as $placa) {
+            $placa->setIdEstudioArea($this);
+        }
+    }
+
+    // public function setPlacas(\Doctrine\Common\Collections\ArrayCollection $placas)
+    // {
+    //     $this->placas = $placas;
+        
+    //     foreach ($placas as $placa) {
+    //         $placa->setIdEstudioArea($this);
+    //     }
+    // }
+
     /**
      * @var integer
      *
@@ -29,12 +65,14 @@ class EstudioArea
      */
     private $estadoEstudioArea;
 
+    
+
     /**
      * @var \Estudio
      *
      * @ORM\ManyToOne(targetEntity="Estudio", cascade={"persist", "remove"})
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_estudio", referencedColumnName="id")
+     * @ORM\JoinColumn(name="id_estudio", referencedColumnName="id")
      * })
      */
     private $idEstudio;
@@ -42,7 +80,7 @@ class EstudioArea
     /**
      * @var \Area
      *
-     * @ORM\ManyToOne(targetEntity="Area")
+     * @ORM\ManyToOne(targetEntity="Area", cascade={"persist", "remove"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_area", referencedColumnName="id")
      * })
@@ -100,7 +138,7 @@ class EstudioArea
     /**
      * Get idEstudio
      *
-     * @return \hnr\sircimBundle\Entity\Estudio 
+     * @return \hnr\sircimBundle\Entity\Estudio
      */
     public function getIdEstudio()
     {
@@ -129,4 +167,66 @@ class EstudioArea
     {
         return $this->idArea;
     }
+
+    public function __toString(){
+        return $this->idEstudio;
+    }
+
+
+    // protected $estudio;
+
+    /**
+     * Set estudio
+     *
+     * @param \hnr\sircimBundle\Entity\Estudio $estudio
+     * @return Estudio
+     */
+    public function setestudio(\hnr\sircimBundle\Entity\Estudio $estudio = null)
+    {
+        $this->idEstudio = $estudio;
+    
+        return $this;
+    }
+
+    /**
+     * Get idEstudio
+     *
+     * @return \hnr\sircimBundle\Entity\Estudio
+     */
+    public function getestudio()
+    {
+        return $this->idEstudio;
+    }
+
+    /**
+     * @Assert\Type(type="hnr\sircimBundle\Entity\Estudio")
+     */
+    // public $uscreacion;
+
+    /**
+     * Set uscreacion
+     *
+     * @param \hnr\sircimBundle\Entity\Estudio $uscreacion
+     * @return Estudio
+     */
+    // public function setuscreacion(\hnr\sircimBundle\Entity\Estudio $uscreacion = null)
+    // {
+    //     $this->uscreacion = $uscreacion;
+    
+    //     return $this;
+    // }
+
+    /**
+     * Get uscreacion
+     *
+     * @return \hnr\sircimBundle\Entity\Estudio
+     */
+    public function getuscreacion()
+    {
+        return $this->uscreacion;
+    }
+
+    
+
+
 }

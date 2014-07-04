@@ -5,7 +5,36 @@
 
     <form action="{{ path('horario_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         <input type="hidden" name="_method" value="PUT" />
-        {{ form_widget(edit_form) }}
+        <table>
+            <tr>
+                <td>
+                    Día
+                </td>
+
+                <td>
+                    Hora inicio
+                </td>
+
+                <td>
+                    Hora fin
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{form_widget(edit_form.hoDia)}}
+                </td>
+
+                <td>
+                    {{form_widget(edit_form.hoHoraInicio)}}
+                </td>
+
+                <td>
+                    {{form_widget(edit_form.hoHoraFin)}}
+                </td>
+            </tr>
+        </table>
+
+{{ form_rest(edit_form) }}
         <p>
             <button type="submit">Edit</button>
         </p>

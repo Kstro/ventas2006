@@ -1,42 +1,119 @@
-{% extends 'hnrsircimBundle::Layout.html.twig' %}
+{% block stylesheets %}
+   <link href="{{ asset('bundles/hnrsircim/css/Modulos/Citas/citas_show.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
 
 {% block body -%}
-    <h1>Cita</h1>
+    <div id="exit_bar">
+        Consultar cita
+        <a class="close_show" href="#">x</a>
+    </div>
+   
+    <div id="div_consultar_cita">
+        <div class="form_cita">
+        {{ entity.ciEstado }}
 
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Ciedadpaciente</th>
-                <td>{{ entity.ciEdadPaciente }}</td>
-            </tr>
-            <tr>
-                <th>Ciestado</th>
-                <td>{{ entity.ciEstado }}</td>
-            </tr>
-        </tbody>
-    </table>
+        <table>
+                {#
+                <tr>
+                    <th>Id</th>
+                    <td>{{ entity.id }}</td>
+                </tr> #}
+                <tr>
+                    <td colspan="2" class="separador" id="paciente"> Paciente </td>
+                </tr>
+                <tr>
+                    <td class="label"> 
+                        <label> Registro: </label>
+                    </td>
+                    <td> 
+                        <input class="regular" type="text" value="{{ entity.idSolicitud.idMntExpediente }}" readonly/> 
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label"> 
+                        <label> Nombre: </label>
+                    </td>
+                    <td> 
+                        <input class="regular nombre_paciente" type="text" value="{{ nombre }}" readonly/> 
+                    </td>                
+                </tr>
+                <tr>
+                    <td class="label"> 
+                        <label> Edad: </label>
+                    </td>
+                    <td> 
+                        <input class="regular" type="text" value="{{ entity.ciEdadPaciente }} años" readonly/> 
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label"> 
+                        <label> Servicio: </label> 
+                    </td>
+                    <td> 
+                        <input class="regular" type="text" value="{{ entity.idSolicitud.idMntAtenAreaModEstab }}" readonly/> 
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="separador" id="estudio"> Estudio </td>
+                </tr>
+                <tr>
+                    <td class="label"> 
+                        <label> Estudio: </label>
+                    </td>
+                    <td> 
+                        <input class="regular" type="text" value="{{ entity.idSolicitud.getEstudioArea().getIdEstudio() }}" readonly/> 
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label"> 
+                        <label> Región: </label>
+                    </td>
+                    <td> 
+                        <input class="regular" type="text" value="{{ entity.idSolicitud.soRegion }}" readonly/> 
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label"> 
+                        <label> Posición: </label>
+                    </td>
+                    <td> 
+                        <input class="regular" type="text" value="{{ entity.idSolicitud.soPosicion }}" readonly/> 
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="separador" id="horario"> Horario </td>
+                </tr>
+                <tr>
+                    <td class="label"> 
+                        <label> Fecha: </label>
+                    </td>
+                    <td> 
+                        <input class="regular" type="text" value="{{ entity.idSolicitud.soFecha|date('Y-m-d') }}" readonly/> 
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label"> 
+                        <label> Hora: </label>
+                    </td>
+                    <td> 
+                        <input class="regular" type="text" value="{{ entity.idSolicitud.soHora|date('H:i') }}" readonly/> 
+                    </td>
+                </tr>
+        </table>
+        </div>
+    </div>
+{% endblock %}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('cita') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('cita_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('cita_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+{% block script %}
+    
+    <script>
+        
+        $('.close_show').click(function(e){
+            e.preventDefault();
+            $('#deshabilitar').fadeOut('slow'); 
+            $('#pop_citas').fadeOut("slow");
+            $('#popup_box_exp').fadeOut("slow");
+        });
+                       
+    </script>
 {% endblock %}

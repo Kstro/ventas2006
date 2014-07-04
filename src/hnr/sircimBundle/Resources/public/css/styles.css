@@ -4,5 +4,50 @@
 /*Layout*/
 @import url('Layout/layout.css');
 
+/*Busquedas*/
+@import url('Modulos/administracion/busqueda.css');
+
 /*Componentes*/
 @import url('Componentes/botones.css');
+
+/*Componentes*/
+@import url('Componentes/formularios.css');
+
+/*Login*/
+@import url('Modulos/login/login.css');
+
+/*Ventana emergente*/
+@import url('Modulos/administracion/ventanaemergente.css');
+
+/*Slide imagen*/
+@import url('Modulos/administracion/slidesJS.css');
+
+/*Slide imagen*/
+@import url('Modulos/administracion/font-awesome.min.css');
+
+/*Tablas de administracion*/	
+@import url('Modulos/administracion/tablas.css');
+
+/*Mensajes*/
+@import url('alertify/themes/alertify.core.css');
+@import url('alertify/themes/alertify.bootstrap.css');
+/*Mensajes otro tema para los mensajes*/
+/*@import url('alertify/themes/alertify.default.css');*/
+
+/*Scrollbar*/
+@import url('scrollbar/src/perfect-scrollbar.css');
+
+/*Zoom*/
+@import url('../js/zoom/smoothzoom.css');
+
+/*Modulo*/
+@import url('Modulos/administracion/admin.css');
+/*@import url('Modulos/Citas/cita_semana.css');*/
+@import url('bValidator/themes/bvalidator.theme.bootstrap.css');
+/*@import url('reporte.css');*/        
+@import url('Modulos/Citas/citas_dia.css');
+@import url('Modulos/Citas/citas_mes.css');
+@import url('Modulos/Citas/citas_semana.css');
+
+/*Error 404*/
+@import url('error404.css');

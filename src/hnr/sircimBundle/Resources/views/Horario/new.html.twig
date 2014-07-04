@@ -4,7 +4,38 @@
     <h1>Horario creation</h1>
 
     <form action="{{ path('horario_create') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
+        
+        <table>
+            <tr>
+                <td>
+                    Día
+                </td>
+
+                <td>
+                    Hora inicio
+                </td>
+
+                <td>
+                    Hora fin
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {{form_widget(form.hoDia)}}
+                </td>
+
+                <td>
+                    {{form_widget(form.hoHoraInicio)}}
+                </td>
+
+                <td>
+                    {{form_widget(form.hoHoraFin)}}
+                </td>
+            </tr>
+        </table>
+
+{{ form_rest(form) }}
+        
         <p>
             <button type="submit">Create</button>
         </p>

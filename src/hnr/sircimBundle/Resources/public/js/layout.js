@@ -13,7 +13,7 @@ $( document ).ready(function() {
 	});
 
 	$('#mostrar_opc_sesion').focusout(function() {
-	    $('#usr_opciones_sesion').css("visibility","hidden");
+	    // $('#usr_opciones_sesion').css("visibility","hidden");
 	});
 
 	$('#seleccionar_modulo').click(function(){
@@ -21,7 +21,7 @@ $( document ).ready(function() {
 	});	
 
 	$('#seleccionar_modulo').focusout(function() {
-	    $('#lista_modulos').css("visibility","hidden");
+	    // $('#lista_modulos').css("visibility","hidden");
 	});
 
 	/* fijar menu en parte superior de la ventana */

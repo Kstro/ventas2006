@@ -9,7 +9,8 @@
     margin-left: 5px;
 }
 
-.menu_grupo .btn{
+.menu_grupo .btn,
+#busqueda .btn{
     height: 100%;
     width: 50px;
     float: right;
@@ -30,7 +31,8 @@
               user-select: none;
 }
 
-    .menu_grupo .btn::-moz-focus-inner {
+    .menu_grupo .btn::-moz-focus-inner,
+     #busqueda .btn::-moz-focus-inner{
         border: 0;
     }
 
@@ -54,41 +56,52 @@
     background-position:  50% 55%;
 }
 
+.menu_grupo #comparar{
+    background-image: url('../../img/btn_comparar.png');
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position:  50% 55%;
+}
+
 .menu_grupo input[type=radio]{
     display: none;
 }
 
-.menu_grupo .btn_regular{
+.menu_grupo .btn_regular,
+#busqueda .btn_regular{
     line-height: 24px;
     color: #7F7F7F;
     background-color: #F2F2F2;
-    border-radius: 0;
     -webkit-box-shadow: inset 0 0 0 1px #d8d8d8;
             box-shadow: inset 0 0 0 1px #d8d8d8;
 }
 
-    .menu_grupo .btn_regular:hover{
+    .menu_grupo .btn_regular:hover,
+    #busqueda .btn_regular:hover{
         background-color: #d8d8d8;
     }
     
 .menu_grupo .btn_toggle{
     width: 60px;
+    border-radius: 0;
 }
 
-    .menu_grupo .btn_toggle:nth-of-type(1){
+    .menu_grupo .primero{
         -webkit-border-radius: 0 3px 3px 0;
            -moz-border-radius: 0 3px 3px 0;
                 border-radius: 0 3px 3px 0;
+    }
 
-        -webkit-box-shadow: inset -2px 0 0 -1px #d8d8d8,
+    .menu_grupo .medio{
+        -webkit-box-shadow: inset 2px 0 0 -1px #d8d8d8,
                             inset 0 2px 0 -1px #d8d8d8,
                             inset 0 -2px 0 -1px #d8d8d8;
-                box-shadow: inset -2px 0 0 -1px #d8d8d8,
+                box-shadow: inset 2px 0 0 -1px #d8d8d8,
                             inset 0 2px 0 -1px #d8d8d8,
                             inset 0 -2px 0 -1px #d8d8d8;
     }
-
-    .menu_grupo .btn_toggle:nth-of-type(3){
+    
+    .menu_grupo .ultimo{
         -webkit-border-radius: 3px 0 0 3px;
            -moz-border-radius: 3px 0 0 3px;
                 border-radius: 3px 0 0 3px;
@@ -109,15 +122,97 @@
                 box-shadow: inset #555 0 0 0 1px;
     }
 
-.menu_grupo .btn_hoy{
-    border-radius: 3px;
+.menu_grupo .btn_hoy:active,
+#busqueda .btn_hoy:active{
+    background-color: #555555;
+    color: #fff;
+    text-shadow: 0 -1px 1px rgba(0,0,0,0.5);
+    -webkit-box-shadow: inset 0 0 0 1px #555555;
+            box-shadow: inset 0 0 0 1px #555555;
 }
 
-    .menu_grupo .btn_hoy:active {
-        background-color: #555555;
-        color: #fff;
-        text-shadow: 0 -1px 1px rgba(0,0,0,0.5);
-        -webkit-box-shadow: inset 0 0 0 1px #555555;
-                box-shadow: inset 0 0 0 1px #555555;
+.menu_grupo #cancelar,
+#busqueda #cancelar{
+    width: 100px;
+    border-radius: 2px;
+    margin-left: 4px;
+}
+
+.menu_grupo #guardar,
+#busqueda #guardar{
+    width: 100px;
+    color: #fff;
+    background-color: #3B97D6;
+    border-radius: 2px;
+    -webkit-box-shadow: inset 0 0 0 1px #3B97D6;
+            box-shadow: inset 0 0 0 1px #3B97D6;
+}
+
+.td_list .btn_list{
+    position: absolute;
+    margin-top: -10px;
+    background: none;
+    border: none;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+    .td_list .btn_list::-moz-focus-inner {
+            border: 0;
+        }
+
+    .td_list .edit{
+        left: 0;
+        background-image: url('../../img/pencil.png');
+        background-repeat: no-repeat;
+        background-position:  50% 55%;
     }
 
+    .td_list .view{
+        right: 0;
+        background-image: url('../../img/detalle.png');
+        background-repeat: no-repeat;
+        background-position:  50% 55%;
+    }
+
+#cal_next .desplazar{
+    height: 16px;
+    width: 20px;
+    /*float: right;*/
+    border: none;
+    
+    background: none;
+    cursor: pointer;
+
+    /*font-family: inherit;*/
+    /*font-size: 12px;*/
+    text-align: center;
+
+    -webkit-touch-callout: none;
+      -webkit-user-select: none;
+       -khtml-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none;
+}
+
+    #cal_next .desplazar::-moz-focus-inner {
+        border: 0;
+    }
+
+    #cal_next #prev{
+        float: left;
+        background-image: url('../../img/1390525568_back.png');
+        background-repeat: no-repeat;
+        background-position:  50% 55%;
+        margin-left: 15px;
+    }
+
+    #cal_next #next{
+        float: right;
+        background-image: url('../../img/1390526103_forward.png');
+        background-repeat: no-repeat;
+        background-position:  50% 55%;
+        margin-right: 15px;
+    }

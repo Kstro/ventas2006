@@ -1,20 +1,99 @@
-{% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Diagnostico creation</h1>
+   
+<div id="contenido">
+    <div id="transcripcion_estudios_consulta">
+      
+        <div>
+            <div>
+                {{ entity_er.getIdSolicitud.getEstudioArea.getIdEstudio() }}
+            </div>
+            <div>
+                {{ entity_er.getIdSolicitud.getsoFecha()|date('d/m/Y') }}
+                 {%if entity_er.getIdSolicitud.getsoHora|date('H') <= 12 %}
+                - {{ entity_er.getIdSolicitud.getsoHora()|date('H:i') }} a.m.
+                {%else %}
+                - {{ entity_er.getIdSolicitud.getsoHora()|date('H:i')-12 }}{{ entity_er.getIdSolicitud.getsoHora()|date(':i') }} p.m.
+                {% endif %}
+            </div>
+             <div><a href="" id="cerrar_link"><img src={{ asset('bundles/hnrsircim/imagenes/cerrar.png') }} /></a></div>
+        </div>
+    </div>
+        <br><br>
+        <form action="{{ path('diagnostico_create', { 'id': entity_er.getId }) }}" method="post" {{ form_enctype(form) }}>
+         {#{ form_widget(form) }#}
+         
+        
+       
+          <div class="titulo2" id="radiologo">
+              {#{ form_row(form.idempleado, {'label':'medico:'}) }#}
+           
+              <p>Medico Radiologo:
+                  <select class="desplegable" name="empleados"> 
+                <option value="">[Elija una opción]</option>
+                {% for empleado in idempleado %}
+                    <option value="{{empleado.Idempleado}}"> {{empleado.Nombre}}  </option>   
+                {% endfor %}
+               </select> 
+            
+            </p> 
+          </div>  
+          <div class="titulo2" id="resultado">
+              <p>Resultado:</p>
+            {{ form_row(form.diResultado, {'label':' ' , 'attr':{'style':'width: 99%; resize:none; height: 275px;border:0px solid;'} }) }}
+          </div>    
+          <div class="titulo2" id="conclusion">
+              <p>Conclusi&oacute;n:</p>
+               {{ form_row(form.diConclusion, {'label':' ', 'attr':{'style':'width: 99%; resize:none; border:0px solid;'} }) }}
+          </div>      
+                {{ form_rest(form) }}
+                
+            <div id="botones">
+           
+                <button class="guardar" type="submit">Guardar</button>
+                 <button id="cancelar" class= "cancelar" type="submit">
+                  Cancelar
+                </button>
+            </div>
+            
+     </form>
+    
+    
+    </div>
+ 
+{% endblock %}
 
-    <form action="{{ path('diagnostico_create') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
-        <p>
-            <button type="submit">Create</button>
-        </p>
-    </form>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('diagnostico') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+{% block script %}
+    
+
+<script type="text/javascript">
+
+
+jQuery(document).ready(function() {
+
+    $('#cancelar').click(function(event) {
+        /* Act on the event */
+        $('#deshabilitar').fadeOut('fast');
+        $('#popup_box_exp').fadeOut('fast');
+        return false;
+    });
+
+    $('#cerrar_link').click(function(event) {
+        /* Act on the event */
+        $('#deshabilitar').fadeOut('fast');
+        $('#popup_box_exp').fadeOut('fast');
+        return false;
+    });
+
+});
+
+
+
+
+</script>
+
+
+
+
 {% endblock %}

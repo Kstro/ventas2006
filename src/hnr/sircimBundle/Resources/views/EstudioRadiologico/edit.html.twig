@@ -1,141 +1,297 @@
 {% extends 'hnrsircimBundle::Layout.html.twig' %}
 
 {% block stylesheets %}
-{{ parent() }}
-        <link rel="stylesheet" href="{{ asset('bundles/hnrsircim/css/css/default.css')}}" type="text/css">
-    {% endblock %}
+   {{ parent() }}
+   <link href="{{ asset('bundles/hnrsircim/js/Zebra_Datepicker-master/public/css/metallic.css') }}" rel="stylesheet" type="text/css" /> 
+{% endblock %}
+   
+{% block javascripts %}
+   {{ parent() }}
+   <script type="text/javascript" src="{{ asset('bundles/hnrsircim/js/Zebra_Datepicker-master/public/javascript/zebra_datepicker.js') }}" ></script>   
+{% endblock %}
 
-{% block javascripts %}            
-    {{ parent() }}
-        <script src="{{ asset('bundles/hnrsircim/js/placas.js') }}" type="text/javascript"></script>
-        <script type="text/javascript" src="{{ asset('bundles/hnrsircim/js/zebra_datepicker.js') }}"></script>
-
-{% endblock %}  
+{% block mod_activo %} Registro de estudios {% endblock %}
 
 
+{% block nombre_usr %}
+    <label id="{{ login }}">
+        {{ login }}
+    </label> 
+{% endblock %} 
+
+{% block lista_modulos %}
+    {% for modulo in modulos %}
+        <li><a href="{{path(modulo.osURL,{'login':usuario})}}">{{modulo}}</a></li>
+    {% endfor %}
+{% endblock %}
+
+{% block configuracion %}
+    
+    <a id="conf_cuenta" href="{{ path('usuario_cuenta', { 'login':login,'opc':'0' }) }}">Configuración de cuenta</a>
+
+{% endblock %}
+
+
+{% block botones_modulo %} 
+    <div class="menu_grupo"> 
+        <button class="btn btn_regular btn_hoy" id="cancelar" title="Cancelar" onclick="location.href='{{ path('estudioradiologico',{'login':login}) }}';">Cancelar</button>
+        <button type="submit" class="btn btn_regular" id="guardar" title="Guardar" onclick="document.getElementById('actualizar_estudio').submit();">Guardar</button>        
+    </div>
+{% endblock %}
 
 {% block body -%}
-    <h1>EstudioRadiologico creation</h1>
-
-    <form action="{{ path('estudioradiologico_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    <form id="actualizar_estudio" class="form_estudio" action="{{ path('estudioradiologico_update', { 'id': entity.id,'login':login }) }}" method="post" {{ form_enctype(edit_form) }}>
         <input type="hidden" name="_method" value="PUT" />
         {{ form_errors(edit_form) }}
-        {{ form_row(edit_form.erEdadPaciente) }}
-        {{ form_row(edit_form.idempleado) }}
-        {{ form_row(edit_form.idSolicitud) }}
+        <table>
+          <tr>
+            <td colspan="2" class="separador" id="paciente"> Paciente </td>
+          </tr>
+          <tr>
+            <td class="label"> {{ form_label(edit_form.idSolicitud.idMntExpediente) }} </td>
+            <td> {{ form_widget(edit_form.idSolicitud.idMntExpediente) }} </td>
+          </tr>
+          <tr>
+            <td class="label"> {{ form_label(edit_form.idSolicitud.Nombre) }} </td>
+            <td> {{ form_widget(edit_form.idSolicitud.Nombre) }} </td>
+          </tr>
+          <tr>
+            <td class="label"> {{ form_label(edit_form.erEdadPaciente) }} </td>
+            <td> {{ form_widget(edit_form.erEdadPaciente) }} </td>
+          </tr>
+          <tr>
+            <td colspan="2" class="separador" id="estudio"> Estudio </td>
+          </tr>
+          <tr>
+            <td class="label"> {{ form_label(edit_form.idSolicitud.EstudioArea) }} </td>       
+            <td> {{ form_widget(edit_form.idSolicitud.EstudioArea) }} </td>
+          </tr>
+          <tr>
+            <td class="label"> {{ form_label(edit_form.idSolicitud.soRegion) }} </td>    
+            <td> {{ form_widget(edit_form.idSolicitud.soRegion) }} </td>    
+          </tr>
+          <tr>
+            <td class="label"> {{ form_label(edit_form.idSolicitud.soPosicion) }} </td>    
+            <td> {{ form_widget(edit_form.idSolicitud.soPosicion) }} </td>    
+          </tr>
+          <tr>
+            <td class="label"> {{ form_label(edit_form.idSolicitud.idMntAtenAreaModEstab) }} </td>
+            <td> {{ form_widget(edit_form.idSolicitud.idMntAtenAreaModEstab) }} </td>
+          </tr>
+          <tr>
+            <td class="label"> {{ form_label(edit_form.idempleado) }} </td>
+            <td> {{ form_widget(edit_form.idempleado) }} </td>
+          </tr>
+          <tr>
+            <td colspan="2" class="separador" id="horario"> Horario </td>
+          </tr>
+          <tr>
+            <td class="label"> {{ form_label(edit_form.idSolicitud.soFecha) }} </td>
+            <td> {{ form_widget(edit_form.idSolicitud.soFecha) }} </td>
+          </tr>
+          <tr>
+            <td class="label"> {{ form_label(edit_form.idSolicitud.soHora) }} </td>  
+            <td> {{ form_widget(edit_form.idSolicitud.soHora) }} </td>  
+          </tr>
+          <tr>
+            <td colspan="2" class="separador" id="peliculas"> Películas </td>
+          </tr>
+          <tr>
+            <td colspan="2"> 
+                <div class="tabla_placas">
+                    <div class="add_placa"> 
+                        <a class="add_placa_link" title="Agregar Tamaño de placa" href="#"> + </a> 
+                    </div>
+                    <div class="encabezado_placas">
+                        <div>Tamaño</div>
+                        <div>Aceptadas</div>
+                        <div>Descartadas</div>
+                    </div>
+                    <div class="cuerpo_placas">
+                        <ul class="placas" data-prototype="{{ form_widget(edit_form.placas.vars.prototype)|e }}">
+                            {# {{ form_widget(edit_form.placas) }} #}
+                            {% for placa in edit_form.placas %}
+                                <li> 
+                                     {{ form_row(placa) }} 
+                                     <a class="link" href="#" style="visibility: hidden;">x</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="total_placas">
+                        <div>TOTAL</div>
+                        <div id="total_aceptadas">0</div>
+                        <div id="total_descartadas">0</div>
+                    </div>                    
+                </div>
+                
+            </td>
+          </tr>
+          
+        </table>
         
-        <ul class="placas" data-prototype="{{ form_widget(edit_form.placas.vars.prototype)|e }}">
-            {{ form_rest(edit_form) }}
-        </ul>
-        <p>
-            <button type="submit">Edit</button>
-        </p>
-
-        <div id="container"></div>
-
+        {{ form_rest(edit_form) }}
     </form>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('estudioradiologico') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
-
 {% endblock %}
 
-
-{% block script%}
+{% block script %}
 <script type="text/javascript">
-
+ 
     $(document).ready(function() {
+        
+        $parameters = '?numExpediente=' + $('#hnr_sircimbundle_estudioradiologicotype_idSolicitud_idMntExpediente').val();
+           
+        $.getJSON(Routing.generate('get_infopaciente')+$parameters,
+            function(data) {
+                $.each(data.regs, function(indice, reg) {
+                    $('#hnr_sircimbundle_estudioradiologicotype_idSolicitud_Nombre').val( reg.Nombre );                            
+                });
+            });
+         
+        var collectionHolder = $('ul.placas');
+        
+        collectionHolder.data('index', collectionHolder.find(':input').length);
 
-    // assuming the controls you want to attach the plugin to 
-    // have the "datepicker" class set
-   $('#hnr_sircimbundle_estudioradiologicotype_idSolicitud_soFecha').Zebra_DatePicker();
+        $('.add_placa_link').on('click', function(e) {
+            // prevent the link from creating a "#" on the URL
+            e.preventDefault();
 
- });
+            // add a new tag form (see next code block)
+            addTagForm(collectionHolder);
+        }); 
+        
+        $('.link').on('click', function(e) {
+                // prevent the link from creating a "#" on the URL
+                e.preventDefault();
 
+                // remove the li for the tag form
+                $(this).parent('li').remove();
+            });
+            
+        $('.date').Zebra_DatePicker({
+                        direction: false,
+                        //format: 'YYYY-M-d',
+                        onSelect: function(dateText,inst) {
+                                    var date = new Date(dateText);
+                                    
+                                    /*switch( date.getDay() ){
+                                       case 0 : alert(date.getDay()+': Lunes'); break;
+                                       case 1 : alert(date.getDay()+': Martes'); break;
+                                       case 2 : alert(date.getDay()+': Miercoles'); break;
+                                       case 3 : alert(date.getDay()+': Jueves'); break;
+                                       case 4 : alert(date.getDay()+': Viernes'); break;
+                                       case 5 : alert(date.getDay()+': Sabado'); break;
+                                       case 6 : alert(date.getDay()+': Domingo'); break;
+                                    }*/
+                                    
+                                    $.getJSON(Routing.generate('get_horas')+'?idEstudio=1&dia=Lunes',
+                                        function(data) {
+                                            $.each(data.regs, function(indice, reg) {
+                                                //alert( reg.hoHoraInicio);
+                                                var horainicio = reg.hoHoraInicio, horafin =reg.hoHoraFin;
+                                                while(horainicio != horafin){
+                                                    if( horainicio.substring(3, 5) == '00' ){
+                                                        horainicio = horainicio.substring(0, 3) + '30';
+                                                        $('#hora_content').append('<li>'+horainicio+'</li>');
+                                                    }
+                                                    else{
+                                                        horainicio = (parseInt(horainicio.substring(0, 2)) + 1) + ':00';
+                                                        $('#hora_content').append('<li>'+horainicio+'</li>');
+                                                    }
+                                                    /*alert( parseInt(horainicio.substring(0, 2)) + 1 );
+                                                    alert(horainicio.substring(3, 5));*/
+                                                    /*if( horainicio.substring(3, 5) == horafin.substring(3, 5) )
+                                                        alert();*/
+                                                }
+                                                //$('#result').append(reg.hoHoraInicio + ' - ' + reg.hoHoraFin);
+                                            });
+                                        });
+                        }
+                    });
+                    
+                    var sum_pl_aceptadas = 0,
+                    sum_pl_descartadas = 0;
+                    $('.placas_aceptadas').each(function(){
+                        sum_pl_aceptadas += parseInt( $(this).val() ); 
+                    });
+                    $('.placas_descartadas').each(function(){
+                        sum_pl_descartadas += parseInt( $(this).val() ); 
+                    });
+                    $('#total_aceptadas').html(sum_pl_aceptadas);
+                    $('#total_descartadas').html(sum_pl_descartadas);
+         
+    });
+    
+    function addTagForm(collectionHolder) {
+            // Get the data-prototype explained earlier
+            var prototype = collectionHolder.data('prototype');
+            
+            // get the new index
+            var index = collectionHolder.data('index');
+            
+            // Replace '__name__' in the prototype's HTML to
+            // instead be a number based on how many items we have
+            var newForm = prototype.replace(/__name__/g, index);
+            
+            // increase the index with one for the next item
+            collectionHolder.data('index', index + 1);
 
+            // Display the form in the page in an li, before the "Add a tag" link li
+            var $newFormLi = $('<li></li>').append('<div>'+newForm+'</div>');
+            
+            collectionHolder.append($newFormLi);
+
+            // add a delete link to the new form
+            addTagFormDeleteLink($newFormLi);
+        }
+
+    function addTagFormDeleteLink($tagFormLi) {
+            var $removeFormA = $('<a class="link" href="#">x</a>');
+            $tagFormLi.append($removeFormA);
+
+            $removeFormA.on('click', function(e) {
+                // prevent the link from creating a "#" on the URL
+                e.preventDefault();
+
+                // remove the li for the tag form
+                $tagFormLi.remove();
+                
+                var sum_pl_aceptadas = 0,
+                    sum_pl_descartadas = 0;
+                $('.placas_aceptadas').each(function(){
+                    sum_pl_aceptadas += parseInt( $(this).val() ); 
+                });
+                $('.placas_descartadas').each(function(){
+                    sum_pl_descartadas += parseInt( $(this).val() ); 
+                });
+                $('#total_aceptadas').html(sum_pl_aceptadas);
+                $('#total_descartadas').html(sum_pl_descartadas);
+            });
+        }
+        
+    $('ul.placas')
+            .on('mouseover','li', function(){
+                $(this).find('a.link').css('visibility','visible');
+            })
+            .on('mouseout','li', function(){ 
+                $(this).find('a.link').css('visibility','hidden'); 
+            });
+    
+    $('.cuerpo_placas').on('keyup','.placas_aceptadas',function() {
+        var sum = 0;
+        $('.placas_aceptadas').each(function(){
+            sum += parseInt( $(this).val() ); 
+        });
+        $('#total_aceptadas').html(sum);
+    });
+        
+    $('.cuerpo_placas').on('keyup','.placas_descartadas',function() {
+        var sum = 0;
+        $('.placas_descartadas').each(function(){
+            sum += parseInt( $(this).val() ); 
+        });
+        $('#total_descartadas').html(sum);
+    });
 </script>
 {% endblock %}
-{# {% block script %}
-
-
-
-<script type="text/javascript">
-
-// Get the ul that holds the collection of tags
-var collectionHolder = $('ul.placas');
-
-// setup an "add a tag" link
-var $addTagLink = $('<a href="#" class="add_placa_link">Agregar placa</a>');
-var $newLinkLi = $('<li></li>').append($addTagLink);
-
-
-
-jQuery(document).ready(function() {
-
-    collectionHolder.find('li').each(function() {
-        addTagFormDeleteLink($(this));
-    });
-
-    // add the "add a tag" anchor and li to the tags ul
-    collectionHolder.append($newLinkLi);
-
-    // count the current form inputs we have (e.g. 2), use that as the new
-    // index when inserting a new item (e.g. 2)
-    collectionHolder.data('index', collectionHolder.find(':input').length);
-
-    $addTagLink.on('click', function(e) {
-        // prevent the link from creating a "#" on the URL
-        e.preventDefault();
-
-        // add a new tag form (see next code block)
-        addTagForm(collectionHolder, $newLinkLi);
-    });
-
-    
-});
-
-
-
-
-function addTagForm(collectionHolder, $newLinkLi) {
-    // Get the data-prototype explained earlier
-    var prototype = collectionHolder.data('prototype');
-
-    // get the new index
-    var index = collectionHolder.data('index');
-
-    // Replace '__name__' in the prototype's HTML to
-    // instead be a number based on how many items we have
-    var newForm = prototype.replace(/__name__/g, index);
-
-    // increase the index with one for the next item
-    collectionHolder.data('index', index + 1);
-
-    // Display the form in the page in an li, before the "Add a tag" link li
-    var $newFormLi = $('<li></li>').append(newForm);
-    $newLinkLi.before($newFormLi);
-    // add a delete link to the new form
-    addTagFormDeleteLink($newFormLi);
-}
-
-function addTagFormDeleteLink($tagFormLi) {
-    var $removeFormA = $('<a href="#">Borrar placa</a>');
-    $tagFormLi.append($removeFormA);
-
-    $removeFormA.on('click', function(e) {
-        // prevent the link from creating a "#" on the URL
-        e.preventDefault();
-
-        // remove the li for the tag form
-        $tagFormLi.remove();
-    });
-}
-
-
-</script>
-{% endblock %} #}

@@ -11,10 +11,10 @@ class TamanoPlacaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('tpTamano',null,array('label' => 'Tamaño'))
-            ->add('tpEstado','choice',
-                    array('label' => 'Estado','empty_value'=>'Seleccione...','choices' => array('1' => 'Activo', '0' => 'Inactivo'),
-                    'required'  => true))
+            ->add('tpTamano',null,array('label' => 'Tamaño','attr'=>array('class'=>'textos')))
+            // ->add('tpEstado','choice',
+            //         array('label' => 'Estado','empty_value'=>'Seleccione...','choices' => array('1' => 'Activo', '0' => 'Inactivo'),
+            //         'required'  => true))
             // ->add('tpUsuarioCreacion')
             // ->add('tpUsuarioModificacion')
             // ->add('tpFechaCreacion')

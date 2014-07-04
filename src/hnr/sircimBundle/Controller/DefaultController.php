@@ -10,7 +10,7 @@ class DefaultController extends Controller
 {
     /**
      * @Route("/{name}",name="hnrsircimBundle_homepage")
-     * @Template("hnrsircimBundle::layout.html.twig")
+     * @Template("hnrsircimBundle::Layout.html.twig")
      */
     public function indexAction($name)
     {

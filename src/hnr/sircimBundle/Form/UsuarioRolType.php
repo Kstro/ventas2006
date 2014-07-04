@@ -5,15 +5,38 @@ namespace hnr\sircimBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use hnr\sircimBundle\Repositorio\RolRepository;
 
 class UsuarioRolType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('usroPredeterminado')
-            ->add('idUsuario')
-            ->add('idRol')
+            ->add('usroPredeterminado','radio',array(
+                'label'=>' ',
+                'required' => false,
+                'attr'=>array('class'=>'btn_radio')
+                                ))
+            // ->add('idUsuario')
+            // ->add('idRol',null,array(
+            //     'label'=>' ',
+            //     'required'=>true,
+            //     'empty_value'=>'Seleccione un rol...',
+            //     'attr'=>array('class'=>'desplegable')
+            //     ))
+
+            ->add('idRol', 'entity', 
+                  array( 'label'         => '',
+                         'empty_value'   => 'Seleccione un rol...',
+                         'attr'          => array('class' => 'desplegable'),
+                         'class'         => 'hnrsircimBundle:Rol',
+                         'property'      => 'roNombre',
+                         'query_builder' => function(RolRepository $ro) {
+                                                return $ro->createQueryBuilder('r')
+                                                  ->where('r.roEstado =1')
+                                                  ->orderBy('r.id', 'ASC');
+                                              }
+                       ))
         ;
     }
 

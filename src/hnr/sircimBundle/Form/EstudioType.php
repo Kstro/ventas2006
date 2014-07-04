@@ -11,13 +11,18 @@ class EstudioType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('esNombre','text',array('label'=>'Nombre'))
-            ->add('esAbreviatura','text',array('label'=>'Abreviatura'))
+            ->add('esNombre','text',array('label'=>'Nombre','attr'=>array('class'=>'textos')))
+            ->add('esAbreviatura','text',array('label'=>'Abrevitura','attr'=>array('class'=>'textos')))
             ->add('esTipo','choice',
-                array('empty_value' => 'Seleccionar tipo de estudio...','label'=>'Tipo','choices' => array('Convencional' => 'Convencional', 'Especial' => 'Especial'),
+                array('empty_value' => 'Seleccionar tipo de estudio...',
+                    'label'=>'Tipo',
+                    'attr'=>array('class'=>'desplegable'),
+                    'choices' => array('Convencional' => 'Convencional', 'Especial' => 'Especial'),
 
                 ))
-            ->add('esDescripcion','text',array('label'=>'Descripción'))
+            ->add('esDescripcion','textarea',array('label'=>'Descripción','attr'=>array('class'=>'textos')))
+            ->add('profile',new EstudioAreaType(),array('label'=>' '))
+            
             // ->add('esUsuarioCreacion',)
             // ->add('esUsuarioModificacion')
             // ->add('esFechaCreacion')

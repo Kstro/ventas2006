@@ -1,78 +1,115 @@
-{% extends '::base.html.twig' %}
+
 
 {% block body -%}
-    <h1>Usuario</h1>
+    <div id="titulo_barra">
+        Consultar usuario
+        <a class="cerrar" href="#">x</a>
+    </div>
 
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Uslogin</th>
-                <td>{{ entity.usLogin }}</td>
-            </tr>
-            <tr>
-                <th>Uscorreo</th>
-                <td>{{ entity.usCorreo }}</td>
-            </tr>
-            <tr>
-                <th>Uscontrasena</th>
-                <td>{{ entity.usContrasena }}</td>
-            </tr>
-            <tr>
-                <th>Usactualizarcontrasena</th>
-                <td>{{ entity.usActualizarContrasena }}</td>
-            </tr>
-            <tr>
-                <th>Usestadoactivo</th>
-                <td>{{ entity.usEstadoActivo }}</td>
-            </tr>
-            <tr>
-                <th>Usestadobloqueado</th>
-                <td>{{ entity.usEstadoBloqueado }}</td>
-            </tr>
-            <tr>
-                <th>Idempleado</th>
-                <td>{{ entity.idempleado }}</td>
-            </tr>
-            <tr>
-                <th>Ususuariocreacion</th>
-                <td>{{ entity.usUsuarioCreacion }}</td>
-            </tr>
-            <tr>
-                <th>Ususuariomodificacion</th>
-                <td>{{ entity.usUsuarioModificacion }}</td>
-            </tr>
-            <tr>
-                <th>Usfechacreacion</th>
-                <td>{{ entity.usFechaCreacion|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Usfechamodificacion</th>
-                <td>{{ entity.usFechaModificacion|date('Y-m-d H:i:s') }}</td>
-            </tr>
-        </tbody>
-    </table>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('usuario') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('usuario_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('usuario_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+    <table id="tbl_nuevo_usuario" align="center">
+            <tr>
+                <td colspan="2">
+                    <div id="titulo">
+                        Información personal
+                    </div>                
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Nombre:
+                </td>
+                <td>
+                    
+                        {% for empleado in empleados %}
+                            {% if empleado.Idempleado == entity[0].getIdUsuario().idempleado %}
+                                {{empleado.Nombre}}
+                            {% endif %}
+                        {% endfor %}
+                    
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    E-mail:
+                </td>
+                <td>
+                    {{ entity[0].idUsuario.usCorreo }}
+                </td>
+            </tr>    
+
+            <tr>
+                <td>
+                    Login:
+                </td>
+                <td>
+                    {{ entity[0].idUsuario.usLogin }}
+                </td>
+            </tr>    
+            <br>
+<br>
+
+            <tr>
+                <td colspan="2">
+                    <div id="titulo">
+                        Roles
+                    </div>                
+                </td>
+            </tr>
+            <tr> 
+                <td colspan="2" style="text-align: left; padding-left: 40%;">
+
+
+
+
+
+                    
+                    <ol style="list-style: decimal outside none;">
+                            {% for key, placa in entity %}
+                                <li id="l" class="l">
+                                             {{ placa.idRol.roNombre }}<br><br>
+                                             {# <a class="link" href="#" style="visibility: hidden;">x</a> #}
+                                </li>                   
+                            {% endfor %}
+
+                    </ol>
+                            {# <div class="listado">
+                                <ul class="placas" data-prototype="{{ form_widget(edit_form.placas.vars.prototype)|e }}">
+                                    {{ form_widget(edit_form.placas) }}
+                                </ul>
+                            </div> #}
+                           
+                 </td>
+            </tr>
+            
+              
+              
+        
+        </table>
+
+
+    
+    
+{% endblock %}
+{% block script %}
+    
+
+<script type="text/javascript">
+
+
+jQuery(document).ready(function() {
+
+    $('.cerrar').click(function(event) {
+        /* Act on the event */
+        $('#deshabilitar').fadeOut('fast');
+        $('#popup_box').fadeOut('fast');
+        return false;
+    });
+});
+
+
+
+
+</script>
+
 {% endblock %}

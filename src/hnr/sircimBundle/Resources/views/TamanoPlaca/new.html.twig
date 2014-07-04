@@ -1,19 +1,48 @@
-{% extends 'hnrsircimBundle::Layout.html.twig' %}
-{% block body -%}
-    <h1>Tamano de placa</h1>
+{% block javascripts %}
+    <script src="{{ asset('bundles/hnrsircim/js/Modulos/administracion/tamanoplaca/new_edit.js') }}" type="text/javascript"></script>        
+{% endblock %}
 
-    <form action="{{ path('tamanoplaca_create') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
-        <p>
-            <button type="submit">Crear</button>
-        </p>
+{% block body -%}
+    <div id="titulo_barra">
+        Nuevo tamaño de placa
+    </div>
+<br><br>
+    <form action="{{ path('tamanoplaca_create',{'login':login}) }}" method="post" {{ form_enctype(form) }}>
+
+        <table id="tbl_placa" class="tbl_nuevo" align="center">
+            <tr>
+                <td colspan="2">
+                    <div id="titulo">
+                        Información de la placa
+                    </div>                
+                </td>
+            </tr>
+            
+            <tr>
+                <td>
+                    Tamaño:
+                </td>
+                <td>
+                    {{ form_widget(form.tpTamano)}}
+                </td>
+            </tr>    
+
+            
+              {{form_rest(form)}}
+        </table>
+
+
+        <br>
+        <div class="botones">
+            <p>
+                <button type="submit" class="guardar">Guardar</button>
+                {# <a id="cancelar" class="cancelar" href"">Cancelar</a> #}
+                <button id="cancelar" class="cancelar">Cancelar</button>
+            </p>
+        </div>
+    
+
     </form>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('tamanoplaca') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+
 {% endblock %}

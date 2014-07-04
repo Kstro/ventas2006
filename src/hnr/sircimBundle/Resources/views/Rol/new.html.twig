@@ -1,20 +1,78 @@
-{% extends '::base.html.twig' %}
+{% block javascripts %}
+    <script src="{{ asset('bundles/hnrsircim/js/Modulos/administracion/rol/new_edit.js') }}" type="text/javascript"></script>        
+{% endblock %} 
 
 {% block body -%}
-    <h1>Rol creation</h1>
+    <div id="titulo_barra">
+        Nuevo rol
+        
+    </div>
+    <br><br>
+    <form action="{{ path('rol_create',{'login':login}) }}" method="post" {{ form_enctype(form) }}>
 
-    <form action="{{ path('rol_create') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
-        <p>
-            <button type="submit">Create</button>
-        </p>
+        <table id="tbl_rol" class="tbl_nuevo" align="center">
+            <tr>
+                <td colspan="2">
+                    <div id="titulo">
+                        Información del rol
+                    </div>                
+                </td>
+            </tr>
+            
+            <tr >
+                <td>
+                    Nombre:
+                </td>
+                <td>
+                    {{ form_widget(form.roNombre)}}
+                </td>
+            </tr>    
+
+            <tr>
+                <td>
+                    Descripción:
+                </td>
+                <td>
+                    {{ form_widget(form.roDescripcion)}}
+                </td>
+            </tr>    
+            <tr>
+                <td colspan="2">
+                    <div id="titulo">
+                        Módulos a los que tendrá acceso
+                    </div>                
+                </td>
+            </tr>
+            <tr> 
+                <td>
+                </td>
+                <td>
+                        <div id="listado">
+                            <div class="listado">
+                                <ul class="placas" data-prototype="{{ form_widget(form.placas.vars.prototype)|e }}">
+                                    {{ form_widget(form.placas) }}
+                                </ul>
+                            </div>
+                        </div>
+                 </td>
+            </tr>
+              
+              {{form_rest(form)}}
+        </table>
+
+
+        <br>
+        <div class="botones">
+            <p>
+                <button type="submit" class="guardar">Guardar</button>
+                {# <a id="cancelar" class="cancelar" href"">Cancelar</a> #}
+                <button id="cancelar" class="cancelar">Cancelar</button>
+            </p>
+        </div>
     </form>
+    
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('rol') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+
 {% endblock %}
+
+

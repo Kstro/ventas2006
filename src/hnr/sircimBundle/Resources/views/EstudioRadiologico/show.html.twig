@@ -1,42 +1,186 @@
 {% extends 'hnrsircimBundle::Layout.html.twig' %}
 
+{% block mod_activo %} Registro de estudios {% endblock %}
+
+{% block nombre_usr %}
+    <label id="{{ login }}">
+        {{ login }}
+    </label> 
+{% endblock %} 
+
+{% block lista_modulos %}
+    {% for modulo in modulos %}
+        <li><a href="{{path(modulo.osURL,{'login':usuario})}}">{{modulo}}</a></li>
+    {% endfor %}
+{% endblock %}
+
+{% block configuracion %}
+    
+    <a id="conf_cuenta" href="{{ path('usuario_cuenta', { 'login':login,'opc':'0' }) }}">Configuración de cuenta</a>
+
+{% endblock %}
+
+
+{% block botones_modulo %} 
+    <div class="menu_grupo">         
+        <button type="submit" class="btn btn_regular" id="guardar" title="Volver" onclick="location.href='{{ path('estudioradiologico',{'login':login}) }}';">Volver</button>        
+    </div>
+{% endblock %}
+
 {% block body -%}
-    <h1>EstudioRadiologico</h1>
 
-    <table class="record_properties">
-        <tbody>
+    <div class="form_estudio">
+        <table class="record_properties">
             <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
+                <td colspan="2" class="separador" id="paciente"> Paciente </td>
             </tr>
             <tr>
-                <th>Eredadpaciente</th>
-                <td>{{ entity.erEdadPaciente }}</td>
+                <td class="label"> 
+                    <label> Registro: </label> 
+                </td>
+                <td>
+                    <input class="regular" type="text" value="{{ entity.idSolicitud.idMntExpediente }}" readonly/> 
+                </td>
             </tr>
             <tr>
-                <th>Idempleado</th>
-                <td>{{ entity.idempleado }}</td>
+                <td class="label"> 
+                    <label> Nombre: </label> 
+                </td>
+                <td> 
+                    <input class="regular nombre_paciente" type="text" value="{{ nombre }}" readonly/> 
+                </td>
             </tr>
-        </tbody>
-    </table>
+            <tr>
+                <td class="label"> 
+                    <label> Edad: </label>
+                </td>
+                <td> 
+                    <input class="regular" type="text" value="{{ entity.erEdadPaciente }} años" readonly/> 
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="separador" id="estudio"> Estudio </td>
+            </tr>
+            <tr>
+                <td class="label"> 
+                    <label> Estudio: </label>
+                </td>
+                <td> 
+                    <input class="regular" type="text" value="{{ entity.idSolicitud.getEstudioArea().getIdEstudio() }}" readonly/> 
+                </td>
+            </tr>
+            <tr>
+                <td class="label"> 
+                    <label> Región: </label>
+                </td>
+                <td> 
+                    <input class="regular" type="text" value="{{ entity.idSolicitud.soRegion }}" readonly/> 
+                </td>
+            </tr>
+            <tr>
+                <td class="label"> 
+                    <label> Posición: </label>
+                </td>
+                <td> 
+                    <input class="regular" type="text" value="{{ entity.idSolicitud.soPosicion }}" readonly/> 
+                </td>
+            </tr>
+            <tr>
+                <td class="label"> 
+                    <label> Servicio: </label> 
+                </td>
+                <td> 
+                    <input class="regular" type="text" value="{{ entity.idSolicitud.idMntAtenAreaModEstab }}" readonly/> 
+                </td>
+            </tr>
+            <tr>
+                <td class="label">
+                    <label> Técnico: </label>
+                </td>
+                <td>
+                    <input class="regular nombre_paciente" type="text" value="{{ tecnico }}" readonly/> 
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="separador" id="horario"> Horario </td>
+            </tr>
+            <tr>
+                <td class="label"> 
+                    <label> Fecha: </label>
+                </td>
+                <td> 
+                    <input class="regular" type="text" value="{{ entity.idSolicitud.soFecha|date('Y-m-d') }}" readonly/> 
+                </td>
+            </tr>
+            <tr>
+                <td class="label"> 
+                    <label> Hora: </label>
+                </td>
+                <td> 
+                    <input class="regular" type="text" value="{{ entity.idSolicitud.soHora|date('H:i') }}" readonly/> 
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="separador" id="peliculas"> Películas </td>
+            </tr>
+            <tr>
+                <td colspan="2"> 
+                    <div class="tabla_placas">
+                        <div class="encabezado_placas">
+                            <div>Tamaño</div>
+                            <div>Aceptadas</div>
+                            <div>Descartadas</div>
+                        </div>
+                        <div class="cuerpo_placas">
+                            <ul class="placas">
+                                {% for placa in placas %}
+                                    <li>
+                                        <div>
+                                            <div id="hnr_sircimbundle_estudioradiologicotype_placas_0">
+                                                <div>
+                                                    {{ placa.tpTamano }}
+                                                </div>
+                                                <div>
+                                                    <input class="placas_aceptadas" type="number" value={{ placa.ertpAceptadas }} placeholder="Ingrese Número" required="required" name="hnr_sircimbundle_estudioradiologicotype[placas][0][ertpAceptadas]"></input>
+                                                </div>
+                                                <div>
+                                                    <input id="hnr_sircimbundle_estudioradiologicotype_placas_0_ertpDescartadas" class="placas_descartadas" type="number" value={{ placa.ertpDescartadas }} placeholder="Ingrese Número" required="required" name="hnr_sircimbundle_estudioradiologicotype[placas][0][ertpDescartadas]"></input>
+                                                </div>
+                                           </div>
+                                       </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="total_placas">
+                            <div>TOTAL</div>
+                            <div id="total_aceptadas">0</div>
+                            <div id="total_descartadas">0</div>
+                        </div>                    
+                    </div>                
+                </td>
+            </tr>
+        </table>
+    </div>        
+{% endblock %}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('estudioradiologico') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('estudioradiologico_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('estudioradiologico_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+{% block script %}
+<script type="text/javascript">
+ 
+    $(document).ready(function() {
+        var sum_pl_aceptadas = 0,
+            sum_pl_descartadas = 0;
+            
+        $('.placas_aceptadas').each(function(){
+            sum_pl_aceptadas += parseInt( $(this).val() ); 
+        });
+        $('.placas_descartadas').each(function(){
+            sum_pl_descartadas += parseInt( $(this).val() ); 
+        });
+        
+        $('#total_aceptadas').html(sum_pl_aceptadas);
+        $('#total_descartadas').html(sum_pl_descartadas);
+    });
+    
+</script>
 {% endblock %}

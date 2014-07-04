@@ -1,55 +1,104 @@
-{% extends '::base.html.twig' %}
+ {% extends 'hnrsircimBundle::Layout.html.twig' %}
+
+{% block lista_modulos %}
+    {% for modulo in modulos %}
+        <li><a href="{{ path(modulo.osUrl, { 'login': usuario.usLogin }) }}">{{modulo}}</a></li>
+    {% endfor %}
+{% endblock %}
+
+
+{% block configuracion %}
+    
+    <a id="conf_cuenta" href="{{ path('usuario_cuenta', { 'login':login,'opc':'0' }) }}">Configuración de cuenta</a>
+
+{% endblock %}
+
+
+{% block nombre_usr %}
+    <label id="{{ usuario.usLogin }}">
+        {{ usuario.usLogin }}
+    </label> 
+{% endblock %} 
+
+{% block mod_activo %} 
+    
+    Administración
+
+{% endblock %} 
+
+{% block gestion_modulo %} 
+    
+    Gestión de roles
+
+{% endblock %} 
+
+{% block javascripts %}
+    {{parent()}}
+    
+    <script src="{{ asset('bundles/hnrsircim/js/Modulos/administracion/rol/index.js') }}" type="text/javascript"></script>
+    
+{% endblock %}
+
+{% block botones_modulo %}
+    <div class="menu_grupo">
+        {# <button id="buscar" class="btn btn_destacado"></button> #}
+        <button href="{{ path('rol_new',{'login':login}) }}" id="nuevo" class="btn btn_destacado"></button>
+
+    </div>
+{% endblock %}
+
+{% block emergente %}
+    <div id="deshabilitar"></div>
+    <div id="popup_box_rol"></div>
+{% endblock %}
 
 {% block body -%}
-    <h1>Rol list</h1>
-
-    <table class="records_list">
+    <br><br>
+    <table class="listados">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Ronombre</th>
-                <th>Rodescripcion</th>
-                <th>Romodificable</th>
-                <th>Roestado</th>
-                <th>Rousuariocreacion</th>
-                <th>Rousuariomodificacion</th>
-                <th>Rofechacreacion</th>
-                <th>Rofechamodificacion</th>
-                <th>Actions</th>
+                <th>No.</th>
+                <th>Nombre</th>
+                <th>Estado</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-        {% for entity in entities %}
+        {% for key, entity in entities %}
             <tr>
-                <td><a href="{{ path('rol_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{key+1}}</td>
                 <td>{{ entity.roNombre }}</td>
-                <td>{{ entity.roDescripcion }}</td>
-                <td>{{ entity.roModificable }}</td>
-                <td>{{ entity.roEstado }}</td>
-                <td>{{ entity.roUsuarioCreacion }}</td>
-                <td>{{ entity.roUsuarioModificacion }}</td>
-                <td>{% if entity.roFechaCreacion %}{{ entity.roFechaCreacion|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if entity.roFechaModificacion %}{{ entity.roFechaModificacion|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('rol_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('rol_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+                    {% if entity.roModificable == 1%} 
+                         <div class="slideThree">   
+                            <input type="checkbox" 
+                                
+                                    {% if entity.roEstado == 1%} 
+                                        checked 
+                                    {% endif %} 
+                                
+                                    id="{{entity.id}}" name="{{entity.roNombre}}" 
+                            />
+                            <label for="{{entity.id}}"></label>
+                        </div>
+                    {% endif %} 
+                </td>
+                <td>
+                    {% if entity.roModificable == 1%} 
+                        <a class="acciones" href="{{ path('rol_edit', { 'id': entity.id,'login':login }) }}">
+                            <img src="{{ asset('bundles/hnrsircim/img/edit.png')}}">
+                        </a>
+                    {% endif %}
+                    <a class="acciones" href="{{ path('rol_show', { 'id': entity.id ,'login':login}) }}">
+                        <img src="{{ asset('bundles/hnrsircim/img/detalle.png')}}">
+                    </a>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
-    </table>
-
-        <ul>
-        <li>
-            <a href="{{ path('rol_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
+    </table><br>
     {% endblock %}
+
+
+
+    

@@ -3,12 +3,13 @@
 namespace hnr\sircimBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Estudio
  *
  * @ORM\Table(name="estudio")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="hnr\sircimBundle\Repositorio\EstudioRepository")
  */
 class Estudio
 {
@@ -78,7 +79,34 @@ class Estudio
      */
     private $esFechaModificacion;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="es_estado", type="smallint", nullable=false)
+     */
+    private $esEstado;
 
+
+    /**
+     * @ORM\OneToOne(targetEntity="hnr\sircimBundle\Entity\EstudioArea", mappedBy="idEstudio", cascade={"persist", "remove"})
+     * @Assert\Valid()
+     */
+    protected $profile;
+ 
+    public function setProfile(\hnr\sircimBundle\Entity\EstudioArea $profile = null)
+    {
+        $this->profile = $profile;
+        $profile->setIdEstudio($this);
+        $profile->setEstadoEstudioArea(1);
+
+        return $this;
+    }
+
+
+    public function getProfile()
+    {
+        return $this->profile;
+    }
 
     /**
      * Get id
@@ -274,7 +302,31 @@ class Estudio
         return $this->esFechaModificacion;
     }
 
+    /**
+     * Set esEstado
+     *
+     * @param integer $esEstado
+     * @return Estudio
+     */
+    public function setEsEstado($esEstado)
+    {
+        $this->esEstado = $esEstado;
+    
+        return $this;
+    }
+
+    /**
+     * Get esEstado
+     *
+     * @return integer 
+     */
+    public function getEsEstado()
+    {
+        return $this->esEstado;
+    }
+
     public function __tostring(){
         return $this->esNombre;
+        
     }
 }

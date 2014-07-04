@@ -11,15 +11,20 @@ class AreaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('arNombre')
-            ->add('arDescripcion')
-            ->add('arCupo')
-            ->add('arEstadoCupo')
-            ->add('arEstado')
-            ->add('arUsuarioCreacion')
-            ->add('arUsuarioModificacion')
-            ->add('arFechaCreacion')
-            ->add('arFechaModificacion')
+            
+            ->add('arNombre',null,array('attr'=>array('class'=>'textos')))
+            ->add('arDescripcion','textarea',array('attr'=>array('class'=>'textos')))
+            ->add('arCupo',null,array(
+                'attr'=>array('class'=>'textos'),
+                // 'required'=>true
+                ))
+            
+            // ->add('arEstadoCupo')
+            // ->add('arEstado')
+            // ->add('arUsuarioCreacion')
+            // ->add('arUsuarioModificacion')
+            // ->add('arFechaCreacion')
+            // ->add('arFechaModificacion')
         ;
     }
 

@@ -25,7 +25,7 @@ class RolOpcionSistema
     /**
      * @var \Rol
      *
-     * @ORM\ManyToOne(targetEntity="Rol")
+     * @ORM\ManyToOne(targetEntity="Rol",inversedBy="placas")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_rol", referencedColumnName="id")
      * })

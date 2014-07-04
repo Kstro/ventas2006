@@ -3,13 +3,89 @@
 */
 
 
+#error_html {
+    
+    width: 100%;
+    /*background:red;*/
+    height: 100%;
+    top: 0;
+    left: 0;
+    margin: auto;
+    position: absolute;
+
+}
+    #error_html div{
+        text-align: center;
+        /*background:yellow;*/
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 50%;
+        height: 30%;
+        margin: auto;
+        vertical-align: middle;
+    }
+
+#sesion_mensaje, #cargando{
+    
+    width: 100%;
+    /*background:red;*/
+    height: 100%;
+    top: 0;
+    left: 0;
+    margin: auto;
+    position: absolute;
+
+}
+    #sesion_mensaje div{
+        text-align: center;
+        /*background:yellow;*/
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 50%;
+        height: 30%;
+        margin: auto;
+        vertical-align: middle;
+    }
+
+    #boton_iniciar_sesion{
+        width: 200px;
+        height: 30px;
+        background: #6699FF;
+        color: #ffffff;
+        cursor: pointer;
+        border: 0px;
+        font-style: italic;
+    }
+
+#cargando img{
+    text-align: center;
+    /*background:yellow;*/
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    width: 20px;
+    margin: auto;
+    vertical-align: middle;
+}
+
 
 .listados{
     
     width:972px;
     border-collapse:collapse;
-    margin: 0 auto;
+    margin: 0px auto;
+
     color: #555555;
+    
 }
 
 .listados th{
@@ -24,6 +100,7 @@
 
 .listados tr td {
     text-align: left;
+    vertical-align: middle;
 }
 
 .listados td{
@@ -56,7 +133,9 @@
 
 .listados td:nth-child(3), .listados td:nth-child(4) {
     text-align: center;
-    padding-top: 3px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+
 }
 
 .listados th:nth-child(3) {
@@ -74,36 +153,916 @@ td .listados {
 }
 
 .listados img {
+
     height: 15px; 
     width: 15px; 
-    display: none;
+    
+    visibility: hidden;
 }
 
-.listados tr:nth-child(1) {
+.listados tbody tr:hover {
+    background: #F2F2F2;
+}
+
+/*.listados tr:nth-child(1) {
     background: white;
-}
+}*/
 
-/*.listados tr:nth-child(odd) {
+/*.listados tbody tr:nth-child(even) {
     background: #F2F2F2;
 }*/
 
+.listados tr:hover img {
+    
+    visibility: visible;
 
-
-.listados tr:hover {
-    background: #F2F2F2;
 }
 
+.acciones {
+    text-decoration: none;
+    cursor: pointer;
+}
 
-.listados tr:hover img {
-    display: inline;
+#tabla_area tr td:nth-child(1){
+    width: 40px;
+}
+
+#tabla_area tr th:nth-child(2){
+    width: 400px;
+}
+
+#tabla_area tr th:nth-child(3){
+    width: 50px;
+}
+
+#tabla_area tr th:nth-child(4){
+    width: 90px;
+}
+
+#tabla_area tr th:nth-child(5){
+    text-align: center;
+
+}
+
+#tabla_area tr td:nth-child(6){
+    text-align: center;
+}
+
+#tabla_bitacora {
+    /*text-align: center;*/
+    width: 95%;
+}
+
+    #tabla_bitacora tr td:nth-child(1), #tabla_bitacora tr th:nth-child(1){
+        width: 20px;
+    }
+
+    #tabla_bitacora tr th:nth-child(2){
+        text-align: center;
+    }
+
+#listado_acciones {
+    overflow: hidden;
+    position:relative;
+    height:435px; 
     
 }
 
 
+/*#tabla_bitacora tr th:nth-child(2){
+    text-align: center;
+    width: 20%;
 
+}
+
+#tabla_bitacora tr th:nth-child(3){
+    text-align: center;
+    width: 5%;
+}
+*/
+/*#tabla_bitacora tr td:nth-child(1){
+    text-align: center;
+    width: 40px;
+}
+
+#tabla_bitacora tr td:nth-child(2){
+    width: 50px;
+}
+
+#tabla_bitacora tr td:nth-child(3){
+    
+    width: 20px;
+}*/
 
 
 
 /*
 -----------------------------FIN tabla--------------------------------
 */
+
+/*
+-------------------------------Inputs---------------------------------
+*/
+
+/*textos*/
+#expediente {
+    /*height: 19px;*/
+    width: 120px;
+    border: 1px solid #BFBFBF;
+    background: #F2F2F2;
+    height: 90%;
+    position: relative;
+}
+
+
+
+#exp_label {
+    font-size: 16px;
+    height: 90%;
+    vertical-align: middle;
+}
+
+
+
+.textos {
+    height: 19px;
+    width: 300px;
+    border: 1px solid #BFBFBF;
+    background: #F2F2F2;
+}
+
+.textosestudios {
+    width: 100px;
+    float: left;
+    border-top: 0px solid #BFBFBF;
+    border-right: 0px solid #BFBFBF;
+    border-bottom: 1px solid #BFBFBF;
+    border-left: 1px solid #BFBFBF;
+    background: transparent;
+    height: 23px;
+}
+
+.inputultimo{
+    border-right: 1px solid #BFBFBF;
+}
+
+
+
+.listado .placasestudio li{
+    background: transparent;
+    height: 22px;
+}
+
+.est{
+    border-left: 0px solid #BFBFBF;
+
+}
+
+
+
+
+
+/*listas*/
+
+
+
+
+.desplegable {
+
+    height: 25px;
+    width: 302px;
+    border: 1px solid #BFBFBF;
+    background: #F2F2F2;
+    padding-top: 3px;
+    -webkit-appearance: none;  /*Removes default chrome and safari style*/
+    -moz-appearance: none;  /*Removes default style Firefox*/    
+    text-indent: 0.01px;
+    text-overflow: '';
+    /*text-overflow: "";*/
+    background:url(../../../img/desplegable.png) no-repeat right center;
+    cursor: pointer;
+    display: inline-block;
+
+
+}
+
+.desplegable:afte{
+    
+        position: absolute;
+        margin-left: -27px;
+        height: 22px;
+        border-top-right-radius: 6px;
+        border-bottom-right-radius: 6px;
+        content: url('../images/yourArrow.svg');
+        pointer-events: none;
+        overflow: hidden;
+        border-right: 1px solid #yourBorderColour;
+        border-top: 1px solid #yourBorderColour;
+        border-bottom: 1px solid #yourBorderColour; 
+    
+}
+
+div>.desplegable{
+    width: 87%;
+    float: left;
+    border: 0px;
+    background:none;
+}
+
+div>.desplegable:hover{
+    background:url(../../../img/desplegable.png) no-repeat right center;
+    
+}
+
+select:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #000;
+}
+
+/*slides, checkboxs*/
+.slideThree input[type=checkbox] {
+    visibility: hidden;
+}
+
+.comparacion{
+    visibility: visible;
+    float: right;
+    margin-right: 20px;
+    top: -50px;
+
+    /*position: absolute;*/
+}
+
+/* SLIDE THREE */
+.slideThree {
+    width: 68px;
+    height: 25px;
+    background: url(../../../img/states2.png);    
+    border: 1px solid #CECECE;
+    /*
+    -webkit-border-radius:50px;
+    -moz-border-radius:50px;
+    border-radius:50px;*/
+    position: relative;
+    margin: auto;
+    
+}
+
+.slideThree:after {
+    /*content: 'OFF';*/
+    
+    font: 12px/26px Arial, sans-serif;
+    color: #000;
+    position: absolute;
+    right: 0px;
+    z-index: 0;
+    font-weight: bold;
+    text-shadow: 1px 1px 0px rgba(255,255,255,.15);
+}
+
+.slideThree:before {
+    
+    font: 12px/26px Arial, sans-serif;
+    color: #00bf00;
+    position: absolute;
+    left: 0px;
+    z-index: 0;
+    font-weight: bold;
+}
+
+.slideThree label {
+    display: block;
+    width: 34px;
+    height: 25px;
+    background: url(../../../img/boton.png);
+    /*-webkit-border-radius:50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;*/
+
+    -webkit-transition: all .4s ease;
+    -moz-transition: all .4s ease;
+    -o-transition: all .4s ease;
+    -ms-transition: all .4s ease;
+    transition: all .4s ease;
+    cursor: pointer;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+
+    /*-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
+    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
+    background: #fcfff4;
+
+    background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    background: -moz-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    background: -o-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    background: -ms-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    background: linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfff4', endColorstr='#b3bead',GradientType=0 );*/
+}
+
+.slideThree input[type=checkbox]:checked + label {
+    left: 34px;
+}
+
+
+
+
+
+/*
+-----------------------------Fin Inputs-------------------------------
+*/
+
+
+
+/*
+-------------------------------Forms----------------------------------
+*/
+
+
+
+/*form div { 
+    padding: 1px;
+}
+form label {    
+    float: left; 
+    text-align: right;
+    width: 150px;
+    padding-right: 5px;   
+}
+*/
+
+.listado li .add_placa_link  {
+    /*background: red;*/
+    font-size: 25px;
+    color: #3B97DC;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    text-decoration: none;
+}   
+
+/*ordenar el + en el form estudio area*/
+    
+    #addplaca_estudiarea{
+        position: fixed;
+        margin-left: 430px;
+        margin-top: 5px;
+    }
+
+.listado ul.placas{
+    width: 300px;
+    /*margin-left: 145px;*/
+
+}
+
+.listado .placas {
+    border-top: 1px solid #BFBFBF;
+    width: 45%;
+    margin: 0;
+
+}
+
+.listado .placas li{
+    border: 1px solid #BFBFBF;
+    height: 25px;
+    text-decoration: none;
+    list-style: none;
+    border-left: 1px solid #BFBFBF; 
+    border-top: 1px solid #BFBFBF;
+    border-bottom: 1px solid #BFBFBF;
+}
+
+.listado .placas li a{
+    visibility: hidden;
+    text-decoration: none;
+    padding-top: 0px;
+    margin-right: 4px;
+    float: left;
+}
+
+.listado .placas .btn_radio{
+    float: left;
+    margin-top: 6px;
+}
+.listado .placas li:hover a{
+    visibility: visible;
+    padding-top: 0px;
+    vertical-align: middle;
+    float: left;
+}
+
+.listado .placas li:last-child a{
+    visibility: visible;
+    float: right;
+}
+
+.listado .placas li:nth-child(2) a{
+    visibility: hidden;
+}
+
+.listado .placas li:last-child a{
+    visibility: visible;
+}
+
+.listado .placas li:last-child a:hover{
+    opacity: 0.75;
+
+}
+
+
+
+.listado .placas li:first-child a{
+    visibility: hidden;
+}
+
+
+.listado .placas li:nth-child(even){
+    background: #F2F2F2;
+}
+
+.listado .placas li:nth-child(n){
+    border-top: 0px;
+}
+
+.listado .placas li:first-child {
+    border-top: 1px solid #BFBFBF;
+}
+
+.listado .placas li:last-child{
+    border: 0px;
+    border-top: 0px;
+    background: white; 
+    margin-top: 2px;
+}
+
+
+
+.listado ul.placasestudio{
+    width: 340px;
+    margin-left: 145px;
+
+}
+
+.listado .placasestudio {
+    border: 0px solid;
+
+}
+
+.listado .placasestudio li:nth-child(2n){
+
+    background: white;
+}
+
+.listado .placasestudio li{
+    border: 0px;
+}
+
+
+
+.listado .placasestudio li:nth-child(2) input{
+    border-top: 1px solid #BFBFBF;
+}
+
+.listado .placasestudio li:nth-child(even) input{
+    background: #F2F2F2;
+}
+
+.desplegableHO {
+    height: 26px;
+    width: 93px;
+    float: left;
+    border: 0px solid #BFBFBF;
+    padding-left: 0px;
+    padding-top: 3px;
+    position: relative;
+    -webkit-appearance: none;  Removes default chrome and safari style
+    -moz-appearance: none;  /*Removes default style Firefox*/
+    text-indent: 0.01px;
+    text-overflow: "";
+    background:url(../../../img/desplegable.png) no-repeat right center;
+    cursor: pointer;
+
+}
+
+    .desplegableHO-medio{
+        border-left: 1px solid #BFBFBF;
+        border-right: 1px solid #BFBFBF;
+        height: 26px;
+        /*background: red;*/
+        width: 96px;
+    }
+
+
+
+#hnr_sircimbundle_estudiotype_profile_placas div div div .desplegableHO{
+    border-top: 0px solid #BFBFBF;
+}
+
+
+
+#tbl_nuevo_usuario { 
+    width: 95%;
+    margin: auto;
+    padding-top: 20px;
+}
+
+#tbl_nuevo_usuario tr td {
+    width: 15%;
+    height: 28px;
+    vertical-align: top;
+}
+
+#tbl_nuevo_usuario tr:nth-child(6) {
+    
+    height: 145px;
+    
+}
+
+#tbl_nuevo_usuario td:first-child {
+    text-align: right;
+    padding-right: 5px;
+}
+
+#tbl_nuevo_usuario .required {
+    top: 50%;
+    display: none;
+}
+
+#tbl_nuevo_usuario #ocultar{
+    visibility: hidden;
+    height: 5px;
+}
+
+#tbl_area tr:nth-child(5) td{
+    vertical-align: middle;
+    height: 185px;
+}
+
+#tbl_area tr:nth-child(3) td:first-child{
+    vertical-align: top;
+    
+}
+
+#tbl_placa {
+    height: 100px;
+}
+
+#tbl_rol tr td{
+    padding-top: 10px;
+
+}
+
+
+#tbl_rol tr:nth-child(4) td{
+    padding-top: 30px;
+
+}
+
+#tbl_rol tr:nth-child(3) td:nth-child(2){
+    vertical-align: top;
+
+}
+
+
+
+#tbl_rol tr:nth-child(5) td{
+    height: 155px;
+
+}
+
+#tbl_estudioarea tr{
+    height: 55px;
+}
+
+#tbl_estudio tr:nth-child(2) td label:nth-child(1){
+    padding-left: 115px;
+}   
+
+    #tbl_estudio tr:nth-child(2) td label:nth-child(2){
+        padding-left: 45px;
+    }
+
+    #tbl_estudio tr:nth-child(2) td label:nth-child(3){
+        padding-left: 30px;
+    }
+
+    #tbl_estudio tr:nth-child(6) td:nth-child(1){
+        vertical-align: top;
+    }  
+
+
+#tbl_estudioareaHO tr:nth-child(2) td label:nth-child(1){
+    padding-left: 105px;
+}   
+
+    #tbl_estudioareaHO tr:nth-child(2) td label:nth-child(2){
+        padding-left: 40px;
+    }
+
+    #tbl_estudioareaHO tr:nth-child(2) td label:nth-child(3){
+        padding-left: 30px;
+    }
+
+    #tbl_estudioareaHO tr:nth-child(6) td:nth-child(1){
+        vertical-align: top;
+    }   
+
+    #listadoHO {
+        height: 130px;
+    } 
+
+    #listadoHO-header{
+        height: 10px;
+        /*background: red;*/
+    }  
+
+
+/*#tbl_estudio tr:nth-child(6) td{
+    vertical-align: top;
+}
+*/
+#tbl_estudio{
+    height: 200px;
+}
+
+
+.tbl_nuevo { 
+    width: 95%;
+    margin: auto;
+}
+
+.tbl_nuevo tr td:nth-child(2){
+    height: 25px;
+}
+
+.tbl_nuevo tr td {
+    width: 15%;
+    height: 25px;
+}
+    
+        #hnr_sircimbundle_roltype_roDescripcion{
+            height: 57px;
+            width: 300px;
+            resize: none;
+
+        }
+
+        #hnr_sircimbundle_areatype_arDescripcion{
+            height: 100px;
+            width: 300px;
+            resize: none;
+
+        }
+
+        #hnr_sircimbundle_estudiotype_esDescripcion{
+        
+            height: 57px;
+            width: 300px;
+            resize: none;            
+        }
+
+
+
+.tbl_nuevo td:first-child {
+    text-align: right;
+    padding-right: 5px;
+    vertical-align: top;
+}
+
+.tbl_nuevo .required {
+    top: 50%;
+    display: none;
+}
+
+
+
+.formularios{
+    margin: 0px auto;
+}
+
+.botones{
+    border-top:  1px solid #D8D8D8;
+    text-align: right;
+    padding-right: 12px;
+    padding-top: 15px;
+    height: 43px;
+    z-index: 3000;
+}
+
+.guardar{
+    background: #3B97D6;
+    height: 31px;
+    width: 130px;
+    border:0px;
+    color:white;
+    cursor: pointer;
+    margin-bottom: 0px;
+}
+
+.guardar:hover{
+    opacity: 0.75;
+}
+
+.cancelar{
+    background: #555555;
+    height: 31px;
+    width: 130px;
+    border:0px;
+    color:white;    
+    cursor: pointer;
+}
+
+.cancelar:hover{
+    opacity: 0.75;
+}
+
+/*/scroll de las colecciones*/
+#listado {
+    
+    max-height:135px;
+    margin-left: 0%;
+    overflow: hidden;
+    position: absolute;
+    width: 330px;
+
+}
+
+#listado_comparacion {
+    max-height:90px;
+    margin-left: 0%;
+    overflow: hidden;
+    position: absolute;
+}
+
+#listado2 {
+    
+    
+    max-height: 900px;
+    margin: 0 auto;
+    overflow: hidden;
+    /*position: absolute;*/
+    
+
+}
+
+#listado_estudioarea {
+    
+    max-height:136px;
+    /*height: 100px;*/
+    margin-left: 33%;
+    width:330px;
+    overflow: hidden;
+    position: absolute;
+
+}
+
+.listado{
+    height: 130px;
+    /*width: 493px;*/
+    /*overflow-y: auto;*/
+    /*overflow: hidden;*/
+    /*margin: 0 auto;*/
+    padding-top: 5px;
+    
+}
+
+.listado_estudio{
+    height: 130px;
+    width: 493px;
+    /*overflow-y: auto;
+    overflow-x: hidden;*/
+    margin: 0 auto;
+    padding-top: 5px;
+    position: absolute;
+
+}
+
+
+/*
+-----------------------------Fin Forms-------------------------------
+*/
+
+
+
+#atras{
+    color:white;
+    margin-right: -3px;
+}
+
+
+
+
+
+.paciente_historial table .pendiente{ 
+    background-image: url('../../../img/pendiente.png'); 
+    background-repeat: no-repeat; 
+    background-position: 100% 55%; 
+} 
+
+.paciente_historial table .asistida{ 
+    background-image: url('../../../img/asistida.png'); 
+    background-repeat: no-repeat; 
+    background-position: 100% 55%;
+}
+
+.paciente_historial table .no_asistida{ 
+    background-image: url('../../../img/no_asistida.png'); 
+    background-repeat: no-repeat; 
+    background-position: 100% 55%; 
+} 
+
+.paciente_historial table .cancelada{ 
+    background-image: url('../../../img/cancelada.png'); 
+    background-repeat: no-repeat; 
+    background-position: 100% 55%; 
+}
+
+
+
+
+
+
+
+
+
+
+
+#vertical-scrollbar-demo {
+            height: 100px;
+            width: 400px;
+        }
+
+            /*Horizontal scrollbar - set width and height of a div you want to add a scrollbar to*/
+        #horizontal-scrollbar-demo {
+            width: 400px;
+            height: 200px;
+        }
+
+            /*Horizontal scrollbar - set width of overview or make it expand horizontal like below*/
+        #horizontal-scrollbar-demo .overview {
+            /*width: 1836px;*/
+            /* or */
+            white-space: nowrap;
+        }
+
+        #horizontal-scrollbar-demo img {
+            height: 180px;
+            width: 180px;
+        }
+
+            /*Vertical and horizontal scrollbar - set width and height of a div you want to add a scrollbar to*/
+        #vertical-horizontal-scrollbar-demo {
+            width: 400px;
+            height: 200px;
+        }
+
+        #vertical-horizontal-scrollbar-demo .overview {
+            width: 600px;
+        }
+
+            /* Vertical and horizontal scrollbar - one extra step required - add width of overview - overall width of scrolled content*/
+        #min-thumb-size-demo .overview {
+            width: 600px;
+        }
+
+            /*Vertical and horizontal scrollbar - set width and height of a div you want to add a scrollbar to*/
+        #min-thumb-size-demo {
+            width: 400px;
+            height: 200px;
+        }
+
+            /* Vertical and horizontal scrollbar - one extra step required - add width of overview - overall width of scrolled content*/
+        #min-thumb-size-demo .overview {
+            width: 600px;
+        }
+
+        #min-thumb-size-demo .vertical .thumb {
+            min-height: 150px;
+        }
+
+        #min-thumb-size-demo .horizontal .thumb {
+            min-width: 300px;
+        }
+
+        #fixed-thumb-size-demo {
+            width: 400px;
+            height: 200px;
+        }
+
+            /* Vertical and horizontal scrollbar - one extra step required - add width of overview - overall width of scrolled content*/
+        #fixed-thumb-size-demo .overview {
+            width: 600px;
+        }
+
+
+
+
+.errorform{
+
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(255, 0, 0, 1);
+    -moz-box-shadow:    0px 0px 5px 0px rgba(255, 0, 0, 1);
+    box-shadow:         0px 0px 5px 0px rgba(255, 0, 0, 1);
+} 

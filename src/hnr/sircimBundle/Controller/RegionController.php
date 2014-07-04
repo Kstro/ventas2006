@@ -3,6 +3,7 @@
 namespace hnr\sircimBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -17,6 +18,10 @@ use hnr\sircimBundle\Form\RegionType;
  */
 class RegionController extends Controller
 {
+
+    private $usCreacion = "MCastro";
+    // private $fechaCreacion = new \DateTime('now');
+
     /**
      * Lists all Region entities.
      *
@@ -45,7 +50,7 @@ class RegionController extends Controller
     public function createAction(Request $request)
     {
         $entity  = new Region();
-        $entity->setReUsuarioCreacion("MCastro");
+        $entity->setReUsuarioCreacion($this->usCreacion);
         $entity->setReFechaCreacion(new \DateTime('now'));
         $form = $this->createForm(new RegionType(), $entity);
         $form->bind($request);

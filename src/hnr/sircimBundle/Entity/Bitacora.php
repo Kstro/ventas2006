@@ -4,13 +4,25 @@ namespace hnr\sircimBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use hnr\sircimBundle\Entity\Usuario;
+use hnr\sircimBundle\Form\UsuarioType;
+use hnr\sircimBundle\Controller\BitacoraController;
+use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\HttpFoundation\Session\Session;
+
 /**
  * Bitacora
  *
  * @ORM\Table(name="bitacora")
  * @ORM\Entity
  */
-class Bitacora
+class Bitacora extends Controller
 {
     /**
      * @var integer
@@ -126,4 +138,22 @@ class Bitacora
     {
         return $this->idUsuario;
     }
+
+
+
+    public function escribirbitacora($mensaje, $login)
+    {
+        //$entity  = new Bitacora();
+        $em = $this->getDoctrine()->getManager();
+        $usuario = $em->getRepository('hnrsircimBundle:Usuario')->findOneByusLogin($login);
+        $this->setbiAccion($mensaje);
+        $this->setbiFecha(new \DateTime ('now'));
+        $this->setIdUsuario($usuario);
+        $em->persist($this);
+        $em->flush();
+    } 
+
+
+    
+
 }

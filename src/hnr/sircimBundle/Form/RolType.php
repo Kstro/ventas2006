@@ -11,14 +11,22 @@ class RolType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('roNombre')
-            ->add('roDescripcion')
-            ->add('roModificable')
-            ->add('roEstado')
-            ->add('roUsuarioCreacion')
-            ->add('roUsuarioModificacion')
-            ->add('roFechaCreacion')
-            ->add('roFechaModificacion')
+            
+            ->add('roNombre',null,array('attr'=>array('class'=>'textos')))
+            ->add('roDescripcion','textarea',array('attr'=>array('class'=>'textos')))
+            // ->add('roModificable')
+            // ->add('roEstado')
+            ->add('placas','collection',array(
+                'type' => new RolOpcionSistemaType(),
+                'label'=>' ',
+                'by_reference' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+                ))   
+            // ->add('roUsuarioCreacion')
+            // ->add('roUsuarioModificacion')
+            // ->add('roFechaCreacion')
+            // ->add('roFechaModificacion')
         ;
     }
 

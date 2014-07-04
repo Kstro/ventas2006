@@ -1,20 +1,135 @@
-{% extends 'hnrsircimBundle::Layout.html.twig' %}
+{% block javascripts %}
+    <script src="{{ asset('bundles/hnrsircim/js/Modulos/administracion/estudio/new_edit.js') }}" type="text/javascript"></script>        
+{% endblock %}
 
 {% block body -%}
-    <h1>Estudio creation</h1>
+    <div id="titulo_barra">
+        Nuevo Estudio
+        
+    </div>
+    <br><br>
+    <form action="{{ path('estudio_create',{'login':login}) }}" method="get" {{ form_enctype(form) }}>
 
-    <form action="{{ path('estudio_create') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
-        <p>
-            <button type="submit">Create</button>
-        </p>
+        <table class="tbl_nuevo" id="tbl_estudio" align="center">
+            <tr>
+                <td colspan="2">
+                    <div id="titulo">
+                        Información del estudio
+                    </div>                
+                </td>
+            </tr>
+            
+            <tr>
+                <td>
+                    Nombre:
+                </td>
+                <td>
+                    {{ form_widget(form.esNombre)}}
+                </td>
+            </tr>    
+            <tr>
+                <td>
+                    Abrevitura:
+                </td>
+                <td>
+                    {{ form_widget(form.esAbreviatura)}}
+                </td>
+            </tr>    
+            
+            <tr>
+                <td>
+                    Tipo:
+                </td>
+                <td>
+                    {{ form_widget(form.esTipo)}}
+                </td>
+            </tr>   
+            
+            <tr>
+                <td>
+                    Área:
+                </td>
+                <td>
+                    {{ form_widget(form.profile.idArea)}}
+                </td>
+            </tr>   
+
+            <tr>
+                <td>
+                    Descripción:
+                </td>
+                <td>
+                    <div id="descripcion_area">
+                        {{ form_widget(form.esDescripcion)}}
+                    </div>
+                </td>
+            </tr>    
+
+            {# {{form_rest(form)}} #}
+        </table>
+
+        <table class="tbl_nuevo" id="tbl_estudioareaHO" align="center">
+
+            <tr>
+                <td colspan="3">
+                    <div id="titulo">
+                        Horario del estudio
+                    </div>                
+                </td>
+            </tr> 
+
+
+            <tr id="listadoHO-header">
+                {# <td style="width: 50px; padding-right:10px">
+                    Día
+                </td>
+
+                <td>
+                    Hora inicio
+                </td>
+
+                <td style="width: 30px;">
+                    Hora fin
+                </td> #}
+                <td colspan="3" style="text-align:center" >
+                    <label>
+                        Día
+                    </label>
+                    <label> 
+                        Hora inicio
+                    </label>
+                    <label>
+                        Hora fin
+                    </label>
+                </td>
+            </tr> 
+
+            <tr> 
+                <td colspan="2" id="listadoHO">
+                    
+                    <div id="listado_estudioarea">
+                            <div class="listado">
+                                <ul class="placas" data-prototype="{{ form_widget(form.profile.placas.vars.prototype)|e }}">
+                                    {{ form_widget(form.profile.placas) }}
+                                </ul>
+                            </div>
+                    </div>
+                </td>
+            </tr>   
+        </table>
+{{form_rest(form)}}
+        <br>
+        <div class="botones">
+            <p>
+                <button type="submit" class="guardar">Guardar</button>
+                {# <a id="cancelar" class="cancelar" href"">Cancelar</a> #}
+                <button id="cancelar" class="cancelar">Cancelar</button>
+            </p>
+        </div>
     </form>
+    
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('estudio') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+
 {% endblock %}
+
+

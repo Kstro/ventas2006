@@ -1,20 +1,360 @@
-{% extends 'hnrsircimBundle::Layout.html.twig' %}
-
 {% block body -%}
-    <h1>Agregar estudio</h1>
+    <div id="titulo_barra">
+        Nuevo Estudio
+        
+    </div>
+    <br><br>
+    <form action="{{ path('estudioarea_create') }}" method="post" {{ form_enctype(form) }}>
+
+        <table class="tbl_nuevo" id="tbl_estudioarea" align="center">
+            <tr>
+                <td colspan="2">
+                    <div id="titulo">
+                        Información del estudio
+                    </div>                
+                </td>
+            </tr>
+            
+            <tr>
+                <td>
+                    Nombre:
+                </td>
+                <td>
+                    {{ form_widget(form.idEstudio)}}
+                </td>
+            </tr>    
+            {# <tr>
+                <td>
+                    Abrevitura:
+                </td>
+                <td>
+                    {{ form_widget(form.idEstudio.esAbreviatura)}}
+                </td>
+            </tr>    
+            
+            <tr>
+                <td>
+                    Tipo:
+                </td>
+                <td>
+                    {{ form_widget(form.idEstudio.esTipo)}}
+                </td>
+            </tr>    #}
+            <tr>
+                <td>
+                    Área:
+                </td>
+                <td>
+                    {{ form_widget(form.idArea)}}
+                </td>
+            </tr>     
+            {# <tr>
+                <td>
+                    Descripción:
+                </td>
+                <td>
+                    {{ form_widget(form.idEstudio.esDescripcion)}}
+                </td>
+            </tr>     #}
+        </table>
+
+        <table class="tbl_nuevo" id="tbl_estudioareaHO" align="center">
+
+            <tr>
+                <td colspan="3">
+                    <div id="titulo">
+                        Horario del estudio
+                    </div>                
+                </td>
+            </tr> 
+
+
+            <tr id="listadoHO-header">
+                {# <td style="width: 50px; padding-right:10px">
+                    Día
+                </td>
+
+                <td>
+                    Hora inicio
+                </td>
+
+                <td style="width: 30px;">
+                    Hora fin
+                </td> #}
+                <td colspan="3" style="text-align:center" >
+                    <label>
+                        Día
+                    </label>
+                    <label> 
+                        Hora inicio
+                    </label>
+                    <label>
+                        Hora fin
+                    </label>
+                </td>
+            </tr> 
+
+            <tr>
+                <td colspan="2" id="listadoHO">
+                    
+                     <div id="listado_estudioarea">
+                          
+                            <div class="listado">
+                                <ul class="placas" data-prototype="{{ form_widget(form.placas.vars.prototype)|e }}">
+                                    {{ form_widget(form.placas) }}
+                                </ul>
+                            </div>
+                    </div>
+                    
+                    
+                </td>
+
+            </tr>   
+
+              
+              {{form_rest(form)}}
+        </table>
+
+        <br>
+        <div class="botones">
+            <p>
+                <button type="submit" class="guardar">Guardar</button>
+                {# <a id="cancelar" class="cancelar" href"">Cancelar</a> #}
+                <button id="cancelar" class="cancelar">Cancelar</button>
+            </p>
+        </div>
+    </form>
+    
+
+
+{% endblock %}
+
+
+{# 
+{% block body -%}
 
     <form action="{{ path('estudioarea_create') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }}
+        {{form_row(form.idEstudio)}}
+        {{form_row(form.idArea)}}
+                            <div class="listado">
+                                <ul class="placas" data-prototype="{{ form_widget(form.placas.vars.prototype)|e }}">
+                                    {{ form_widget(form.placas) }}
+                                </ul>
+                            </div>
         <p>
             <button type="submit">Create</button>
         </p>
     </form>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('estudioarea') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+{% endblock %} #}
+
+
+{% block script %}
+    
+
+<script type="text/javascript">
+
+// Get the ul that holds the collection of tags
+var collectionHolder = $('ul.placas');
+var col=$('#hnr_sircimbundle_estudioradiologicotype_placas');
+// setup an "add a tag" link
+// var $addTagLink = '';
+var $addTagLink = $('<a href="#" class="add_placa_link">+</a>');
+var $removeTagLink = $('<a href="#" class="remove_placa_link">x</a>');
+var $newLinkLi = $('<li></li>').append($addTagLink);
+var $delLinkLi = $('#hnr_sircimbundle_estudioradiologicotype_placas.required').append($removeTagLink);
+
+
+
+$('.add_placa_link').on('click', function(e) {
+                // prevent the link from creating a "#" on the URL
+                e.preventDefault();
+
+                // add a new tag form (see next code block)
+                addTagForm(collectionHolder,$newLinkLi);
+            });
+
+
+
+
+jQuery(document).ready(function() {
+
+    $('#listado_estudioarea').perfectScrollbar({
+          wheelSpeed: 20,
+          wheelPropagation: false
+        });
+
+    //verifica si el estudio area ya existe
+$('select').on('change', function(event) {
+    
+    /* Act on the event */
+        
+        var area = $('#hnr_sircimbundle_estudioareatype_idArea').val();
+        var estudio = $('#hnr_sircimbundle_estudioareatype_idEstudio').val();
+        $('#hnr_sircimbundle_estudioareatype_idArea').removeClass('errorform')
+        $('#hnr_sircimbundle_estudioareatype_idEstudio').removeClass('errorform');
+        // alert(estudio+" "+area);
+        if(area=='')
+            area=0;
+        if(estudio=='')
+            estudio=0;
+
+        $.getJSON(Routing.generate('est_area_consultar',{area:area,estudio:estudio}),
+                            function(data) {
+                                $.each(data.regs, function(indice, reg) {
+                                
+                                    $('.guardar').attr('existe','1');
+                                    $('#hnr_sircimbundle_estudioareatype_idArea').addClass('errorform');
+                                    $('#hnr_sircimbundle_estudioareatype_idEstudio').addClass('errorform');
+                                    alertify.error("<div class='icon_msg'><img src={{ asset('bundles/hnrsircim/img/error.png') }}></div><div class=\"msg\">El estudio seleccionado ya está asociado en el área seleccionada</div>");
+                
+                                });
+
+                            });
+
+});
+
+
+    $('.guardar').click(function(event) {
+
+        var existe= $('.guardar').attr('existe');
+        var existe_abre= $('.guardar').attr('existe_abre');
+        if(existe==1){
+            
+                alertify.error("<div class='icon_msg'><img src={{ asset('bundles/hnrsircim/img/error.png') }}></div><div class=\"msg\">El estudio seleccionado ya está asociado en el área seleccionada</div>");
+                return false;
+        }
+        if(existe_abre==1){
+                alertify.error("<div class='icon_msg'><img src={{ asset('bundles/hnrsircim/img/error.png') }}></div><div class=\"msg\">La abreviatura del estudio '"+$('#hnr_sircimbundle_estudiotype_esAbreviatura').val()+"' ya esta asignada</div>");
+                return false;
+        }
+        
+        $.getJSON(Routing.generate('estudio_update'),
+                            function(data) {
+                                $.each(data.regs, function(indice, reg) {
+                                    
+                                    // alert(data.length);
+                                });
+
+                            });
+ 
+        
+
+
+        
+    });
+
+
+    $('#cancelar').click(function(event) {
+        /* Act on the event */
+        $('#deshabilitar').fadeOut('fast');
+        $('#popup_box_estudioarea').fadeOut('fast');
+        alertify.log("<div class='icon_msg'><img src={{ asset('bundles/hnrsircim/img/info.png') }}></div><div class=\"msg\">Acción cancelada</div>");
+        return false;
+    });
+
+
+    $('.link').on('click', function(event) {
+        event.preventDefault();
+        /* Act on the event */
+
+        $(this).parent('li').remove();
+
+    });
+        
+
+    $('#hnr_sircimbundle_estudioradiologicotype_placas>div>label.required').hide('slow/400/fast');
+    col.children('div').each(function() {
+        addTagFormDeleteLink($(this));
+    }); 
+
+    collectionHolder.find('li').each(function() {
+        addTagFormDeleteLink($(this));
+
+    });
+
+    
+
+    // add the "add a tag" anchor and li to the tags ul
+    collectionHolder.append($newLinkLi);
+
+    // count the current form inputs we have (e.g. 2), use that as the new
+    // index when inserting a new item (e.g. 2)
+    collectionHolder.data('index', collectionHolder.find(':input').length);
+    
+
+    addTagForm(collectionHolder, $newLinkLi);   //Muestra un formulario en la carga de la página
+
+
+    $addTagLink.on('click', function(e) {
+        // prevent the link from creating a "#" on the URL
+        e.preventDefault();
+
+        // add a new tag form (see next code block)
+        addTagForm(collectionHolder, $newLinkLi);
+    });
+
+
+
+    $(document).on('click', '.close', function(){
+            alert('del');
+        $(this).closest('#hnr_sircimbundle_estudioradiologicotype_placas').fadeOut(500, function() {
+            $(this).remove();
+        });
+    });
+
+    
+});
+
+
+function addTagForm(collectionHolder, $newLinkLi) {
+    // Get the data-prototype explained earlier
+    var prototype = collectionHolder.data('prototype');
+
+    // get the new index
+    var index = collectionHolder.data('index');
+
+    // Replace '__name__' in the prototype's HTML to
+    // instead be a number based on how many items we have
+    var newForm = prototype.replace(/__name__/g, index);
+
+    // increase the index with one for the next item
+    collectionHolder.data('index', index + 1);
+
+    // Display the form in the page in an li, before the "Add a tag" link li
+    var $newFormLi = $('<li></li>').append(newForm);
+    $newLinkLi.before($newFormLi);
+    
+
+
+    // add a delete link to the new form
+    addTagFormDeleteLink($newFormLi);
+}
+
+
+
+function addTagFormDeleteLink($tagFormLi) {
+    var $removeFormA = $('<a class="link" href="#">x</a>');
+    $tagFormLi.append($removeFormA);
+
+    $removeFormA.on('click', function(e) {
+        // prevent the link from creating a "#" on the URL
+        e.preventDefault();
+
+        // remove the li for the tag form
+        $tagFormLi.remove();
+    });
+}
+
+
+
+</script>
+
+
+
+
 {% endblock %}
+
+
+
+

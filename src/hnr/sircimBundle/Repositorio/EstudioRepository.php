@@ -12,13 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class EstudioRepository extends EntityRepository
 {
-	public function seleccionarEstudios()
+	public function seleccionarEstudiosActivos()
     {
     	
          return $this->getEntityManager()
             ->createQuery('SELECT e 
-                           FROM minsalacademicaAnBundle:Evaluacion e
-                           WHERE e.porcentaje > 0.5
+                           FROM hnrsircimBundle:Estudio e
+                           WHERE e.esEstado = 1
                            ORDER BY e.id ASC')
                 ->getResult();
     }

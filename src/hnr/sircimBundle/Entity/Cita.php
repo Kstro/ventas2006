@@ -3,6 +3,7 @@
 namespace hnr\sircimBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Cita
@@ -39,7 +40,7 @@ class Cita
     /**
      * @var \Solicitud
      *
-     * @ORM\ManyToOne(targetEntity="Solicitud", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="Solicitud",cascade={"persist","remove"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_solicitud", referencedColumnName="id")
      * })
@@ -126,4 +127,5 @@ class Cita
     {
         return $this->idSolicitud;
     }
+     
 }

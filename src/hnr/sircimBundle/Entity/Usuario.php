@@ -3,7 +3,8 @@
 namespace hnr\sircimBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Usuario
  *
@@ -12,6 +13,32 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Usuario
 {
+
+    /**
+     * @ORM\OneToMany(targetEntity="UsuarioRol", mappedBy="idUsuario", cascade={"persist", "remove"})
+     */
+    protected $placas;
+
+    public function __construct()
+    {
+        //$this->placas = array(new EstudioRadTamPlaca(), new EstudioRadTamPlaca());
+        $this->placas = new ArrayCollection();
+    }           
+
+    public function getPlacas()
+    {
+        return $this->placas;
+    }
+
+    public function setPlacas(\Doctrine\Common\Collections\Collection $placas)
+    {
+        $this->placas = $placas;
+        foreach ($placas as $placa) {
+            $placa->setIdUsuario($this);
+        }
+    }
+
+
     /**
      * @var integer
      *
@@ -26,6 +53,12 @@ class Usuario
      * @var string
      *
      * @ORM\Column(name="us_login", type="string", length=15, nullable=false)
+     * @Assert\Length(
+     *      min = "2",
+     *      max = "10",
+     *      minMessage = "Tu primer nombre por lo menos debe tener {{ limit }} caracteres de largo",
+     *      maxMessage = "Tu primer nombre no puede tener más de {{ limit }} caracteres de largo"
+     * )
      */
     private $usLogin;
 
@@ -39,7 +72,7 @@ class Usuario
     /**
      * @var string
      *
-     * @ORM\Column(name="us_contrasena", type="string", length=128, nullable=false)
+     * @ORM\Column(name="us_contrasena", type="string", length=128, nullable=true)
      */
     private $usContrasena;
 
@@ -363,4 +396,8 @@ class Usuario
     {
         return $this->usFechaModificacion;
     }
+
+    // public function __tostring(){
+    //     return $this->id."";
+    // }
 }

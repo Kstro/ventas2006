@@ -1,116 +1,374 @@
 {% extends 'hnrsircimBundle::Layout.html.twig' %}
 
-
-
-
-
-{% block body -%}
-    <h1>EstudioRadiologico creation</h1>
-
-    <form action="{{ path('estudioradiologico_create') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_errors(form) }}
-        {{ form_row(form.erEdadPaciente) }}
-        {{ form_row(form.idempleado) }}
-        {{ form_row(form.idSolicitud) }}
-        
-        <ul class="placas" data-prototype="{{ form_widget(form.placas.vars.prototype)|e }}">
-            {{ form_rest(form) }}
-        </ul>
-        <p>
-            <button type="submit">Create</button>
-        </p>
-
-
-
-    </form>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('estudioradiologico') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
-
+{% block stylesheets %}
+   {{ parent() }}
+   <link href="{{ asset('bundles/hnrsircim/js/Zebra_Datepicker-master/public/css/metallic.css') }}" rel="stylesheet" type="text/css" /> 
+{% endblock %}
+   
+{% block javascripts %}
+   {{ parent() }}
+   <script type="text/javascript" src="{{ asset('bundles/hnrsircim/js/Zebra_Datepicker-master/public/javascript/zebra_datepicker.js') }}" ></script>   
+{% endblock %}
+   
+{% block mod_activo %} Registro de estudios {% endblock %}
+   
+{% block lista_modulos %}
+    {% for modulo in modulos %}
+        <li><a href="{{ path(modulo.osUrl, { 'login': usuario }) }}">{{modulo}}</a></li>
+    {% endfor %}
 {% endblock %}
 
 
-{# {% block script %}
 
+{% block nombre_usr %}
+    <label id="{{ usuario }}">
+        {{ usuario }}
+    </label> 
+{% endblock %}
 
+{% block botones_modulo %} 
+    <div class="menu_grupo"> 
+        <button class="btn btn_regular btn_hoy" id="cancelar" title="Cancelar" onclick="location.href='{{ path('estudioradiologico',{'login':login}) }}';">Cancelar</button>
+        {#<button type="submit" class="btn btn_regular" id="guardar" title="Guardar" onclick="document.getElementById('crear_estudio').submit();">Guardar</button>#}        
+        <button class="btn btn_regular" id="guardar" title="Guardar">Guardar</button>
+    </div>
+{% endblock %}
 
-<script type="text/javascript">
+{% block body -%}
+    <form id="crear_estudio" class="form_estudio" action="{{ path('estudioradiologico_create',{'login':login}) }}" method="post" {{ form_enctype(form) }}>
+        {{ form_errors(form) }}
+        <table>
+          <tr>
+            <td colspan="2" class="separador" id="paciente"> Paciente </td>
+          </tr>
+          <tr>
+            <td class="label"> {{ form_label(form.idSolicitud.idMntExpediente) }} </td>
+            <td> {{ form_widget(form.idSolicitud.idMntExpediente) }} </td>
+          </tr>
+          <tr>
+            <td class="label"> {{ form_label(form.idSolicitud.Nombre) }} </td>
+            <td> {{ form_widget(form.idSolicitud.Nombre) }} </td>
+          </tr>
+          <tr>
+            <td class="label"> {{ form_label(form.erEdadPaciente) }} </td>
+            <td> {{ form_widget(form.erEdadPaciente) }} </td>
+          </tr>
+          <tr>
+            <td colspan="2" class="separador" id="estudio"> Estudio </td>
+          </tr>
+          <tr>
+            <td class="label"> {{ form_label(form.idSolicitud.EstudioArea) }} </td>       
+            <td> {{ form_widget(form.idSolicitud.EstudioArea) }} </td>
+          </tr>
+          <tr>
+            <td class="label"> {{ form_label(form.idSolicitud.soRegion) }} </td>    
+            <td> {{ form_widget(form.idSolicitud.soRegion) }} </td>    
+          </tr>
+          <tr>
+            <td class="label"> {{ form_label(form.idSolicitud.soPosicion) }} </td>    
+            <td> {{ form_widget(form.idSolicitud.soPosicion) }} </td>    
+          </tr>
+          <tr>
+            <td class="label"> {{ form_label(form.idSolicitud.idMntAtenAreaModEstab) }} </td>
+            <td> {{ form_widget(form.idSolicitud.idMntAtenAreaModEstab) }} </td>
+          </tr>
+          <tr>
+            <td class="label"> {{ form_label(form.idempleado) }} </td>
+            <td> {{ form_widget(form.idempleado) }} </td>
+          </tr>
+          <tr>
+            <td colspan="2" class="separador" id="horario"> Horario </td>
+          </tr>
+          <tr>
+            <td class="label"> {{ form_label(form.idSolicitud.soFecha) }} </td>
+            <td> {{ form_widget(form.idSolicitud.soFecha) }} </td>
+          </tr>
+          <tr>
+            <td class="label"> {{ form_label(form.idSolicitud.soHora) }} </td>  
+            <td> {{ form_widget(form.idSolicitud.soHora) }} </td>
+            <ul id="hora_content"></ul>
+          </tr>
+          <tr>
+            <td colspan="2" class="separador" id="peliculas"> Películas </td>
+          </tr>
+          <tr>
+            <td colspan="2"> 
+                <div class="tabla_placas">
+                    <div class="add_placa"> 
+                        <a class="add_placa_link" title="Agregar Tamaño de placa" href="#"> + </a> 
+                    </div>
+                    <div class="encabezado_placas">
+                        <div>Tamaño</div>
+                        <div>Aceptadas</div>
+                        <div>Descartadas</div>
+                    </div>
+                    <div class="cuerpo_placas">
+                        <ul class="placas" data-prototype="{{ form_widget(form.placas.vars.prototype)|e }}">
+                            {{ form_widget(form.placas) }}
+                        </ul>
+                    </div>
+                    <div class="total_placas">
+                        <div>TOTAL</div>
+                        <div id="total_aceptadas">0</div>
+                        <div id="total_descartadas">0</div>
+                    </div>                    
+                </div>
+                
+            </td>
+          </tr>
+          
+        </table>
+        
+        {{ form_rest(form) }}
+            
+        
+    </form>
 
-// Get the ul that holds the collection of tags
-var collectionHolder = $('ul.placas');
+{% endblock %}
 
-// setup an "add a tag" link
-var $addTagLink = $('<a href="#" class="add_placa_link">Agregar placa</a>');
-var $newLinkLi = $('<li></li>').append($addTagLink);
-
-
-
-jQuery(document).ready(function() {
-
-    collectionHolder.find('li').each(function() {
-        addTagFormDeleteLink($(this));
-    });
-
-    // add the "add a tag" anchor and li to the tags ul
-    collectionHolder.append($newLinkLi);
-
-    // count the current form inputs we have (e.g. 2), use that as the new
-    // index when inserting a new item (e.g. 2)
-    collectionHolder.data('index', collectionHolder.find(':input').length);
-
-    $addTagLink.on('click', function(e) {
-        // prevent the link from creating a "#" on the URL
-        e.preventDefault();
-
-        // add a new tag form (see next code block)
-        addTagForm(collectionHolder, $newLinkLi);
-    });
-
+{% block emergente -%}
+    <div id="deshabilitar"></div>
+    <div id="pop_citas"></div>
+{% endblock %}    
     
-});
+{% block script %}
+    <script>
+        
+        // Get the ul that holds the collection of tags
+        var collectionHolder = $('ul.placas');
+        
+        $(document).ready(function() {
+            document.getElementById("hnr_sircimbundle_estudioradiologicotype_idSolicitud_soRegion").disabled = true;
+            document.getElementById("hnr_sircimbundle_estudioradiologicotype_idSolicitud_soPosicion").disabled = true;
+            
+            collectionHolder.data('index', collectionHolder.find(':input').length);
 
+            addTagForm(collectionHolder);
 
+            $('.add_placa_link').on('click', function(e) {
+                // prevent the link from creating a "#" on the URL
+                e.preventDefault();
 
+                // add a new tag form (see next code block)
+                addTagForm(collectionHolder);
+            });
+            
+            $('.date').Zebra_DatePicker({
+                        direction: false,
+                        //format: 'YYYY-M-d',
+                        onSelect: function(dateText,inst) {
+                                    var date = new Date(dateText);
+                                    
+                                    /*switch( date.getDay() ){
+                                       case 0 : alert(date.getDay()+': Lunes'); break;
+                                       case 1 : alert(date.getDay()+': Martes'); break;
+                                       case 2 : alert(date.getDay()+': Miercoles'); break;
+                                       case 3 : alert(date.getDay()+': Jueves'); break;
+                                       case 4 : alert(date.getDay()+': Viernes'); break;
+                                       case 5 : alert(date.getDay()+': Sabado'); break;
+                                       case 6 : alert(date.getDay()+': Domingo'); break;
+                                    }*/
+                                    
+                                    $.getJSON(Routing.generate('get_horas')+'?idEstudio=1&dia=Lunes',
+                                        function(data) {
+                                            $.each(data.regs, function(indice, reg) {
+                                                //alert( reg.hoHoraInicio);
+                                                var horainicio = reg.hoHoraInicio, horafin =reg.hoHoraFin;
+                                                while(horainicio != horafin){
+                                                    if( horainicio.substring(3, 5) == '00' ){
+                                                        horainicio = horainicio.substring(0, 3) + '30';
+                                                        $('#hora_content').append('<li>'+horainicio+'</li>');
+                                                    }
+                                                    else{
+                                                        horainicio = (parseInt(horainicio.substring(0, 2)) + 1) + ':00';
+                                                        $('#hora_content').append('<li>'+horainicio+'</li>');
+                                                    }
+                                                    /*alert( parseInt(horainicio.substring(0, 2)) + 1 );
+                                                    alert(horainicio.substring(3, 5));*/
+                                                    /*if( horainicio.substring(3, 5) == horafin.substring(3, 5) )
+                                                        alert();*/
+                                                }
+                                                //$('#result').append(reg.hoHoraInicio + ' - ' + reg.hoHoraFin);
+                                            });
+                                        });
+                        }
+                    });
+                    
+              $('#hora_content').hide();
+        });
+        
+        $('#hora_content').on('click', 'li', function(){
+            $('.horas').val( $(this).html() );
+            $('#hora_content').hide();
+         });
+    
+        $('.horas, #hora_content span')
+           .blur( function(){
+                $('#hora_content').addClass('hiding');
+                setTimeout( function(){
+                    $('#hora_content.hiding').hide();
+                },100);
+           })
+           .focus( function(){
+                $('#hora_content').removeClass('hiding').show();
+           });
+        
+        function addTagForm(collectionHolder) {
+            // Get the data-prototype explained earlier
+            var prototype = collectionHolder.data('prototype');
+            
+            // get the new index
+            var index = collectionHolder.data('index');
+            
+            // Replace '__name__' in the prototype's HTML to
+            // instead be a number based on how many items we have
+            var newForm = prototype.replace(/__name__/g, index);
+            
+            // increase the index with one for the next item
+            collectionHolder.data('index', index + 1);
 
-function addTagForm(collectionHolder, $newLinkLi) {
-    // Get the data-prototype explained earlier
-    var prototype = collectionHolder.data('prototype');
+            // Display the form in the page in an li, before the "Add a tag" link li
+            var $newFormLi = $('<li></li>').append(newForm);
+            
+            collectionHolder.append($newFormLi);
 
-    // get the new index
-    var index = collectionHolder.data('index');
+            // add a delete link to the new form
+            addTagFormDeleteLink($newFormLi);
+        }
 
-    // Replace '__name__' in the prototype's HTML to
-    // instead be a number based on how many items we have
-    var newForm = prototype.replace(/__name__/g, index);
+        function addTagFormDeleteLink($tagFormLi) {
+            var $removeFormA = $('<a class="link" href="#">x</a>');
+            $tagFormLi.append($removeFormA);
 
-    // increase the index with one for the next item
-    collectionHolder.data('index', index + 1);
+            $removeFormA.on('click', function(e) {
+                // prevent the link from creating a "#" on the URL
+                e.preventDefault();
 
-    // Display the form in the page in an li, before the "Add a tag" link li
-    var $newFormLi = $('<li></li>').append(newForm);
-    $newLinkLi.before($newFormLi);
-    // add a delete link to the new form
-    addTagFormDeleteLink($newFormLi);
-}
+                // remove the li for the tag form
+                $tagFormLi.remove();
+                
+                var sum_pl_aceptadas = 0,
+                    sum_pl_descartadas = 0;
+                $('.placas_aceptadas').each(function(){
+                    sum_pl_aceptadas += parseInt( $(this).val() ); 
+                });
+                $('.placas_descartadas').each(function(){
+                    sum_pl_descartadas += parseInt( $(this).val() ); 
+                });
+                $('#total_aceptadas').html(sum_pl_aceptadas);
+                $('#total_descartadas').html(sum_pl_descartadas);
+            });
+        }
+        
+        $('ul.placas')
+            .on('mouseover','li', function(){
+                $(this).find('a.link').css('visibility','visible');
+            })
+            .on('mouseout','li', function(){ 
+                $(this).find('a.link').css('visibility','hidden'); 
+            });
 
-function addTagFormDeleteLink($tagFormLi) {
-    var $removeFormA = $('<a href="#">Borrar placa</a>');
-    $tagFormLi.append($removeFormA);
+        //Listas desplegables
+        $('select[id$="_idSolicitud_EstudioArea"]').change(function() {        
+            $('select[id$="_idSolicitud_soRegion"]').children().remove();
+            $('select[id$="_idSolicitud_soRegion"]').append('<option value="">Seleccione...</option>');
+            $('select[id$="_idSolicitud_soPosicion"]').children().remove();
+            $('select[id$="_idSolicitud_soPosicion"]').append('<option value="">Seleccione...</option>');
 
-    $removeFormA.on('click', function(e) {
-        // prevent the link from creating a "#" on the URL
-        e.preventDefault();
+            $parameters = '?nomEstudio=' + $(this).find("option:selected").text();
 
-        // remove the li for the tag form
-        $tagFormLi.remove();
-    });
-}
+            $.getJSON(Routing.generate('get_regiones')+$parameters,
+                        function(data) {
+                            $.each(data.regs, function(indice, reg) {
+                                $('select[id$="_idSolicitud_soRegion"]').append('<option value="' + reg.reNombre + '">' + reg.reNombre + '</option>');                       
+                            });
+                        });
 
+            $.getJSON(Routing.generate('get_posiciones')+$parameters,
+                        function(data) {
+                            $.each(data.regs, function(indice, reg) {
+                                $('select[id$="_idSolicitud_soPosicion"]').append('<option value="' + reg.poNombre + '">' + reg.poNombre + '</option>');                       
+                            });
+                        });
 
-</script>
-{% endblock %} #}
+            $('select[id$="_idSolicitud_soRegion"]').removeAttr('disabled');
+            $('select[id$="_idSolicitud_soPosicion"]').removeAttr('disabled');
+            
+        });
+
+        //Info de paciente
+        $('#hnr_sircimbundle_estudioradiologicotype_idSolicitud_idMntExpediente').keyup(function(){
+
+                $parameters = '?numExpediente=' + $(this).val();
+
+                $.getJSON(Routing.generate('get_infopaciente')+$parameters,
+                        function(data) {
+                            $.each(data.regs, function(indice, reg) {
+                                $('#hnr_sircimbundle_estudioradiologicotype_idSolicitud_Nombre').val( reg.Nombre );
+                                $('#hnr_sircimbundle_estudioradiologicotype_erEdadPaciente').val( reg.Edad );                            
+                            });
+                        });
+
+        });
+        
+        $('.cuerpo_placas').on('keyup','.placas_aceptadas',function() {
+            var sum = 0;
+            $('.placas_aceptadas').each(function(){
+               sum += parseInt( $(this).val() ); 
+            });
+            $('#total_aceptadas').html(sum);
+        });
+        
+        $('.cuerpo_placas').on('keyup','.placas_descartadas',function() {
+            var sum = 0;
+            $('.placas_descartadas').each(function(){
+               sum += parseInt( $(this).val() ); 
+            });
+            $('#total_descartadas').html(sum);
+        });
+        
+        $('#botones_modulo').on('click','.menu_grupo #guardar',function(){
+            //$count;
+            /*$.getJSON(Routing.generate('ci_consultar')+'/'+$('#hnr_sircimbundle_citatype_idSolicitud_idMntExpediente').val()+'/'+$('#hnr_sircimbundle_citatype_idSolicitud_soFecha').val()+'/'+$('#hnr_sircimbundle_citatype_idSolicitud_soHora').val(),
+                                            function(data) {
+                                                $.each(data.regs, function(indice, reg) {
+                                                    $count = reg;
+                                                });
+                                            });*/
+            //alert(Routing.generate('ci_consultar')+
+            //      '/'+$('#hnr_sircimbundle_citatype_idSolicitud_idMntExpediente').val()+'/'+$('#hnr_sircimbundle_citatype_idSolicitud_soFecha').val()+'/'+$('#hnr_sircimbundle_citatype_idSolicitud_soHora').val());
+            
+            $('#deshabilitar').fadeIn('slow'); 
+            alertify.confirm("¿ Está seguro de realizar esta operación ?", function (e) { 
+                if (e) { 
+                    if( !$('#hnr_sircimbundle_estudioradiologicotype_idSolicitud_idMntExpediente').val()  
+                     || !$('#hnr_sircimbundle_estudioradiologicotype_idSolicitud_Nombre').val() 
+                     || !$('#hnr_sircimbundle_estudioradiologicotype_idSolicitud_idMntAtenAreaModEstab').val()
+                     || !$('#hnr_sircimbundle_estudioradiologicotype_idSolicitud_EstudioArea').val()
+                     || !$('#hnr_sircimbundle_estudioradiologicotype_idSolicitud_soRegion').val()
+                     || !$('#hnr_sircimbundle_estudioradiologicotype_idSolicitud_soPosicion').val()
+                     || !$('#hnr_sircimbundle_estudioradiologicotype_idSolicitud_soFecha').val()
+                     || !$('#hnr_sircimbundle_estudioradiologicotype_idSolicitud_soHora').val()
+                     || !$('#hnr_sircimbundle_estudioradiologicotype_idempleado').val()
+                     || $('#total_aceptadas').html() === '0'){
+                        mensaje_error('¡ Existen campos sin llenar !');
+                    }
+                    /*else if($count > 0){
+                        mensaje_error('¡ El paciente ya posee una cita programada para esa fecha y hora !');
+                    }*/
+                    else{
+                        $('#crear_estudio').submit();
+                    }    
+                        $('#deshabilitar').fadeOut('slow'); 
+                } 
+                else{ 
+                    $('#deshabilitar').fadeOut('slow');
+                } 
+            });
+            
+        });
+        
+     </script>
+{% endblock %}
+
+     

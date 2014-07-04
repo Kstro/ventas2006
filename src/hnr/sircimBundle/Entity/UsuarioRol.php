@@ -23,16 +23,16 @@ class UsuarioRol
     private $id;
 
     /**
-     * @var integer
+     * @var boolean
      *
-     * @ORM\Column(name="usro_predeterminado", type="smallint", nullable=true)
+     * @ORM\Column(name="usro_predeterminado", type="boolean", nullable=true)
      */
     private $usroPredeterminado;
 
     /**
      * @var \Usuario
      *
-     * @ORM\ManyToOne(targetEntity="Usuario")
+     * @ORM\ManyToOne(targetEntity="Usuario", inversedBy="placas", cascade={"persist", "remove"}) 
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_usuario", referencedColumnName="id")
      * })
@@ -42,7 +42,7 @@ class UsuarioRol
     /**
      * @var \Rol
      *
-     * @ORM\ManyToOne(targetEntity="Rol")
+     * @ORM\ManyToOne(targetEntity="Rol" )
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_rol", referencedColumnName="id")
      * })
@@ -83,6 +83,8 @@ class UsuarioRol
     {
         return $this->usroPredeterminado;
     }
+
+
 
     /**
      * Set idUsuario
@@ -129,4 +131,14 @@ class UsuarioRol
     {
         return $this->idRol;
     }
+
+
+    public function addEstudioRad(Usuario $task)
+    {
+        setIdUsuario($task);
+        // if (!$this->idEstudioRadiologico->contains($task)) {
+        //     $this->idEstudioRadiologico->setIdEstudioRadiologico($task);
+        // }
+    }
+
 }

@@ -1,55 +1,112 @@
-{% extends 'hnrsircimBundle::Layout.html.twig' %}
+ {% extends 'hnrsircimBundle::Layout.html.twig' %}
 
+{% block javascripts %}            
+    {{parent()}}
+    
+    <script src="{{ asset('bundles/hnrsircim/js/Modulos/administracion/estudio/index.js') }}" type="text/javascript"></script>        
+        
+{% endblock %} 
+
+{% block lista_modulos %}
+    {% for modulo in modulos %}
+        <li><a href="{{ path(modulo.osUrl, { 'login': usuario.usLogin }) }}">{{modulo}}</a></li>
+    {% endfor %}
+{% endblock %}
+
+
+{% block configuracion %}
+    
+    <a id="conf_cuenta" href="{{ path('usuario_cuenta', { 'login':login,'opc':'0' }) }}">Configuración de cuenta</a>
+
+{% endblock %}
+
+
+{% block nombre_usr %}
+    <label id="{{ usuario.usLogin }}">
+        {{ usuario.usLogin }}
+    </label> 
+{% endblock %} 
+
+{% block mod_activo %} 
+    
+    Administración
+
+{% endblock %}  
+
+{% block gestion_modulo %} 
+    
+    Gestión de estudios
+
+{% endblock %} 
+
+
+
+{% block botones_modulo %}
+    <div class="menu_grupo">
+        {# <button id="buscar" class="btn btn_destacado"></button> #}
+        <button href="{{ path('estudio_new',{'login':login}) }}" id="nuevo" class="btn btn_destacado"></button>
+
+    </div>
+{% endblock %}
+
+{% block emergente %}
+    <div id="deshabilitar"></div>
+    <div id="popup_box_estudio"></div>
+{% endblock %}
 {% block body -%}
-    <h1>Estudio list</h1>
-
-    <table class="records_list">
+    <br><br>
+    <table class="listados">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Esnombre</th>
-                <th>Esabreviatura</th>
-                <th>Estipo</th>
-                <th>Esdescripcion</th>
-                <th>Esusuariocreacion</th>
-                <th>Esusuariomodificacion</th>
-                <th>Esfechacreacion</th>
-                <th>Esfechamodificacion</th>
-                <th>Actions</th>
+                <th>No.</th>
+                <th>Nombre</th>
+                <th>Abreviatura</th>
+                <th>Área</th>
+                <th>Activo/Inactivo</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-        {% for entity in entities %}
+        {% for key, entity in entities %}
             <tr>
-                <td><a href="{{ path('estudio_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.esNombre }}</td>
-                <td>{{ entity.esAbreviatura }}</td>
-                <td>{{ entity.esTipo }}</td>
-                <td>{{ entity.esDescripcion }}</td>
-                <td>{{ entity.esUsuarioCreacion }}</td>
-                <td>{{ entity.esUsuarioModificacion }}</td>
-                <td>{% if entity.esFechaCreacion %}{{ entity.esFechaCreacion|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if entity.esFechaModificacion %}{{ entity.esFechaModificacion|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{key+1}}</td>
+                <td>{{ entity.idEstudio.esNombre }}</td>
+                <td>{{ entity.idEstudio.esAbreviatura }}</td>
+                <td>{{ entity.idArea.arNombre }}</td>
                 <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('estudio_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('estudio_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+                    <div class="slideThree">   
+                            <input type="checkbox" 
+                                
+                                    {# {% if entity.idEstudio.esEstado == 1%} 
+                                        checked 
+                                    {% endif %}  #}
+
+                                    {% if entity.estadoEstudioArea == 1%} 
+                                        checked 
+                                    {% endif %} 
+
+                                
+                                    id="{{entity.id}}" name="{{entity.idEstudio.esNombre}}" 
+                            />
+                            <label for="{{entity.id}}"></label>
+                        </div>
+                    
+
+                </td>
+                <td>
+                    <a class="acciones" href="{{ path('estudio_edit', { 'id': entity.idEstudio.id,'login':login }) }}">
+                        <img src="{{ asset('bundles/hnrsircim/img/edit.png')}}">
+                    </a>
+                    <a class="acciones" href="{{ path('estudio_show', { 'id': entity.idEstudio.id,'login':login }) }}">
+                        <img src="{{ asset('bundles/hnrsircim/img/detalle.png')}}">
+                    </a>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-        <ul>
-        <li>
-            <a href="{{ path('estudio_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
+    <br><br>
+        
     {% endblock %}
+
+

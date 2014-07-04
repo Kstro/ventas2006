@@ -1,57 +1,129 @@
-{% extends '::base.html.twig' %}
+ {% extends 'hnrsircimBundle::Layout.html.twig' %}
+
+{% block lista_modulos %}
+    {% for modulo in modulos %}
+        <li><a href="{{ path(modulo.osUrl, { 'login': usuario.usLogin }) }}">{{modulo}}</a></li>
+    {% endfor %}
+{% endblock %}
+
+
+{% block configuracion %}
+    
+    <a id="conf_cuenta" href="{{ path('usuario_cuenta', { 'login':login,'opc':'0' }) }}">Configuración de cuenta</a>
+
+{% endblock %}
+
+
+{% block nombre_usr %}
+    <label id="{{ usuario.usLogin }}">
+        {{ usuario.usLogin }}
+    </label> 
+{% endblock %} 
+
+{% block mod_activo %} 
+    
+    Administración
+
+{% endblock %} 
+
+{% block gestion_modulo %} 
+    
+    Gestión de áreas
+
+{% endblock %} 
+
+{% block javascripts %}
+    {{parent()}}
+    
+    
+    <script src="{{ asset('bundles/hnrsircim/js/Modulos/administracion/area/index.js') }}" type="text/javascript"></script>
+    
+{% endblock %}
+
+{% block botones_modulo %}
+    <div class="menu_grupo">
+        {# <button id="buscar" class="btn btn_destacado"></button> #}
+        <button href="{{ path('area_new',{'login':login}) }}" id="nuevo" class="btn btn_destacado"></button>
+
+    </div>
+{% endblock %}
+
+{% block emergente %}
+    <div id="deshabilitar"></div>
+    <div id="popup_box"></div>
+{% endblock %}
 
 {% block body -%}
-    <h1>Area list</h1>
+    
+<br><br>
 
-    <table class="records_list">
+    <table class="listados" id="tabla_area">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Arnombre</th>
-                <th>Ardescripcion</th>
-                <th>Arcupo</th>
-                <th>Arestadocupo</th>
-                <th>Arestado</th>
-                <th>Arusuariocreacion</th>
-                <th>Arusuariomodificacion</th>
-                <th>Arfechacreacion</th>
-                <th>Arfechamodificacion</th>
-                <th>Actions</th>
+                <th>No.</th>
+                <th>Nombre</th>
+                <th>Cupo</th>
+                <th>Estado cupo</th>
+                <th>Estado área</th>
+                
+                <th></th>
             </tr>
         </thead>
         <tbody>
-        {% for entity in entities %}
+        {% for key, entity in entities %}
             <tr>
-                <td><a href="{{ path('area_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{key+1}}</td>
                 <td>{{ entity.arNombre }}</td>
-                <td>{{ entity.arDescripcion }}</td>
                 <td>{{ entity.arCupo }}</td>
-                <td>{{ entity.arEstadoCupo }}</td>
-                <td>{{ entity.arEstado }}</td>
-                <td>{{ entity.arUsuarioCreacion }}</td>
-                <td>{{ entity.arUsuarioModificacion }}</td>
-                <td>{% if entity.arFechaCreacion %}{{ entity.arFechaCreacion|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if entity.arFechaModificacion %}{{ entity.arFechaModificacion|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('area_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('area_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+                    <div class="slideThree">   
+                            <input type="checkbox" 
+                                
+                                    {% if entity.arEstadoCupo == 1%} 
+                                        checked 
+                                    {% endif %} 
+
+                                    {% if entity.arCupo == 0 %} 
+                                        cupo="{{entity.arCupo}}"
+                                    {% endif %} 
+                                
+                                    id="cupo{{entity.id}}" name="{{entity.id}}" nombre="{{entity.arNombre}}" 
+                            />
+                            <label for="cupo{{entity.id}}"></label>
+                        </div>
+                    
                 </td>
-            </tr>
+                <td>
+                    <div class="slideThree">   
+                            <input type="checkbox" 
+                                
+                                    {% if entity.arEstado == 1 %} 
+                                        checked 
+                                    {% endif %} 
+                                
+                                    
+
+                                    id="activo{{entity.id}}" name="{{entity.id}}" nombre="{{entity.arNombre}}"
+                            />
+                            <label for="activo{{entity.id}}"></label>
+                        </div>
+                    
+
+                </td>
+                <td>
+                    <a class="acciones" href="{{ path('area_edit', { 'id': entity.id,'login':login }) }}">
+                        <img src="{{ asset('bundles/hnrsircim/img/edit.png')}}">
+                    </a>
+                    <a class="acciones" href="{{ path('area_show', { 'id': entity.id,'login':login }) }}">
+                        <img src="{{ asset('bundles/hnrsircim/img/detalle.png')}}">
+                    </a>
+                </td>
+                </tr>
         {% endfor %}
         </tbody>
     </table>
 
-        <ul>
-        <li>
-            <a href="{{ path('area_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
+        <br>
     {% endblock %}
+
+

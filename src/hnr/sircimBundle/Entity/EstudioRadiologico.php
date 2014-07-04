@@ -15,14 +15,14 @@ class EstudioRadiologico
 {
 
     /**
-     * @ORM\OneToMany(targetEntity="EstudioRadTamPlaca", mappedBy="idEstudioRadiologico", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="EstudioRadTamPlaca", mappedBy="idEstudioRadiologico", cascade={"persist"})
      */
     protected $placas;
 
     public function __construct()
     {
-        //$this->placas = array(new EstudioRadTamPlaca(), new EstudioRadTamPlaca());
         $this->placas = new ArrayCollection();
+        // $this->placas = new ArrayCollection();
     }           
 
     public function getPlacas()
@@ -33,23 +33,13 @@ class EstudioRadiologico
     public function setPlacas(\Doctrine\Common\Collections\Collection $placas)
     {
         $this->placas = $placas;
+        
         foreach ($placas as $placa) {
             $placa->setIdEstudioRadiologico($this);
         }
     }
+       
 
-    // public function addPlaca(EstudioRadTamPlaca $placa)
-    // {
-    //     $placa->addEstudioRad($this);
-    //     $this->placas->add($placa);
-    // }
-
-    // public function removePlaca(EstudioRadTamPlaca $placa)
-    // {
-    //     $this->placas->removeElement($placa);
-    // }
-
-    
     /**
      * @var integer
      *
@@ -165,9 +155,10 @@ class EstudioRadiologico
     {
         return $this->idSolicitud;
     }
-
-    public function __tostring(){
+    
+    
+    
+    /*public function __toString() {
         return $this->id."";
-    }
-
+    }*/
 }

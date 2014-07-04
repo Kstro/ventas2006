@@ -30,28 +30,30 @@ class Horario
     private $hoDia;
 
     /**
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(name="ho_hora_inicio", type="time", nullable=false)
+     * @ORM\Column(name="ho_hora_inicio", type="string", nullable=false)
      */
     private $hoHoraInicio;
 
     /**
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(name="ho_hora_fin", type="time", nullable=false)
+     * @ORM\Column(name="ho_hora_fin", type="string", nullable=false)
      */
     private $hoHoraFin;
 
     /**
      * @var \EstudioArea
      *
-     * @ORM\ManyToOne(targetEntity="EstudioArea")
+     * @ORM\ManyToOne(targetEntity="EstudioArea",inversedBy="placas")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_estudio_area", referencedColumnName="id")
      * })
      */
     private $idEstudioArea;
+
+
 
 
 
@@ -134,6 +136,8 @@ class Horario
         return $this->hoHoraFin;
     }
 
+
+
     /**
      * Set idEstudioArea
      *
@@ -147,6 +151,8 @@ class Horario
         return $this;
     }
 
+    
+
     /**
      * Get idEstudioArea
      *
@@ -156,4 +162,13 @@ class Horario
     {
         return $this->idEstudioArea;
     }
+
+    public function addEstudioArea(EstudioArea $task)
+    {
+        setIdEstudioArea($task);
+        // if (!$this->idEstudioRadiologico->contains($task)) {
+        //     $this->idEstudioRadiologico->setIdEstudioRadiologico($task);
+        // }
+    }
+
 }

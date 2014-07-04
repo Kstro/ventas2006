@@ -1,86 +1,425 @@
-{% extends 'hnrsircimBundle::Layout.html.twig' %}
+{% block javascripts %}
+    <script src="{{ asset('bundles/hnrsircim/js/Modulos/administracion/usuario/new.js') }}" type="text/javascript"></script>
+{% endblock %} 
 
 {% block body -%}
-    <h1>Usuario creation</h1>
+    <div id="titulo_barra">
+        Nuevo usuario
+    </div>
+    <br>
+    <br>
+    <div class="formularios">
+    <form action="{{ path('usuario_create',{'login':login}) }}" method="post" {{ form_enctype(form) }}>
+        {# {{form_widget(form)}} #}
+        {# idempleado #}
+        <table id="tbl_nuevo_usuario"  align="center">
+            <tr>
+                <td colspan="2">
+                    <div id="titulo">
+                        Información personal
+                    </div>                
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Nombre:
+                </td>
+                <td>
+                    <select class="desplegable" name="listaempleado">
+                        {% for empleado in empleados %}
+                        <option value={{empleado.Idempleado}}>{{empleado.Nombre}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    E-mail:
+                </td>
+                <td>
+                    {{ form_widget(form.usCorreo)}}
+                </td>
+            </tr>    
 
-    <form action="{{ path('usuario_create') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form)}}    
+            <tr>
+                <td>
+                    Login:
+                </td>
+                <td>
+                    {{ form_widget(form.usLogin)}}
+                </td>
+            </tr>    
+            <tr>
+                <td colspan="2">
+                    <div id="titulo">
+                        Roles
+                    </div>                
+                </td>
+            </tr>
+            <tr >
+                <td>
+                </td>
+                <td>
+                        <div id="listado">
+                            <div class="listado">
+                                <ul class="placas" data-prototype="{{ form_widget(form.placas.vars.prototype)|e }}">
+                                    {{ form_widget(form.placas) }}
+                                </ul>
+                            </div>
+                        </div>
+                           
+                 </td>
+            </tr>
+            <tr style="height: 30px;">
+                <td colspan="2">
+                    <div id="titulo">
+                        Asignar contraseña
+                    </div>                
+                </td>
+            </tr>    
+            <tr>
+                <td>
+                    Contraseña:
+                </td>
+                <td>
+                    {{ form_widget(form.usContrasena.pass) }}
+                </td>
+            </tr>    
+            <tr>
+                <td>
+                    Confirmar:
+                </td>
+                <td>
+                    {{ form_widget(form.usContrasena.confirm) }}
+                </td>
+            </tr>    
+              
+              
+        
+{# fin idempleado
+        
+    
+        
+        
 
         {# {{ form_row(form.usLogin) }}
         {{ form_row(form.usCorreo) }}
         {{ form_row(form.usContrasena) }}
  #}
-
-{# idempleado #}
-
-        
-        <select id="idempleado" name="listaempleado">
-            {% for empleado in empleados %}
-            <option value={{empleado.Idempleado}}>{{empleado.Nombre}}</option>
-            {% endfor %}
-        </select><br>
-
-{# fin idempleado #}
-
+        </table>
+    
+{{form_rest(form)}}
         {# {{ form_row(form.usActualizarContrasena) }} #}
-        <label>Activo/Inactivo</label>
-        <div class="slideThree">   
-            <input type="checkbox" value='0' id="slideThree" name="estado1" />
-            <label for="slideThree"></label>
-        </div>
-        <label>Desbloqueado/Bloqueado</label>
-        <div class="slideThree">    
-            <input type="checkbox" value='0' id="slideThree2" name="estado2" />
-            <label for="slideThree2"></label>
-        </div>
+            {# <label>Activo/Inactivo</label>
+            <div class="slideThree">   
+                <input type="checkbox" value='0' id="slideThree" name="estado1" />
+                <label for="slideThree"></label>
+            </div>
+            <label>Desbloqueado/Bloqueado</label>
+            <div class="slideThree">    
+                <input type="checkbox" value='0' id="slideThree2" name="estado2" />
+                <label for="slideThree2"></label>
+            </div>
+ #}
 
-
-         
         
-        
-        <p>
-            <button type="submit">Create</button>
-        </p>
+    <br>
+        <div class="botones">
+            <p>
+                <button type="submit" class="guardar">Guardar</button>
+                {# <a id="cancelar" class="cancelar" href"">Cancelar</a> #}
+                <button id="cancelar" class="cancelar">Cancelar</button>
+            </p>
+        </div>
     </form>
+    </div>
 
-        <ul class="record_actions">
+        {# <ul class="record_actions">
     <li>
         <a href="{{ path('usuario') }}">
             Back to the list
         </a>
     </li>
-</ul>
+</ul> #}
+
 {% endblock %}
 
 
-{% block script %}
+{# {% block script %}
     
-    <script type="text/javascript">
 
-    jQuery(document).ready(function($) {
+<script type="text/javascript">
 
-        $( "#idempleado" ).change(function() {
-            alert($(this).val());
+// Get the ul that holds the collection of tags
+var collectionHolder = $('ul.placas');
+var col=$('#hnr_sircimbundle_estudioradiologicotype_placas');
+// setup an "add a tag" link
+var $addTagLink = $('<a href="#" class="add_placa_link">+</a>');
+var $removeTagLink = $('<a href="#" class="remove_placa_link">x</a>');
+var $newLinkLi = $('<li></li>').append($addTagLink);
+var $delLinkLi = $('#hnr_sircimbundle_estudioradiologicotype_placas.required').append($removeTagLink);
+
+
+
+
+
+jQuery(document).ready(function() {
+
+    
+
+    $('#listado').perfectScrollbar({
+          wheelSpeed: 20,
+          wheelPropagation: false
         });
 
-        $("#slideThree" ).click(function() {
-            var valor = $("#slideThree").value;
-            if ($(this).is (':checked'))
-            {
-                
-            }
-            else
-            {
-                
-            }
+    $('#hnr_sircimbundle_usuariotype_usCorreo').on('input', function(event) {
+        var parameters = $('#hnr_sircimbundle_usuariotype_usCorreo').val();          
+        $('.guardar').removeAttr('existe');
+        $.getJSON(Routing.generate('correo_consultar', { email: parameters }),
+                            function(data) {
+                                $.each(data.regs, function(indice, reg) {
+                                    if(data.length!=0){
+                                        $('.guardar').attr('existe', '1');      
+                                    }    
+                                });
+                            });        
+    });
 
+    $('#hnr_sircimbundle_usuariotype_usLogin').on('input', function(event) {
+        var parameters = $('#hnr_sircimbundle_usuariotype_usLogin').val();          
+        $('.guardar').removeAttr('login');
+        $.getJSON(Routing.generate('login_consultar', { login: parameters }),
+                            function(data) {
+                                $.each(data.regs, function(indice, reg) {
+                                    if(data.length!=0){
+                                        $('.guardar').attr('login', '1');      
+                                    }    
+                                });
+                            });        
+    });
 
+    $('#hnr_sircimbundle_usuariotype_usContrasena_pass, #hnr_sircimbundle_usuariotype_usContrasena_confirm').on('input', function(event) {
+            $('#hnr_sircimbundle_usuariotype_usContrasena_pass').removeClass('errorform');
+            $('#hnr_sircimbundle_usuariotype_usContrasena_confirm').removeClass('errorform');
+        });
+
+    $('.guardar').click(function(event) {
+        var pass = $('#hnr_sircimbundle_usuariotype_usContrasena_pass').val();
+        var confirm = $('#hnr_sircimbundle_usuariotype_usContrasena_confirm').val();
+        // alert('ascsa');
+        var existe= $('.guardar').attr('existe');
+        var login= $('.guardar').attr('login');
+        var errores=0;
+
+        var check=0;
+
+         $('.btn_radio:checked').each(function() {
+            // $(this).val() es el valor del checkbox correspondiente
+           // alert('chequeado'); 
+           check++;
+           // $('#hnr_sircimbundle_usuariotype_placas_0_usroPredeterminado').prop('checked', true);
+        });// $('.btn_radio').attr('name', 'rol_predet');
+
+        if(check==0){
+            alertify.error("<div class='icon_msg'><img src={{ asset('bundles/hnrsircim/img/error.png') }}></div><div class=\"msg\">Seleccion un rol predeterminado para el usuario</div>");
+            return false;
+        }
+
+        if(pass!=confirm){
+            alertify.error("<div class='icon_msg'><img src={{ asset('bundles/hnrsircim/img/error.png') }}></div><div class=\"msg\">Las contraseñas no son iguales</div>");
             
-        });    
+            return false; 
+        }
+        if(existe==1){
+            
+                alertify.error("<div class='icon_msg'><img src={{ asset('bundles/hnrsircim/img/error.png') }}></div><div class=\"msg\">El e-mail '"+$('#hnr_sircimbundle_usuariotype_usCorreo').val()+"' ya fue creado</div>");
+            errores++;
+        }
+
+        if(login==1){
+            alertify.error("<div class='icon_msg'><img src={{ asset('bundles/hnrsircim/img/error.png') }}></div><div class=\"msg\">El login '"+$('#hnr_sircimbundle_usuariotype_usLogin').val()+"' ya fue creado</div>");
+            errores++;
+        }
+
+
+        var valido=1;
+        var pass1 = $('#hnr_sircimbundle_usuariotype_usContrasena_pass').val();
+        var pass2 = $('#hnr_sircimbundle_usuariotype_usContrasena_confirm').val();
+        
+        if(pass1!='' || pass2!='' ){
+            if(pass1.length<8){
+                mensaje_error("La contraseña debe tener mínimo 8 caracteres");
+                $('#hnr_sircimbundle_usuariotype_usContrasena_pass').addClass('errorform');
+            }
+            else{
+                if(pass1!=pass2){
+                    mensaje_error("Las contraseñas no son iguales");
+                    $('#hnr_sircimbundle_usuariotype_usContrasena_pass').addClass('errorform');
+                    $('#hnr_sircimbundle_usuariotype_usContrasena_confirm').addClass('errorform');
+                }
+                else{
+                    if(!CheckPassword(pass1)){
+                        mensaje_error("La contraseña debe tener al menos un número, una mayúscula y una minúscula");
+                        $('#hnr_sircimbundle_usuariotype_usContrasena_pass').addClass('errorform');
+                        $('#hnr_sircimbundle_usuariotype_usContrasena_confirm').addClass('errorform');       
+                    }
+                    else{
+                        // var login = 
+                        var login = $('#header label').attr('id');
+                        var contrasena = $('#hnr_sircimbundle_usuariotype_usContrasena_pass').val();
+                        // $.getJSON(Routing.generate('continuar_sistema', { login: login}), function(data) { 
+                        // }); 
+                        mensaje_exito("Contraseña modificada con éxito");
+                        valido=0;
+                    }
+                }
+            }
+        }
+        
+
+
+
+        if(errores!=0){
+            var login = $('#nombre_usr label').attr('id');
+            // $.getJSON(Routing.generate('usuario_create',{login:login}),
+            //                 function(data) {
+            //                     $.each(data.regs, function(indice, reg) {
+            //                             // $('.guardar').attr('error','1');
+                                    
+            //                     });
+
+            //                 });
+            
+            
+                // $('#deshabilitar').fadeOut('fast');
+                // $('#popup_box_rol').fadeOut('fast');
+                // alertify.success("<div class='icon_msg'><img src={{ asset('bundles/hnrsircim/img/info.png') }}></div><div class=\"msg\">El rol '"+$('#hnr_sircimbundle_roltype_roNombre').val()+"' creado con éxito</div>");   
+            // return false;
+            event.preventDefault();
+        }
+    });
+     
+
+
+    $('#cancelar').click(function(event) {
+        /* Act on the event */
+        $('#deshabilitar').fadeOut('fast');
+        $('#popup_box').fadeOut('fast');
+        alertify.log("<div class='icon_msg'><img src={{ asset('bundles/hnrsircim/img/info.png') }}></div><div class=\"msg\">Acción cancelada</div>");
+        return false;
+    });
+
+        
+
+    $('#hnr_sircimbundle_estudioradiologicotype_placas>div>label.required').hide('slow/400/fast');
+    col.children('div').each(function() {
+        addTagFormDeleteLink($(this));
+    }); 
+
+    collectionHolder.find('li').each(function() {
+        addTagFormDeleteLink($(this));
+
+    });
+
+    
+
+    // add the "add a tag" anchor and li to the tags ul
+    collectionHolder.append($newLinkLi);
+
+    // count the current form inputs we have (e.g. 2), use that as the new
+    // index when inserting a new item (e.g. 2)
+    collectionHolder.data('index', collectionHolder.find(':input').length);
+    
+
+    addTagForm(collectionHolder, $newLinkLi);
+
+
+    $addTagLink.on('click', function(e) {
+        // prevent the link from creating a "#" on the URL
+        e.preventDefault();
+
+        // add a new tag form (see next code block)
+        addTagForm(collectionHolder, $newLinkLi);
+        // $('.btn_radio').attr('name', 'rol_predet');
     });
 
 
-    </script>
+
+$(document).on('click', '.close', function(){
+        alert('del');
+    $(this).closest('#hnr_sircimbundle_estudioradiologicotype_placas').fadeOut(500, function() {
+        $(this).remove();
+    });
+});
+
+    
+});
 
 
-{% endblock %}
+
+
+function addTagForm(collectionHolder, $newLinkLi) {
+    // Get the data-prototype explained earlier
+    var prototype = collectionHolder.data('prototype');
+
+    // get the new index
+    var index = collectionHolder.data('index');
+
+    // Replace '__name__' in the prototype's HTML to
+    // instead be a number based on how many items we have
+    var newForm = prototype.replace(/__name__/g, index);
+
+    // increase the index with one for the next item
+    collectionHolder.data('index', index + 1);
+
+    // Display the form in the page in an li, before the "Add a tag" link li
+    var $newFormLi = $('<li></li>').append(newForm);
+    $newLinkLi.before($newFormLi);
+    
+
+
+    // add a delete link to the new form
+    addTagFormDeleteLink($newFormLi);
+    $('.btn_radio').click(function(event) {
+        /* Act on the event */
+        var id = $(this).attr('id');
+        // alert(id);
+        $('.btn_radio').prop('checked', false);
+        $('#'+id).prop('checked', true);
+     
+    });
+}
+
+function addTagFormDeleteLink($tagFormLi) {
+    var $removeFormA = $('<a class="link" href="#">x</a>');
+    $tagFormLi.append($removeFormA);
+
+    $removeFormA.on('click', function(e) {
+        // prevent the link from creating a "#" on the URL
+        e.preventDefault();
+
+        // remove the li for the tag form
+        $('input[name="rol_predet"]:checked').each(function() {
+            //$(this).val() es el valor del checkbox correspondiente
+           // alert('chequeado'); 
+           $('#hnr_sircimbundle_usuariotype_placas_0_usroPredeterminado').prop('checked', true);
+        });
+
+        $tagFormLi.remove();
+        
+
+        
+
+    });
+}
+    
+
+
+    $('#hnr_sircimbundle_usuariotype_placas_0_usroPredeterminado').prop('checked', true);//Se carga el radiobutton seleccionado
+
+</script>
+
+
+
+
+{% endblock %} #}

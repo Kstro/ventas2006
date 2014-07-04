@@ -1,66 +1,116 @@
-{% extends 'hnrsircimBundle::Layout.html.twig' %}
 
 {% block body -%}
-    <h1>Estudio</h1>
+    <div id="titulo_barra">
 
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Esnombre</th>
-                <td>{{ entity.esNombre }}</td>
-            </tr>
-            <tr>
-                <th>Esabreviatura</th>
-                <td>{{ entity.esAbreviatura }}</td>
-            </tr>
-            <tr>
-                <th>Estipo</th>
-                <td>{{ entity.esTipo }}</td>
-            </tr>
-            <tr>
-                <th>Esdescripcion</th>
-                <td>{{ entity.esDescripcion }}</td>
-            </tr>
-            <tr>
-                <th>Esusuariocreacion</th>
-                <td>{{ entity.esUsuarioCreacion }}</td>
-            </tr>
-            <tr>
-                <th>Esusuariomodificacion</th>
-                <td>{{ entity.esUsuarioModificacion }}</td>
-            </tr>
-            <tr>
-                <th>Esfechacreacion</th>
-                <td>{{ entity.esFechaCreacion|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Esfechamodificacion</th>
-                <td>{{ entity.esFechaModificacion|date('Y-m-d H:i:s') }}</td>
-            </tr>
-        </tbody>
-    </table>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('estudio') }}">
-            Back to the list
+            Consultar Estudio
+        <a class="cerrar" href="#" style="color: white;">
+            x
         </a>
-    </li>
-    <li>
-        <a href="{{ path('estudio_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('estudio_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE" />
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+
+    </div>
+    <br>
+    <br>
+    <table class="tbl_nuevo" id="tbl_estudio" align="center">
+            <tr>
+                <td colspan="2">
+                    <div id="titulo">
+                        Información del Estudio
+                    </div>                
+                </td>
+            </tr>
+            
+            <tr>
+                <td>
+                    Nombre:
+                </td>
+                <td>
+                    {{entity.esNombre}}
+                </td>
+            </tr>    
+
+            <tr>
+                <td>
+                    Descripción:
+                </td>
+                <td>
+                    {{entity.esAbreviatura}}
+                </td>
+            </tr>  
+
+            <tr>
+                <td>
+                    Descripción:
+                </td>
+                <td>
+                    {{entity.esTipo}}
+                </td>
+            </tr>  
+
+            <tr>
+                <td>
+                    Descripción:
+                </td>
+                <td>
+                    {{entity.esDescripcion}}
+                </td>
+            </tr>    
+
+            <tr>
+                <td colspan="2">
+                    <div id="titulo">
+                        Horarios del sistema
+                    </div>                
+                </td>
+            </tr>
+            <tr> 
+                <td colspan="2" style="text-align: left; padding-left: 40%;">
+
+                    
+                    <ol style="list-style: decimal outside none;">
+                            {% for key, Ho in horario %}
+                                <li id="l" class="l">
+                                             {{ Ho.hoDia }} {{ Ho.hoHoraInicio }} {{ Ho.hoHoraFin }}<br><br>
+                                             {# <a class="link" href="#" style="visibility: hidden;">x</a> #}
+                                </li>                   
+                            {% endfor %}
+
+                    </ol>
+                            {# <div class="listado">
+                                <ul class="placas" data-prototype="{{ form_widget(edit_form.placas.vars.prototype)|e }}">
+                                    {{ form_widget(edit_form.placas) }}
+                                </ul>
+                            </div> #}
+                           
+                 </td>
+            </tr>
+            
+              
+              
+        </table>
+
+
+{% endblock %}
+
+{% block script %}
+    
+
+<script type="text/javascript">
+
+
+jQuery(document).ready(function() {
+
+    $('.cerrar').click(function(event) {
+        /* Act on the event */
+        $('#deshabilitar').fadeOut('fast');
+        $('#popup_box_estudio').fadeOut('fast');
+        return false;
+    });
+});
+
+
+
+
+</script>
+
 {% endblock %}
