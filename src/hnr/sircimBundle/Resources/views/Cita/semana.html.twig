@@ -1,0 +1,330 @@
+
+    
+
+<div id="div_left">
+    <input id="cal" type="hidden"></input>
+</div>
+
+<div id="citas_semana">
+    <div class="semana-nomdias">
+        <table>
+            <tr>
+                <td></td>
+                <td>Lun</td>
+                <td>Mar</td>
+                <td>Mié</td>
+                <td>Jue</td>
+                <td>Vie</td>
+                <td>Sáb</td>
+                <td>Dom</td>
+            </tr>
+        </table>
+    </div>
+        
+    <div class="tabla-hora"> 
+        <table>
+            {#<tr><td class="indicador_hora">9:00 am</td></tr>
+            <tr><td></td></tr>
+            <tr><td></td></tr>
+            <tr><td class="indicador_hora">10:00 am</td></tr>
+            <tr><td></td></tr>
+            <tr><td></td></tr>
+            <tr><td class="indicador_hora">1:00 pm</td></tr>
+            <tr><td class="indicador_hora">2:00 pm</td></tr>
+            <tr><td></td></tr>
+            <tr><td></td></tr>
+            <tr><td class="indicador_hora">5:00 pm</td></tr>
+            <tr><td></td></tr>
+            <tr><td></td></tr>#}
+        </table>
+    </div>
+        
+    <div class="tabla-dia" id="d0"><table></table></div>
+    <div class="tabla-dia" id="d1"><table></table></div>
+    <div class="tabla-dia" id="d2"><table></table></div>
+    <div class="tabla-dia" id="d3"><table></table></div>
+    <div class="tabla-dia" id="d4"><table></table></div>
+    <div class="tabla-dia" id="d5"><table></table></div>
+    <div class="tabla-dia" id="d6"><table></table></div>
+</div>    
+
+
+{% block script %}
+    
+    <script>
+        var count;
+        var string = new String();
+        var login = $('#nombre_usr label').attr('id');
+        $(document).ready(function() {
+            
+            $('#cal').Zebra_DatePicker({
+                format: 'Y-m-d',
+                always_visible: $('#div_left'),
+                show_clear_date: false,
+                show_select_today: false,
+                onSelect: function(dateText,inst) {
+                    //date = new Date(dateText.substring(0,4),(dateText.substring(5,7)-1),dateText.substring(8));
+                    
+                    fecha = dateText;
+                    var href = Routing.generate('cita_semana',{login:login});
+                    //alert(href);
+                    $('#citas_semana').load(href+' #citas_semana>*', function(){
+                        getFechasSemana(dateText);
+                    });
+                    
+                }
+            });
+            
+            updatecal();
+            getFechasSemana(fecha);
+        });
+        
+        function getFechasSemana(f){
+            var date = new Date(f.substring(0,4),(f.substring(5,7)-1),f.substring(8)),
+                dias = Array(),
+                td_sel = $('.dp_daypicker td.dp_selected'),
+                first = (date.getDay() === 1 ? td_sel : td_sel.siblings().first());
+              
+              if( first.html() > date.getDate() && first.siblings().last().html() >= date.getDate() ){
+                  m = parseInt((date.getMonth() == 0 ? 12 : date.getMonth()));
+                  y = parseInt((date.getMonth() == 0 ? date.getFullYear()-1 : date.getFullYear()));
+              }    
+              else if( first.html() <= date.getDate() && first.siblings().last().html() < date.getDate() ){
+                  m = parseInt(date.getMonth())+1;
+                  y = parseInt(date.getFullYear());
+              }    
+              else{
+                  m = parseInt(date.getMonth())+1;
+                  y = parseInt(date.getFullYear());
+              }
+              
+              for(i=0; i<7; i++){
+                if(i == 0){  
+                    dias[i] = y+"-"+
+                              (m<10?'0'+m:m)+"-"+
+                              (first.html()<10?'0'+first.html():first.html());
+                    $act = parseInt(first.html());
+                }
+                else{
+                    if($act > parseInt(first.siblings().eq(i-1).html()) ){
+                        m = (m == 12 ? 1 : m+1);
+                        y = (m == 1 ? ++y : y);
+                    }    
+                    else if($act < parseInt(first.siblings().eq(i-1).html()) ){
+                        m = m;
+                    }
+                    dias[i] = y+"-"+
+                              (m<10?'0'+m:m)+"-"+
+                              (first.siblings().eq(i-1).html()<10?'0'+first.siblings().eq(i-1).html():first.siblings().eq(i-1).html());
+                    $act = parseInt(first.siblings().eq(i-1).html());
+                }   
+              }             
+              
+              if( dias[0].substring(0,4) !== dias[6].substring(0,4) ){
+                  $('#cal_next').empty().append(
+                      //'30 Diciembre 2013 - 05 Enero 2014'
+                      dias[0].substring(8)+' Diciembre '+dias[0].substring(0,4)+' - '+
+                      dias[6].substring(8)+' Enero '+dias[6].substring(0,4)        
+                  );
+              }
+              else if( dias[0].substring(5,7) !== dias[6].substring(5,7) ){
+                  $('#cal_next').empty().append(
+                      //'24 Febrero - 02 Marzo 2014'
+                      dias[0].substring(8)+' '+convertir_mes_semana(dias[0].substring(5,7))+' - '+
+                      dias[6].substring(8)+' '+convertir_mes_semana(dias[6].substring(5,7))+' '+dias[6].substring(0,4)
+                  );
+              }
+              else{
+                  $('#cal_next').empty().append(
+                     dias[0].substring(8)+' - '+dias[6].substring(8)+' '+convertir_mes_semana(dias[6].substring(5,7))+' '+dias[6].substring(0,4)
+                  );
+              }
+              
+              for(i=0; i<7; i++){
+                var convert = dias[i].substring(8)+'/'+dias[i].substring(5,7);
+                $('.semana-nomdias td:nth-of-type('+(i+2)+')').append(' '+convert);                
+              }
+              
+              asd(dias);
+        }
+        
+        function asd(dias){
+            $('.tabla-hora table').empty();
+            $.getJSON(Routing.generate('ci_consultar_num')+'/'+dias[0]+'/'+dias[6],
+                function(data) {
+                    if(data.success){
+                        $.each(data.cnt, function(indice, reg) {
+                            if(reg.hora.substring(0,1) === '9')
+                                $indicador_hora = reg.hora+' am';
+                            else if(reg.hora.substring(0,2) < 10)
+                                $indicador_hora = reg.hora.substring(1)+' am';
+                            else if(reg.hora.substring(0,2) >= 10 && reg.hora.substring(0,2) < 12)
+                                $indicador_hora = reg.hora+' am';
+                            else{                                
+                                $indicador_hora = (reg.hora.substring(0,2) === '12' ? reg.hora+' pm' : (reg.hora.substring(0,2)-12)+reg.hora.substring(2)+' pm');
+                            }    
+                            
+                            if( reg.cnt === 0 ){
+                                $('.tabla-hora > table').append('<tr><td class="indicador_hora">'+$indicador_hora+'</td></tr>');
+                            }
+                            else{
+                                for(i=0; i<reg.cnt; i++){
+                                    if(i === 0)
+                                        $('.tabla-hora > table').append('<tr><td class="indicador_hora">'+$indicador_hora+'</td></tr>');
+                                    else
+                                        $('.tabla-hora > table').append('<tr><td></td></tr>');
+                                }
+                            }
+                        });
+                        
+                        for(i=0; i<7; i++){
+                            //alert(i);
+                            $.each(data.cnt, function(indice, reg) {
+                                //alert(reg.hora);
+                                //alert(reg.cnt);
+                                if( reg.cnt === 0 ){
+                                    $('#d'+i+'> table').append('<tr><td></td></tr>');
+                                }
+                                for(j=0; j<reg.cnt; j++){
+                                    if(typeof data.regs[0] !== 'undefined' && data.regs[0] !== null){
+                                        $hora = data.regs[0]["soHora"]["date"];
+                                        //$t = ($hora.substring(11,13) < 10 ? $hora.substring(12,13) : $hora.substring(11,13))+$hora.substring(13,16);
+                                        //alert($hora.substring(11,16));
+                                        //alert('reg.hora: '+reg.hora);
+                                        $t = $hora.substring(11,16);
+                                        if(dias[i] === data.regs[0]["soFecha"]["date"].substring(0,10) && $t === (reg.hora === '9:00' || reg.hora ==='9:30'? '0'+reg.hora :reg.hora)){
+                                        // if(dias[i] === data.regs[0]["soFecha"]["date"].substring(0,10) && $t === (reg.hora === '9:00'? '0'+reg.hora : reg.hora) ){
+                                            if( data.regs[0]["ciEstado"] === 'No Asistida')
+                                                $td = '<tr><td class="no_asistida"><table>';
+                                            else
+                                                $td = '<tr><td class=\"'+data.regs[0]["ciEstado"]+'\"><table>';
+                                            
+                                            $td+= '<tr><td>'+data.regs[0]["idMntExpediente"]+'</td><td>'+data.regs[0]["esAbreviatura"]+'</td><td>'+data.regs[0]["ciEstado"]+'</td></tr></table></td></tr>'; 
+                                            
+                                            $('#d'+i+'> table').append($td);
+                                            data.regs.splice(0,1);
+                                        }
+                                        else{
+                                            //alert('entra1');
+                                            $('#d'+i+'> table').append('<tr><td></td></tr>');
+                                        }
+                                        
+                                        //data.regs.splice(0,1);
+                                        
+                                    }
+                                    else{
+                                        //alert('entra2');
+                                            $('#d'+i+'> table').append('<tr><td></td></tr>');
+                                        }
+                                }
+                            });
+                        }
+                        /*$.each(data.cnt, function(indice, reg) {
+                            alert(indice);
+                            $h = reg.hora;
+                            if( reg.cnt === 0 ){
+                                $('.tabla-hora table').append('<tr><td class="indicador_hora">'+reg.hora+'</td></tr>');
+                                $('.tabla-dia table').append('<tr><td></td></tr>');
+                            }
+                            else{
+                                for(i=0; i<reg.cnt; i++){
+                                    if(i === 0)
+                                        $('.tabla-hora table').append('<tr><td class="indicador_hora">'+reg.hora+'</td></tr>');
+                                    else
+                                        $('.tabla-hora table').append('<tr><td></td></tr>');
+                                    
+                                    //for(j=1; j<=8; j++)
+                                    //        $('#d'+j+' table').append('<tr><td></td></tr>');
+                                    //if(data.regs === null)
+                                    //    alert('0');
+                                    if(typeof data.regs[0] !== 'undefined' && data.regs[0] !== null){
+                                        $t = (reg.soHora.date.substring(11,13) < 10 ? reg.soHora.date.substring(12,13) : reg.soHora.date.substring(11,13))+reg.soHora.date.substring(13,16);
+                                        
+                                        if(dias[i] === reg.soFecha.date.substring(0,10) && $t === '11:00'){
+                                            alert('d'+i+': '+reg.idMntExpediente+' - '+reg.esAbreviatura+' - '+reg.ciEstado);
+                                        }
+                                        
+                                        data.regs.splice(0,1);
+                                        
+                                    }
+                                    
+                                    else{
+                                        alert('vacio');
+                                    }
+                                    
+                                    
+                                    //alert('test');
+                                    /*if($h === '10:00'){
+                                        alert(data.regs[0]["soHora"]["date"]);
+                                        data.regs.splice(0,1);
+                                    }*/
+                                //}       
+                            //}
+                            /*$('.tabla-hora table').append('<tr><td class="indicador_hora">'+reg.hora+'</td></tr>');
+                            for(i=1; i<reg.cnt; i++)
+                                $('.tabla-hora table').append('<tr><td></td></tr>');*/
+                        //});
+                        /*$.each(data.regs, function(indice, reg) {
+                                //alert( reg.soFecha.date.substring(0,10) );
+                                $t = (reg.soHora.date.substring(11,13) < 10 ? reg.soHora.date.substring(12,13) : reg.soHora.date.substring(11,13))+reg.soHora.date.substring(13,16);
+                                for(i=0; i<7; i++){
+                                    if(dias[i] === reg.soFecha.date.substring(0,10) && $t === '11:00'){
+                                     alert('d'+i+': '+reg.idMntExpediente+' - '+reg.esAbreviatura+' - '+reg.ciEstado);
+                                    } 
+                                    else
+                                     alert('d'+i+': vacio');
+                                }
+                            });*/
+                    }
+                    else{
+                        mensaje_error('La semana seleccionada no posee citas programadas.');
+                        
+                    }
+                    $("#citas_semana").mCustomScrollbar({
+                        autoHideScrollbar:true,
+                        theme:"dark-thin"
+                    });
+            });            
+        }       
+        
+        function convertir_mes_semana($mes){            
+            //alert('mes: '+$mes);
+            switch($mes){
+                case '01': $mes = 'Enero';      break;
+                case '02': $mes = 'Febrero';    break;
+                case '03': $mes = 'Marzo';      break;
+                case '04': $mes = 'Abril';      break;
+                case '05': $mes = 'Mayo';       break;
+                case '06': $mes = 'Junio';      break;
+                case '07': $mes = 'Julio';      break;
+                case '08': $mes = 'Agosto';     break;
+                case '09': $mes = 'Septiembre'; break;
+                case '10': $mes = 'Octubre';    break;
+                case '11': $mes = 'Noviembre';  break;
+                case '12': $mes = 'Diciembre';  break;    
+            }
+            return $mes;
+        }
+        
+                
+            
+            /*$table = '<tr><td class="pendiente"><table><tr><td>11581-13</td><td>TAC</td><td>Pendiente</td></tr></table></td></tr>';
+                $table+= '<tr><td></td></tr>';
+                $table+= '<tr><td class="cancelada"><table><tr><td>11581-13</td><td>TAC</td><td>Cancelada</td></tr></table></td></tr>';
+                $table+= '<tr><td class="no_asistida"><table><tr><td>11581-13</td><td>TAC</td><td>No Asistida</td></tr></table></td></tr>';
+                $table+= '<tr><td class="pendiente"><table><tr><td>11581-13</td><td>TAC</td><td>Pendiente</td></tr></table></td></tr>';
+                $table+= '<tr><td class="pendiente"><table><tr><td>11581-13</td><td>TAC</td><td>Pendiente</td></tr></table></td></tr>';
+                $table+= '<tr><td></td></tr>';
+                $table+= '<tr><td class="cancelada"><table><tr><td>11581-13</td><td>TAC</td><td>Cancelada</td></tr></table></td></tr>';
+                $table+= '<tr><td class="no_asistida"><table><tr><td>11581-13</td><td>TAC</td><td>No Asistida</td></tr></table></td></tr>';
+                $table+= '<tr><td class="pendiente"><table><tr><td>11581-13</td><td>TAC</td><td>Pendiente</td></tr></table></td></tr>';
+                $table+= '<tr><td></td></tr>';
+                $table+= '<tr><td class="cancelada"><table><tr><td>11581-13</td><td>TAC</td><td>Cancelada</td></tr></table></td></tr>';
+                $table+= '<tr><td class="asistida"><table><tr><td>11581-13</td><td>TAC</td><td>Cancelada</td></tr></table></td></tr>';
+                
+                
+                $('.tabla-dia table').append($table);*/    
+        
+    </script>
+    
+{% endblock %}        

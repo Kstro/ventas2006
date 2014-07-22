@@ -1,0 +1,95 @@
+#tablarol {
+	margin: 0 auto;
+	
+}
+
+#tablarol table{
+	border: 1px solid #BFBFBF;
+	border-collapse: collapse;
+	width: 300px;
+}
+
+#tablarol table td {
+	width: 300px;
+	padding-left: 5px;
+}
+
+#tablarol table tr{
+	height: 27px;
+	border: 1px solid #E2E2E2;
+	margin: 0 auto;
+}
+
+
+#tablarol tr:nth-child(odd) {
+	background: #F2F2F2;
+}
+
+#opciones2 {
+	margin: 0 auto;
+	border-collapse: collapse;
+	border: 0px solid white;
+	width: 300px;
+}
+
+
+#opciones2 td{
+
+	height: 2px;
+	width: 1px;
+	text-align: right;
+}
+
+#opciones2 td:nth-child(1) {
+	width: 100px;
+}
+
+#opciones2 td:nth-child(3) {
+	width: 12px;
+}
+
+#opciones2 td:nth-child(2) {
+	width: 160px;
+}
+
+
+
+#opciones2 img {
+	padding-top: 5px;
+}
+
+#opciones3 img {
+	padding-top: 5px;
+}
+
+#opciones2 select {
+	height: 23px;
+	width: 170px;
+	border: 1px solid #BFBFBF;
+	background: #F2F2F2;
+	color: #7F7F7F;
+	overflow: hidden;
+	-webkit-appearance: none;
+	background:url(../imagenes/opciones.png) no-repeat right center;
+
+}
+
+#opciones3 select  {
+	height: 23px;
+	width: 155px;
+	border: 1px solid #BFBFBF;
+	background: #F2F2F2;
+	color: #7F7F7F;
+	overflow: hidden;
+	-webkit-appearance: none;
+	background:url(../imagenes/opciones.png) no-repeat right center;
+
+}
+
+
+
+
+
+
+
+

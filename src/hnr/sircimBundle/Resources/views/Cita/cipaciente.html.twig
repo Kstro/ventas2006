@@ -1,0 +1,81 @@
+<div id="div_left">
+    <table id="citas_info_paciente">
+        <tr> 
+	  <td colspan="2"> <img src="{{ asset('bundles/hnrsircim/img/paciente.png') }}"> Información del paciente </td> 
+        </tr> 
+        <tr> 
+	  <td colspan="2"> Registro: </td> 
+	</tr>
+        <tr> 
+	  <td colspan="2"> {{ paciente[0]["NumExpediente"] }} </td> 
+        </tr>
+        <tr> 
+	  <td colspan="2"> Nombre: </td> 
+	</tr> 
+	<tr> 
+	  <td colspan="2"> {{ paciente[0]["Nombre"] }} </td> 
+	</tr>
+        <tr> 
+	  <td colspan="2"> Edad: </td> 
+	</tr> 
+        <tr> 
+	  <td colspan="2"> {{paciente[0]['Edad']}} </td> 
+	</tr>
+    </table>
+</div>
+
+<div id="citas_paciente">
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Estudio</th>
+                <th>Servicio</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Estado</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+           {% for entity in entities %}
+               <tr id="{{ entity.id }}">
+                 <td></td>  
+                 <td>{{ entity.idSolicitud.getEstudioArea().getIdEstudio() }}</td>
+                 <td>{{ entity.idSolicitud.idMntAtenAreaModEstab }}</td>
+                 
+                 <td>{{ entity.idSolicitud.soFecha|date('Y-m-d') }}</td>   
+                 
+                 {% if entity.idSolicitud.soHora|date('H:i')[:2] < '12' %}
+                    <td>{{ entity.idSolicitud.soHora|date('H:i') }} am</td>
+                 {% elseif entity.idSolicitud.soHora|date('H:i')[:2] == '12' %}
+                    <td>{{ entity.idSolicitud.soHora|date('H:i') }} pm</td>
+                 {% else %}    
+                    <td>{{ entity.idSolicitud.soHora|date('H:i')[:2] - 12 }}:{{ entity.idSolicitud.soHora|date('H:i')[3:2] }} pm</td>
+                 {% endif %}
+                 
+                 {% if entity.ciEstado == 'Pendiente' %}
+                    <td class="pendiente">{{ entity.ciEstado }}</td>
+                 {% elseif entity.ciEstado == 'Cancelada' %}
+                    <td class="cancelada">{{ entity.ciEstado }}</td>
+                 {% elseif entity.ciEstado == 'No Asistida' %}
+                    <td class="no_asistida">{{ entity.ciEstado }}</td>
+                 {% else %}
+                    <td class="asistida">{{ entity.ciEstado }}</td>
+                 {% endif %}
+                    
+                 <td class="td_list">
+                    <div class="wrapper">
+                        {% set factual = fecha_actual %}
+                        {% if entity.idSolicitud.soFecha|date('Y-m-d') >= factual %}
+                            <button class="btn_list edit" title="Editar" onclick="location.href='{{ path('cita_edit', { 'id': entity.id ,'login':'wantonio'}) }}';"></button>
+                        {% endif %}
+                            
+                        <button class="btn_list view" title="Consultar" href="{{ path('cita_show', { 'id': entity.id, 'nombre': paciente[0]["Nombre"] }) }}"></button>
+                    </div>
+                 </td>
+               </tr>
+           {% endfor %}
+        </tbody>
+    </table>
+</div>

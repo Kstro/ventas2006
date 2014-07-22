@@ -1,0 +1,132 @@
+{% extends 'hnrsircimBundle::Layout.html.twig' %}
+
+
+{% block stylesheets %}
+   {{ parent() }}
+   {# <link href="{{ asset('bundles/hnrsircim/js/jquery-ui-1.10.3.custom/css/custom-theme/jquery-ui-1.10.3.custom.css') }}" rel="stylesheet" type="text/css" /> #}
+   <link href="{{ asset('bundles/hnrsircim/js/Zebra_Datepicker-master/public/css/default.css') }}" rel="stylesheet" type="text/css" /> 
+   
+{% endblock %}
+   
+{% block javascripts %}
+   {{ parent() }}
+   {# <script type="text/javascript" src="{{ asset('bundles/hnrsircim/js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js') }}" ></script> #}
+   <script type="text/javascript" src="{{ asset('bundles/hnrsircim/js/Zebra_Datepicker-master/public/javascript/zebra_datepicker(bitacora).js') }}" ></script>   
+   <script type="text/javascript" src="{{ asset('bundles/hnrsircim/js/Modulos/expediente/buscar_paciente.js') }}" ></script>   
+   
+{% endblock %}
+
+
+{% block configuracion %}
+    
+    <a id="conf_cuenta" href="{{ path('usuario_cuenta', { 'login':login,'opc':'0' }) }}">Configuración de cuenta</a>
+
+{% endblock %}
+
+
+{% block lista_modulos %}
+    {% for modulo in modulos %}
+        <li><a href="{{path(modulo.osURL,{'login':usuario})}}">{{modulo}}</a></li>
+    {% endfor %}
+{% endblock %}
+
+
+
+
+{% block nombre_usr %}
+    <label id="{{ usuario }}">
+        {{ usuario }}
+    </label> 
+{% endblock %} 
+
+{% block mod_activo %} 
+    
+    Módulo de expediente radiológico
+
+{% endblock %} 
+
+{% block botones_modulo %}
+    <div class="menu_grupo">
+        <button href="" id="buscar" class="btn btn_destacado"></button>
+        
+    </div>
+    <div class="menu_grupo">
+        <button href="" id="comparar" class="btn btn_destacado"></button>
+        
+    </div>
+    <div class="menu_grupo">
+        <label class="primero  btn btn_regular btn_toggle" for="input_cita">Citas</label>
+        <input type="radio" name="toggle" id="input_cita">
+        <input type="radio" name="toggle" id="input_estudio">
+        <label class="ultimo btn btn_regular btn_toggle" for="input_estudio">Estudios</label>
+    </div>
+    
+    <div class="menu_grupo">
+        <input type="text" name="toggle" id="expediente">
+    </div>
+    <div class="menu_grupo">
+        <label href="{{ asset('bundles/hnrsircim/img/loading.gif') }}" id="exp_label">Expediente:</label>
+    </div>
+    <div id="opc_busqueda">
+        <table class="tbl_busqueda" align="center">
+            <tr>
+                <td colspan="2">
+                    Realizar búsqueda por:
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Estudio:
+                </td>
+                <td>
+                    <select type="text" name="toggle" id="desplegable_busqueda" class="desplegable">
+                            <option value="0">Seleccione un estudio...</option>
+                        {% for estudio in estudios %}
+                            <option value="{{estudio.esNombre}}">{{estudio.esNombre}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Fecha:
+                </td>
+
+                <td>
+                    <input type="text" class="textos regular date" id="fecha_busqueda" name="toggle" >
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button class="buscar guardar">Buscar</button>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+
+{% endblock %}
+
+{% block body -%}
+                    <br>
+<div id="paciente_historial">
+    
+</div>
+{% endblock %}
+
+
+
+{% block emergente %}
+
+<div id="deshabilitar"></div>
+
+<div id="popup_box_comparar">
+    <div id="titulo_barra">        
+        <a class="cerrar" href="#">x</a>
+    </div>
+    <div id="imagen1"></div>
+    <div id="imagen2"></div>
+</div>
+    
+
+{% endblock %}

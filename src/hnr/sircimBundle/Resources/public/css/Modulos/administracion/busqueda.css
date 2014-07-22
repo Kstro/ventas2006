@@ -1,0 +1,75 @@
+#opc_busqueda{
+	
+	
+	/*visibility: hidden;*/
+    opacity: 1;
+    position: absolute;
+    top: 125%;
+    /*left: 0%;*/
+    right: 0%;
+    float: right;
+    width: 80%;
+    border: 1px solid;
+    border-color: #d9d9d9;
+    border-radius: 3px;
+    background-color: #fff;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    z-index: 100;
+    -webkit-box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.9), 0 1px 2px rgba(0, 0, 0, 0.1);
+                box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.9), 0 1px 2px rgba(0, 0, 0, 0.1);
+
+}
+
+#desplegable_busqueda, #desplegable_busqueda_trans{
+	z-index: 101;
+	border: 1px solid rgb(191, 191, 191);
+	width: 190px;
+}
+
+#fecha_busqueda, #fecha_busqueda_trans{
+	z-index: 102;
+	border: 1px solid rgb(191, 191, 191);
+	width: 190px;
+	background: transparent;
+}
+
+.tbl_busqueda{
+	font-size: 12px;
+	width: 100%;
+}
+
+	.tbl_busqueda tr{
+		height: 40px;
+		text-align: center;
+
+	}
+
+	.tbl_busqueda tr td{
+		vertical-align: middle;
+		padding-right: 10px;
+		
+	}
+
+		.tbl_busqueda td:nth-child(1){
+			width: 30%;
+			/*padding-right: 10px;*/
+			text-align: right;
+
+		}
+
+		.tbl_busqueda td:nth-child(2){
+			width: 70%;
+			text-align: left;
+		}
+
+	.tbl_busqueda tr:first-child td{
+		text-align: left;
+		padding-left: 10px;
+	}
+
+	.tbl_busqueda tr:last-child td{
+		text-align: center;
+		padding-left: 10px;
+
+	}

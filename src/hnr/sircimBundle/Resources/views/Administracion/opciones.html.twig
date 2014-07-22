@@ -1,0 +1,110 @@
+{% block body -%}
+                                        <table id="opciones_admin">
+                                            <tr>
+                                                <td>
+                                                    <a href="{{ path('usuario') }}">
+                                                        <img src="{{ asset('bundles/hnrsircim/img/usuarios.png')}}">
+                                                    </a>
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                                <td>
+                                                    <a href="{{ path('rol') }}">
+                                                        <img src="{{ asset('bundles/hnrsircim/img/roles.png')}}">
+                                                    </a>
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                                <td>
+                                                    <a href="{{ path('area') }}">
+                                                        <img src="{{ asset('bundles/hnrsircim/img/areas.png')}}">
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Usuarios
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                                <td>
+                                                    Roles
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                                <td>
+                                                    Áreas
+                                                </td>
+                                                
+                                            </tr>
+                                            <tr colspan="5">
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <a href="{{ path('estudio') }}">
+                                                        <img src="{{ asset('bundles/hnrsircim/img/estudios.png')}}">
+                                                    </a>
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                                <td>
+                                                   
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                                <td>
+                                                    <a href="{{ path('tamanoplaca') }}">
+                                                        <img src="{{ asset('bundles/hnrsircim/img/tamaños.png')}}">
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Estudios
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                                <td>
+                                                   
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                                <td>
+                                                    Tam. peliculas
+                                                </td>
+                                            </tr>
+                                        </table>
+    {% endblock %}
+
+
+    {% block script %}
+
+        <script type="text/javascript">
+
+        jQuery(document).ready(function($) {
+            
+            
+            $('#opciones_admin a').click(function(event) {
+                /* Act on the event */
+                var href = $(this).attr('href');
+                $('#area_trabajo').load(href);
+                $('#atras').fadeToggle('slow');
+                return false;
+            });
+
+
+            
+        });
+
+        </script>
+
+    {% endblock %}

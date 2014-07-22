@@ -1,0 +1,54 @@
+<table>
+    <thead>
+        <tr>
+            <th></th>
+            <th>Registro</th>
+            <th>Nombre</th>
+            <th>Edad</th>
+            <th>Estudio</th>
+            <th>Técnico</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+            {% set time = '00:00' %}
+            {% for key,entity in entities %}
+                <tr>
+                    {# <td><a href="{{ path('estudioradiologico_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td> #}
+                    {% if entity.idSolicitud.soHora|date('H:i') > time %}
+                        {% set time = entity.idSolicitud.soHora|date('H:i') %}
+                        {% if entity.idSolicitud.soHora|date('H:i')[:2] < '12' %}
+                            <td class="indicador_hora">{{ time }} am</td>
+                        {% elseif entity.idSolicitud.soHora|date('H:i')[:2] == '12' %}
+                            <td class="indicador_hora">{{ time }} pm</td>
+                        {% else %}    
+                            <td class="indicador_hora">{{ time[:2] - 12 }}:{{ time[3:2] }} pm</td>
+                        {% endif %}
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+
+                    <td>{{ entity.idSolicitud.idMntExpediente }}</td>
+                    <td>{{ attribute(pacientes, key) }}</td>
+                    <td>{{ entity.erEdadPaciente }} años</td>
+                    {% if entity.idSolicitud.getEstudioArea().getIdEstudio()|length > 25 %}
+                        <td>{{ entity.idSolicitud.getEstudioArea().getIdEstudio()[:26] }}...</td>
+                    {% else %}
+                        <td>{{ entity.idSolicitud.getEstudioArea().getIdEstudio() }}</td>
+                    {% endif %}    
+                    {# <td>{{ entity.idempleado }}</td> #}
+                    {% if attribute(empleados, key)|length > 26 %} 
+                        <td>{{ attribute(empleados, key)[:26] ~ '...'}}</td>
+                    {% else %}    
+                        <td>{{ attribute(empleados, key) }}</td>
+                    {% endif %}
+                    <td class="td_list">
+                        <div class="wrapper">
+                            <button class="btn_list edit" title="Editar" onclick="location.href='{{ path('estudioradiologico_edit', { 'id': entity.id,'login':login }) }}';"></button>
+                            <button class="btn_list view" title="Consultar" onclick="location.href='{{ path('estudioradiologico_show', { 'id': entity.id, 'nombre': attribute(pacientes, key), 'tecnico': attribute(empleados, key),'login':login }) }}';"></button>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+    </tbody>
+</table>

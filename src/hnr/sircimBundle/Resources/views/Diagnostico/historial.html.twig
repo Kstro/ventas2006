@@ -1,0 +1,248 @@
+{% block javascripts %}                
+     <script src="{{ asset('bundles/hnrsircim/js/Modulos/administracion/diagnostico/historial.js') }}" type="text/javascript"></script>
+{% endblock %}
+
+{% block body %}
+
+{% if citas or estudios and paciente %}
+<br>
+        <div id="paciente_tabla">
+            
+            <table>
+            <tr>
+                <td colspan="2">
+                    <img src="{{ asset('bundles/hnrsircim/img/paciente.png') }}">
+                    Información del paciente
+                </td>
+
+            </tr>
+            <tr>
+            </tr>
+            <tr>
+
+                <td colspan="2">
+                    
+                    Registro:    
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    {{exp}}
+                </td>
+            </tr>
+            <tr>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    Nombre:    
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    {# {{ attribute(paciente.Nombre, 0) }} #}
+                    {{paciente[0]['Nombre']}}
+                </td>
+            </tr>
+            <tr>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    Edad:    
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    {{paciente[0]['Edad']}}
+                </td>
+            </tr>
+            <tr>
+            </tr>
+            <tr>
+                <td>
+                    {{ estudios|length }}  <br> Estudios
+                </td>
+                
+                <td>
+                    {{ citas|length }} <br> Citas
+                </td>
+            </tr>
+        </table>
+
+        </div>
+
+        <div class="paciente_historial">
+            <table align="center" class="paciente_estudios">
+                <tr>
+                   <td>Estudio</td>
+                   <td>
+                        Fecha
+                    </td>
+                    <td>
+                        Hora
+                    </td>
+                    <td>
+                        
+                    </td>
+                </tr>
+                {% for estudio in estudios %}
+                    <tr>
+                        <td>
+                            {{ estudio.getIdSolicitud().getEstudioArea().getIdEstudio().esNombre }}
+                        </td>
+                        <td>
+                            {% if estudio.getIdSolicitud().SoFecha %}
+                                {{ estudio.getIdSolicitud().soFecha|date('d/m/Y') }}
+                            {% endif %}
+                        </td>
+                        <td>
+
+                            {% if estudio.getIdSolicitud().soHora|date('H') <= 12 %} 
+                                {{ estudio.getIdSolicitud().soHora|date('H:i') }} a.m.
+                            {% else %}
+                                {{ estudio.getIdSolicitud().soHora|date('H:i')-12 }}{{estudio.getIdSolicitud().soHora|date(':i')}} p.m.
+                            {% endif %}{# 
+                            {% if estudio.getIdSolicitud().SoHora %}
+                                {{ estudio.getIdSolicitud().soHora|date('H:i')}}
+                            {% endif %} #}
+                        </td>
+                        <td>
+                            {# {{ path('solicitud_edit', { 'exp': paciente[0]['Nombre'], 'fecha':{{ estudio.soFecha|date('Y-m-d') }}, 'hora':{{ estudio.soFecha|date('H-i') }}}) }} #}
+                            <a id="diagnostico_imagen" href="{{ path('diagnostico_img_trans', { 'exp': estudio.getIdSolicitud().idMntExpediente, 
+                            'modalidad': estudio.getIdSolicitud().getEstudioArea().getIdEstudio().esAbreviatura,'fecha': estudio.getIdSolicitud().soFecha|date('Y-m-d') ,
+                            'hora':estudio.getIdSolicitud().soHora|date('H:i'),
+                            'id':estudio.id(), 'opcion':0 }) }}">
+                                <img   src="{{ asset('bundles/hnrsircim/img/detalle.png') }}">
+                            </a>
+
+                            <input class="comparacion" type="checkbox" href="{{ path('diagnostico_img_trans', { 'exp': estudio.getIdSolicitud().idMntExpediente, 
+                            'modalidad': estudio.getIdSolicitud().getEstudioArea().getIdEstudio().esAbreviatura,'fecha': estudio.getIdSolicitud().soFecha|date('Y-m-d') ,
+                            'hora':estudio.getIdSolicitud().soHora|date('H:i'),
+                            'id':estudio.id(), 'opcion':1}) }}"></input>
+                        </td>
+                    </tr>
+                {% endfor %}    
+            </table>
+            {% if citas %}
+                <table class="paciente_citas">
+                    <tr>
+                        <td>
+                            Estudio
+                        </td>
+                        <td>
+                            Fecha
+                        </td>
+                        <td>
+                            Hora
+                        </td>
+                        <td style="text-align:center">
+                            Estado
+                        </td>
+                        <td>
+
+                        </td>
+                    </tr>
+
+                    {% for cita in citas %}
+                    <tr>
+                        <td>
+                            {{ cita.getIdSolicitud().getEstudioArea().getIdEstudio().esNombre }}
+                        </td>
+                        <td>
+                            {% if cita.getIdSolicitud().soFecha %}
+                                {{ cita.getIdSolicitud().soFecha|date('d/m/Y') }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if cita.getIdSolicitud().soHora|date('H') <= 12 %} 
+                                {{ cita.getIdSolicitud().soHora|date('H:i') }} a.m.
+                            {% else %}
+                                {{ cita.getIdSolicitud().soHora|date('H:i')-12 }}{{cita.getIdSolicitud().soHora|date(':i')}} p.m.
+                            {% endif %}
+                        </td>
+                        
+                            {% if cita.ciEstado=="Pendiente" %}
+                                <td class='pendiente'>
+                                    
+                                    {{ cita.ciEstado }}
+
+                                </td>
+                            {% endif %}
+                            {% if cita.ciEstado=="No Asistida" %}
+                                <td class='no_asistida'>
+                                    
+                                    {{ cita.ciEstado }}
+
+                                </td>
+                            {% endif %}
+                            {% if cita.ciEstado=="Asistida" %}
+                                <td class='asistida'>
+                                    
+                                    {{ cita.ciEstado }}
+
+                                </td>
+                            {% endif %}
+                            {% if cita.ciEstado=="Cancelada" %}
+                                <td class='cancelada'>
+                                    
+                                    {{ cita.ciEstado }}
+
+                                </td>
+                            {% endif %}
+                            {# <a id="diagnostico_imagen" href="{{ path('cita_show', { 'exp': estudio.getIdSolicitud().idMntExpediente, 
+                            'modalidad': estudio.getIdSolicitud().getIdEstudioArea().getIdEstudio().esAbreviatura,'fecha': estudio.getIdSolicitud().soFecha|date('Y-m-d') ,
+                            'hora':estudio.getIdSolicitud().soFecha|date('H:i'),
+                            'id':estudio.id() }) }}"> #}
+                                
+                            {# </a> #}
+                            <td>
+                                <a id="diagnostico_cita" href="{{ path('cita_show', { 'id': cita.id, 'nombre': paciente[0]['Nombre'] }) }}">
+                                    <img   src="{{ asset('bundles/hnrsircim/img/detalle.png') }}">
+                                </a>
+                            </td>
+                        
+                    </tr>
+                    {% endfor %}    
+
+                </table>
+            {% else %}
+                <table class="paciente_citas">
+                    <tr>
+                        <td>
+                            Estudio
+                        </td>
+                        <td>
+                            Fecha
+                        </td>
+                        <td>
+                            Hora
+                        </td>
+                        <td>
+                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <label>
+                                El paciente no ha solicitado citas
+                            </label>
+                        </td>
+                        
+                    </tr>
+
+
+                </table>
+
+            {% endif %}
+        </div>
+
+        {% else %}
+
+        <div>
+            El paciente no tiene historial radiológico
+        </div>
+        {% endif %}
+
+        {% endblock %}
+
+
+       

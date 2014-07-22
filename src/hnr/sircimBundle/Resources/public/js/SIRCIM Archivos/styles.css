@@ -1,0 +1,36 @@
+/*Base*/
+@import url('Base/normalize.css');
+
+/*Layout*/
+@import url('Layout/layout.css');
+
+/*Componentes*/
+@import url('Componentes/botones.css');
+
+/*Admin*/
+@import url('Modulos/administracion/admin.css');
+
+/*Login*/
+@import url('Modulos/login/login.css');
+
+/*Ventana emergente*/
+@import url('Modulos/administracion/ventanaemergente.css');
+
+/*Slide imagen*/
+@import url('Modulos/administracion/slidesJS.css');
+
+/*Slide imagen*/
+@import url('Modulos/administracion/font-awesome.min.css');
+
+/*Tablas de administracion*/	
+@import url('Modulos/administracion/tablas.css');
+
+/*Mensajes*/
+@import url('alertify/themes/alertify.core.css');
+
+/*Mensajes*/
+@import url('alertify/themes/alertify.css');
+
+/*Mensajes*/
+@import url('alertify/themes/alertify.bootstrap.css');
+        

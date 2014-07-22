@@ -1,0 +1,342 @@
+
+
+/*
+------------------------Tabla menu administración---------------------
+*/
+
+#opciones_admin {
+	text-align: center;
+    /*background:yellow;*/
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 25%;
+    right: 25%;
+    width: 50%;
+    min-width: 350px;
+    height: 55%;
+    margin: auto;
+    vertical-align: middle;
+    /*background: red;*/
+}
+
+	#opciones_admin table {
+		text-align: center;
+		margin: 0 auto;
+	}
+
+	#opciones_admin td {
+		text-align: center;
+	}
+
+	#opciones_admin tr:nth-child(3) {
+		height: 20px;
+	}
+
+
+	#opciones_admin td:nth-child(2), #opciones_admin td:nth-child(4) {
+		width: 50px;
+	}
+
+	#opciones_admin img:hover {
+		cursor: pointer;
+		filter:alpha(opacity=75); 
+		-moz-opacity: 0.75; 
+		opacity: 0.75;
+		/*background: white;*/
+	}
+
+
+/*
+----------------------FIN Tabla menu administración--------------------
+*/
+
+
+/*
+------------------------Tabla expedientes administración---------------
+*/
+
+#paciente_tabla {
+	width: 25%;
+	border:0px;
+	float: left;
+	
+	
+}
+
+#paciente_tabla div {
+	
+	width: 30px;
+	float: right;
+	z-index: 200;
+	margin-top: 110px;
+	margin-left: 279px;
+	position: absolute;
+}
+
+#paciente_tabla table{
+	
+	border: 1px solid #D8D8D8;
+	border-spacing: 0px;
+	margin-left: 0px;
+	text-align: left;
+	width: 85%;	
+
+	
+}
+
+#paciente_tabla table img{
+	height: 20px;
+	width: 20px;
+	margin-top: -2px;
+	margin-left: -2%;
+	position: absolute;
+}
+
+
+#paciente_tabla table tr{
+	height: 10px;
+}
+
+#paciente_tabla tr:nth-child(1){
+	color: white;
+	background: #ED6859;
+	height: 31px;
+	margin-left: 50%;
+	text-align: center;
+
+}
+
+#paciente_tabla tr:nth-child(3) td, 
+#paciente_tabla tr:nth-child(4) td, 
+#paciente_tabla tr:nth-child(6) td, 
+#paciente_tabla tr:nth-child(7) td, 
+#paciente_tabla tr:nth-child(9) td, 
+#paciente_tabla tr:nth-child(10) td{
+	text-align: left;
+	height: 31px;
+}
+
+#paciente_tabla table tr:nth-child(4), #paciente_tabla tr:nth-child(7), #paciente_tabla tr:nth-child(10){
+	color: #FF5140;
+}
+
+#paciente_tabla tr:nth-child(1) td {
+	text-align: center;
+	padding-left: 0px;
+}
+
+#paciente_tabla tr:nth-child(12) td {
+	text-align: center;
+	padding-left: 0px;
+	background: #555555;
+	color: white;
+	width: 50%; 
+	height: 60px;
+	font-size: 20px;
+}
+
+#paciente_tabla tr:nth-child(12) td:first-child {
+	border-right: 2px solid white;
+}
+
+#paciente_tabla td {
+	padding-left: 20px;
+	vertical-align: middle;
+}
+
+#paciente_tabla tr:nth-child(7) td {
+	padding-right: 20px;
+}
+
+.paciente_historial td {
+	vertical-align: middle;
+}
+
+.paciente_historial {
+	width: 75%;
+	float: right;
+	border:0px;
+}
+
+.paciente_historial table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.paciente_historial table tr{
+	height: 31px;
+	
+}
+
+
+
+.paciente_historial table td:first-child{
+	padding-left: 10px;
+	
+}
+
+.paciente_historial table td:last-child{
+
+	padding-right: 10px;
+}
+
+.paciente_historial table td:first-child{
+	text-align: left;
+}
+
+.paciente_historial tr {
+	border-bottom:1px solid #E6E6E6;
+}
+
+.paciente_historial td img {
+float: right;
+
+}
+
+.paciente_citas{
+	/*visibility: hidden;*/
+	display: none;
+}
+
+.paciente_historial .paciente_estudios td:last-child img,
+.paciente_citas td:last-child img 
+{
+	visibility: hidden;
+}
+
+.paciente_historial img{
+	width: 15px;
+	height: 15px;	
+}
+
+.paciente_historial tr:hover {
+	background: #F2F2F2;
+}
+
+.paciente_historial .paciente_estudios tr:hover td:last-child img,
+.paciente_citas tr:hover td:last-child img
+{
+	
+	visibility: visible;
+	float: right;
+	padding-top: 2px;
+	
+	
+}
+
+.paciente_historial table td:nth-child(1) {
+	width: 55%;	
+}
+
+.paciente_historial table td:nth-child(2) {
+	
+	width: 20%;
+	
+}
+
+.paciente_historial table td:nth-child(2), .paciente_historial table td:nth-child(3) {
+	text-align: center;	
+	width: 100px;
+}
+
+.paciente_estudios tr:nth-child(1) {
+	background: #3B97D6;
+	color:white;
+}
+
+.paciente_citas tr:first-child{
+	background: #555;
+	color:white;
+}
+
+.paciente_historial .paciente_citas td:nth-child(1) {
+	width: 55%;
+	text-align: left;
+}
+
+.paciente_historial .paciente_citas td:nth-child(2){
+	width: 100px;
+	text-align: center;
+}
+
+.paciente_historial .paciente_citas td:nth-child(3) {
+	width: 100px;
+}
+
+
+
+
+
+
+/*
+---------------------FIN tabla expeiente-estudios---------------------
+*/
+
+
+
+#info{
+	width: 100%;
+    /*background:red;*/
+    /*top: 0;*/
+    height: -moz-calc(100%-25px);
+    height: calc(100%-25px);
+    left: 0;
+    margin: auto;
+    position: absolute;
+}
+
+#info_tabla{
+	text-align: center;
+    /*background:yellow;*/
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 80%;
+    height: 30%;
+    margin: auto;
+    vertical-align: middle;
+}
+
+	#info_tabla tr{
+		text-align: center;
+	}
+
+	#info_tabla tr:nth-child(1){
+		text-align: center;
+		height: 175px;
+		/*background: red; */
+	}	
+
+	#info_tabla tr:nth-child(2){
+		text-align: center;
+		height: 50px;
+		/*background: black;*/
+	}
+
+	#info_tabla tr:nth-child(3){
+		text-align: center;
+		height: 50px;
+		/*background: black;*/
+		
+	}
+
+	#info_tabla tr td{
+		
+		vertical-align: middle;
+	}
+
+	#info_tabla img{
+		width: 125px;
+		height: 125px;
+		margin: auto;
+	}
+
+
+
+
+
+
+

@@ -1,0 +1,292 @@
+{% block javascripts %}                
+      <script src="{{ asset('bundles/hnrsircim/js/Modulos/administracion/diagnostico/diagnostico.js') }}" type="text/javascript"></script>
+      <script src="{{ asset('bundles/hnrsircim/js/scrollbar/src/jquery.mousewheel.js') }}"></script>
+        <script src="{{ asset('bundles/hnrsircim/js/scrollbar/src/perfect-scrollbar.js') }}"></script>
+      <script src="{{ asset('bundles/hnrsircim/js/Modulos/administracion/diagnostico/scroll.js') }}" type="text/javascript"></script>
+{% endblock %}
+{% block body %}
+
+<div id="diagnostico">
+
+<div id="titulo_barra">        
+  <a class="cerrar" href="#">x</a>
+</div>
+
+{% if error %}
+  
+  <div class="titulo_estudio">
+        {% if estudioradiologico %} 
+        <div id="nombre_estudio">
+          {{ estudioradiologico.getIdSolicitud().getEstudioArea().getIdEstudio() }}
+        </div>
+        <div id="fecha_estudio">
+          {# {{ estudioradiologico.getIdSolicitud().getSoFecha()|date('d-m-Y') }}, {{ estudioradiologico.getIdSolicitud().getSoHora()|date('H:i')  }} #}
+          {{ estudioradiologico.getIdSolicitud().getSoFecha()|date('d/m/Y') }},
+          {% if estudioradiologico.getIdSolicitud().soHora|date('H') <= 12 %} 
+            {{ estudioradiologico.getIdSolicitud().soHora|date('H:i') }} a.m.
+          {% else %}
+            {{ estudioradiologico.getIdSolicitud().soHora|date('H:i')-12 }}{{estudioradiologico.getIdSolicitud().soHora|date(':i')}} p.m.
+          {% endif %}
+        </div>
+
+        {% endif %}
+    </div>
+  <div id="error">
+      
+    <div>
+      <img src="{{ asset('bundles/hnrsircim/img/error_conexion.png')}}"> </img>
+    </div>
+    <div>
+      <label>
+        {{ error }}
+      </label>
+    </div>
+    
+  </div>
+  <div class="transcripcion">
+    {% if diagnostico %}
+      <div id="radiologo">
+        <div>
+          <label>
+            Médico radiólogo:
+          </label>
+        </div>
+        <div>
+          Dr(a). {{ empleado.Nombre }}
+        </div>
+      </div>
+      <div id="resultado">
+        <div>
+        <label>
+          Resultado:
+        </label>
+        </div>
+        <div id="contenido_resultado">
+          <div>
+              {{ diagnostico.diResultado }}
+          </div>
+        </div>
+      </div>
+      <div id="conclusion">
+       <div>
+        <label>
+          Conclusión:
+        </label>
+        </div>
+        <div id="contenido_conclusion">
+          <div>
+              {{ diagnostico.diConclusion }}
+          </div>
+        </div>
+      </div>
+    {% else %} 
+      <div id="transcripcionNA">
+        
+        <div>
+          <label>
+            Transcripción en proceso
+          </label>
+        </div>
+      </div>
+    {% endif %} 
+  </div>
+
+
+{% else %}
+  
+  
+  <div class="imagen">
+    
+    <div class="titulo_estudio">
+      {% if estudioradiologico %} 
+        <div id="nombre_estudio">
+          {{ estudioradiologico.getIdSolicitud().getEstudioArea().getIdEstudio() }}
+        </div>
+        <div id="fecha_estudio">
+          {# {{ estudioradiologico.getIdSolicitud().getSoFecha()|date('d-m-Y') }}, {{ estudioradiologico.getIdSolicitud().getSoHora()|date('H:i')  }} #}
+          {{ estudioradiologico.getIdSolicitud().getSoFecha()|date('d/m/Y') }},
+          {% if estudioradiologico.getIdSolicitud().soHora|date('H') <= 12 %} 
+            {{ estudioradiologico.getIdSolicitud().soHora|date('H:i') }} a.m.
+          {% else %}
+            {{ estudioradiologico.getIdSolicitud().soHora|date('H:i')-12 }}{{estudioradiologico.getIdSolicitud().soHora|date(':i')}} p.m.
+          {% endif %}
+        </div>
+
+      {% endif %}
+    </div>
+{# <img id="draggable" class="slidesjs-slide" data-zoom-image="/bundles/hnrsircim/Archivos/id_medico/2014/3/12/20/66A9C8F6/E1687F0D/14A17A51.jpg" src="/bundles/hnrsircim/Archivos/id_medico/2014/3/12/20/66A9C8F6/E1687F0D/14A17A51.jpg" style="position: absolute; top: 0px; left: 0px; width: 100%; z-index: 10;" slidesjs-index="0"></img> #}
+    <div class="container">
+      <div id="slides">
+        {% if imagenes %}
+          {% for imagen in imagenes %}
+            {# <img id="draggable" src="/home/mario/Archivos/id_medico/{{ imagen.filepath }}.jpg"></img> #}
+            {# <a href="{{ asset('bundles/hnrsircim/Archivos/id_medico')}}/{{ imagen.filepath }}_tn.jpg"> #}
+              <img rel="zoom" class="noclick" id="draggable" src="{{ asset('bundles/hnrsircim/Archivos/id_medico')}}/{{ imagen.filepath }}_tn.jpg"></img>
+            {# </a> #}
+          {% endfor %}
+          <a href="#" class="slidesjs-previous slidesjs-navigation"><i class="icon-chevron-left icon-large"></i></a>
+          <a href="#" class="slidesjs-next slidesjs-navigation"><i class="icon-chevron-right icon-large"></i></a>
+        {% else %}
+          
+          <img id="draggable" src="{{ asset('bundles/hnrsircim/img/NA.jpg')}}"></img>
+        {% endif %}
+        
+      </div>     
+      {% if imagenes %}
+        <div id="slidesjs-log">
+          <div>
+            <span class="slidesjs-slide-number">
+              1
+            </span> de {{ imagenes|length }}
+          <img id="full" src="{{ asset('bundles/hnrsircim/img/full.png')}}"></img>
+          </div>
+
+        </div>
+      {% else %}        
+        <div id="slidesjs-logNA">
+
+          </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="transcripcion">
+    
+    {% if diagnostico %}
+
+      <div id="radiologo">
+        <div>
+          <label>
+            Médico radiólogo:
+          </label>
+        </div>
+        <div>
+          Dr(a). {{ empleado.Nombre }}
+        </div>
+       
+      </div>
+      <div id="resultado">
+        <div>
+        <label>
+          Resultado:
+        </label>
+        </div>
+        <div id="contenido_resultado">
+            <div>
+            
+              {{ diagnostico.diResultado }}
+            </div>
+          
+        </div>
+        
+      </div>
+      <div id="conclusion">
+        <div>
+          <label>
+            Conclusión:
+          </label>
+        </div>
+        <div id="contenido_conclusion">
+          <div>
+              {{ diagnostico.diConclusion }}
+          </div>
+        </div>
+      </div>
+    {% else %} 
+      <div id="transcripcionNA">
+        <div>
+          <label>
+            Transcripción en proceso
+          </label>
+        </div>
+      </div>
+    {% endif %} 
+  </div>
+
+
+  <!-- End SlidesJS Required: Start Slides -->
+
+  <!-- SlidesJS Required: Link to jQuery -->
+  
+  <!-- End SlidesJS Required -->
+  <script src="{{ asset('bundles/hnrsircim/js/jquery-1.10.2.min.js') }}" type="text/javascript"></script>
+  <!-- SlidesJS Required: Link to jquery.slides.js -->
+  <script src="{{ asset('bundles/hnrsircim/js/jquery.slides.min.js') }}"></script>
+  <script src="{{ asset('bundles/hnrsircim/js/zoom/easing.js') }}" type="text/javascript"></script>
+  <script src="{{ asset('bundles/hnrsircim/js/zoom/smoothzoom.js') }}" type="text/javascript"></script>
+  <!-- End SlidesJS Required -->
+  
+
+  <!-- SlidesJS Required: Initialize SlidesJS with a jQuery doc ready -->
+  <script>
+
+
+
+      var current = 0; 
+
+
+
+      $('#full').on('click', function(event) {
+        
+
+        event.preventDefault();
+        
+        $('img[slidesjs-index="'+current+'"]').trigger('click');
+        // $(this).attr('src', href);
+                /* Act on the event */
+        // alert(href);
+        // $('#draggable').smoothZoom({
+        //   // Options go here
+        //   zoominSpeed:1000,
+        //   zoomoutSpeed:1000,
+        //   zoominEasing:"easeOutExpo",
+        //   zoomoutEasing:"easeOutExpo",
+        //   href: href,
+        // });
+
+      });
+      $('#draggable').smoothZoom({
+          // Options go here
+      });
+      
+
+      $(function() {
+
+      $('#slides').slidesjs({
+        width: 500,
+        height: 500,
+        navigation: true,
+        
+        callback: {
+          loaded: function(number) {
+            // Use your browser console to view log
+            console.log('SlidesJS: Loaded with slide #' + number);
+
+            // Show start slide in log
+            $('#slidesjs-log .slidesjs-slide-number').text(number);
+          },
+          start: function(number) {
+            // Use your browser console to view log
+            console.log('SlidesJS: Start Animation on slide #' + number);
+          },
+          complete: function(number) {
+            // Use your browser console to view log
+            console.log('SlidesJS: Animation Complete. Current slide is #' + number);
+            current = number;
+            current--;
+            // Change slide number on animation complete
+            $('#slidesjs-log .slidesjs-slide-number').text(number);
+          }
+        }
+      });
+    });
+
+      
+      
+    
+  </script>
+  <!-- End SlidesJS Required -->
+
+{% endif %}
+
+{% endblock %}

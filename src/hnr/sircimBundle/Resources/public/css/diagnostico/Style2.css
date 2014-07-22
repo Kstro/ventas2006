@@ -1,0 +1,517 @@
+/* 
+    Document   : Style
+    Created on : 10-28-2013, 03:24:59 PM
+   
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* CSS */
+
+/* CSS Reset */ 
+/*html {margin:0;padding:0;border:0;}body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, code, del, dfn, em, img, q, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, dialog, figure, footer, header, hgroup, nav, section {margin:0;padding:0;border:0;font-weight:inherit;font-style:inherit;font-size:100%;font-family:inherit;vertical-align:baseline;}article, aside, dialog, figure, footer, header, hgroup, nav, section {display:block;}body {line-height:1.5;background:white;}table {border-collapse:separate;border-spacing:0;}caption, th, td {text-align:left;font-weight:normal;float:none !important;}table, th, td {vertical-align:middle;}blockquote:before, blockquote:after, q:before, q:after {content:'';}blockquote, q {quotes:"" "";}a img {border:none;}:focus {outline:0;}
+*/
+
+html {margin:0;padding:0;border:0;}body, div, span, object, iframe, 
+p, blockquote, pre, a, abbr, acronym, address, 
+code, del, dfn, em, img, q, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, 
+caption, tbody, tfoot, thead, tr, th, td, article, aside, dialog, figure, footer, header, 
+hgroup, nav, section {margin:0;padding:0;border:0;font-weight:inherit;font-style:inherit;font-size:100%;vertical-align:baseline;}
+article, aside, dialog, figure, footer, header, hgroup, nav, section {display:block;}body {line-height:1.5;background:white;}
+table caption, th, td {text-align:left;font-weight:normal;float:none !important;}table, th, td {vertical-align:middle;}blockquote:before, blockquote:after, q:before, q:after {content:'';}blockquote, q {quotes:"" "";}a img {border:none;}:focus {outline:0;}
+
+/* General
+----------------------------------------------------------------------------------------------------*/
+html {
+	min-height: 100%;
+}
+
+body{
+	color: #7F7F7F;
+	font-family:"Calibri";
+}
+
+#nombre_usuario {
+	float: right;
+	margin-top: 30px;
+	height: 25px;
+	width: 200px;
+	font-size: 18x;
+}
+
+#nombre_usuario img{
+	height: 20px;
+	width: 20px;
+	float: right;
+	padding-top: 2px;
+}
+
+
+
+/*	
+--------------------------------------------CONTENEDOR-----------------------------
+*/
+
+#encabezado {
+	min-width: 1100px;
+}
+
+
+#contenedor {
+	width: 90%;
+	height: 90%;
+	min-height: 540px;
+	margin: 0 auto;
+	min-width: 1100px;
+}
+
+
+#contenedor-superior{
+	height: 43px;
+	width: 100%;
+	min-width: 1100px;
+	vertical-align: middle;
+	margin: 0 auto;
+	border-bottom: 1px solid #E2E2E2;
+}
+
+#contenedor-medio{
+	width: 100%;	
+}
+
+#contenedor-medio #contenedor-medio img {
+	width: 100%;
+}
+
+#pie{
+	min-width: 1100px;
+}
+
+#contenedor-superior table{
+	height: 100%;
+	float: left; 
+	font-size: 20px;
+	margin: auto 0;
+	border-collapse:collapse;
+}
+
+.modulo {
+	height: 100%;
+	width: 20%;
+	float: left;
+}
+
+
+
+.modulo img {
+	margin: 0 auto;
+	vertical-align: middle;
+}
+
+.modulo table td:nth-child(2) {
+	
+	min-width: 30px;
+}
+
+
+
+
+
+
+
+#ima{
+	height: 100%;
+	float: right;
+	width: 80%;
+	text-align: center;
+}
+
+#ima img {
+	padding-top: 10px;
+	padding-left: 5px;
+	height: 25px;
+	width: 35px;
+}
+
+#ima table {
+	float: right;
+}
+
+#ima input {
+	background: #F2F2F2 url('../images/arrow.png') no-repeat  right;
+	height: 23px;
+	width: 130px;
+	border:0px;
+	color:#555555;	
+	border-left: 5px solid #F2F2F2;
+}
+
+#ima #prev, #ima #next {
+	height: 10px;
+	width: 10px;
+}
+
+
+#estudios_button {
+	background: #555555;
+	height: 25px;
+	border:1px solid #DCDCDC;
+	color:white;	
+}
+
+#citas table {
+	width: 100%;
+}
+
+#citas td:nth-child(1) {
+	
+	
+	text-align: center;
+	
+}
+
+#registro_estudios button{
+	background: #555555;
+	color: white;
+	width: 50px;
+	height: 25px;
+	border: 0px;
+}
+
+#citas td:nth-child(2) button {
+	background: #555555;
+	color: white;
+	width: 50px;
+	height: 25px;
+	border: 0px;
+}
+
+#citas td:nth-child(2) button:last-child {
+	background: #F2F2F2;
+	color: #7F7F7F;
+}
+
+#citas td:nth-child(3) button {
+	background: #F2F2F2;
+	color: #7F7F7F;
+	width: 75px;
+	height: 25px;
+	border: 0px;
+}
+
+#citas td:nth-child(4) button {
+	background: #555555;
+	float: right;
+	margin-top: 2px;
+	color: white;
+	width: 75px;
+	height: 25px;
+	border: 0px;
+}
+
+#citas td:nth-child(5) button {
+	vertical-align: middle;
+	margin-top: -100px;
+}
+
+#paciente_historial {
+	width: 70%;
+	float: right;
+	border:0px;
+}
+
+
+.busqueda {
+	border: 1px solid #D7D7D7;
+	border-top: 5px solid #E85243;
+	width: 300px;
+	float: right;
+	background: white;
+	margin-top: -300px;
+	display: none;
+	position: relative;
+}
+
+.busqueda div {
+	border-bottom: 1px solid #D8D8D8;
+	z-index: 30;
+}
+
+.busqueda input[Type="text"] {
+	margin-left: 25px;
+	width: 100px;
+	
+}
+
+.busqueda div select {
+	margin-left: 25px;
+	width: 150px;
+}
+
+.busqueda table {
+	margin-left: 50px;
+}
+
+.busqueda div table td:first-child {
+	width: 90px;
+}
+
+.busqueda div:last-child  {
+	float: right;
+	height: 30px;
+	display: table-cell;
+}
+
+#busqueda_estudio {
+	
+	position: absolute;
+	float: right; 
+	margin-left:73%;
+	margin-top: 0px;
+	background: white;
+	z-index: 30;
+	
+}
+
+#aplicar {
+	background: #3B97D6;
+	border: 0px;
+	color: white;
+	height: 25px;
+	width: 60px;
+}
+
+#cancelar2 {
+	background: #F2F2F2;
+	height: 25px;
+	width: 60px;
+	border:1px solid #DCDCDC;
+	color:#7F7F7F;	
+}
+
+
+
+
+/*
+--------------------------------------------FIN CONTENEDOR------------------------
+*/
+
+
+/*
+--------------------------------------------SCROLL DIV----------------------------
+*/
+
+
+::-webkit-scrollbar { 
+	width: 5px;    
+}
+
+
+::-webkit-scrollbar-track
+{
+	border-radius: 50px;
+  	background: #CCC;
+  	width: 2px;
+  	
+}
+
+::-webkit-scrollbar-thumb
+{
+	background: #999;
+	border-radius: 50px;
+	width: 100px;
+  
+
+}
+
+/*
+--------------------------------------------FIN SCROLL DIV------------------------
+*/
+
+/*
+------------------------Tabla expedientes administración---------------
+*/
+
+#paciente {
+	width: 25%;
+	border:0px;
+	float: left;
+	
+	
+}
+
+#paciente div {
+	
+	width: 30px;
+	float: right;
+	z-index: 200;
+	margin-top: 110px;
+	margin-left: 279px;
+	position: absolute;
+}
+
+#paciente table{
+	width: 280px;
+	border: 1px solid #D8D8D8;
+	border-spacing: 0px;
+	font-size: 18px;
+	
+}
+
+#paciente table img{
+	height: 20px;
+	width: 20px;
+	margin-top: -6px;
+	padding-top: 10px;
+	margin-left: -40px;
+	position: absolute;
+}
+
+
+#paciente table tr{
+	height: 10px;
+}
+
+#paciente tr:nth-child(1){
+	color: white;
+	background: #ED6859;
+	height: 31px;
+	margin-left: 50%;
+	text-align: center;
+}
+
+#paciente tr:nth-child(4), #paciente tr:nth-child(7), #paciente tr:nth-child(10){
+	color: #FF5140;
+	margin-left: 50%;
+	text-align: center;
+}
+
+#paciente tr:nth-child(1) td {
+	text-align: center;
+	padding-left: 0px;
+}
+
+#paciente tr:nth-child(12) td {
+	text-align: center;
+	padding-left: 0px;
+	background: #555555;
+	color: white;
+	width: 50%; 
+	height: 30px;
+	font-size: 20px;
+}
+
+#paciente tr:nth-child(12) td:first-child {
+	border-right: 2px solid white;
+}
+
+#paciente td {
+	padding-left: 20px;
+
+}
+
+.paciente_historial {
+	width: 75%;
+	float: right;
+	border:0px;
+}
+
+.paciente_historial img{
+	width: 15px;
+	height: 15px;
+}
+
+.paciente_historial table {
+	width: 90%;
+	border-collapse: collapse;
+}
+
+.paciente_historial table td{
+	height: 31px;
+	
+}
+
+.paciente_historial table td:first-child{
+	padding-left: 10px;
+	
+}
+
+.paciente_historial table td:last-child{
+	text-align: right;
+	padding-right: 10px;
+}
+
+.paciente_historial table td:first-child{
+	text-align: left;
+}
+
+.paciente_historial tr {
+	border-bottom:1px solid #E6E6E6;
+}
+
+.paciente_historial td img {
+float: right;
+}
+
+.paciente_historial .paciente_estudios td:last-child img {
+	display: none;
+}
+
+.paciente_historial tr:hover {
+	background: #F2F2F2;
+}
+
+.paciente_historial .paciente_estudios tr:hover td:last-child img{
+	display: block;
+	float: right;
+}
+
+.paciente_historial table td:nth-child(1) {
+	width: 55%;	
+}
+
+.paciente_historial table td:nth-child(2) {
+	
+	width: 20%;
+	
+}
+
+.paciente_historial table td:nth-child(2), .paciente_historial table td:nth-child(3) {
+	text-align: center;	
+	width: 100px;
+}
+
+.paciente_historial table tr:nth-child(1) {
+	background: #3B97D6;
+	color:white;
+}
+
+
+
+.paciente_historial #paciente_citas td:nth-child(1), .paciente_historial #paciente_citas td:nth-child(2) {
+	width: 30%;
+	text-align: left;
+}
+
+.paciente_historial #paciente_citas td:nth-child(3) {
+	width: 100px;
+}
+
+.paciente_historial #paciente_citas td:nth-child(4) {
+	width: 100px;
+	
+}
+
+.paciente_historial #paciente_citas td:nth-child(5) {
+	width: 50px;
+	text-align: left;
+}
+
+
+
+
+/*
+---------------------FIN tabla expeiente-estudios---------------------
+*/
+
+

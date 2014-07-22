@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="numero_de_placas_y_estudios_por_servicio" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d047b924-313f-4669-b0a5-31ee47a87372">
+	<property name="ireport.zoom" value="1.000000000000003"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="128"/>
+	<queryString>
+		<![CDATA[select s.id_mnt_aten_area_mod_estab "Servicio", sum(ertp_aceptadas) "Placas", count(so_tipo) "Estudios"
+from solicitud s join estudio_radiologico er on(s.id=er.id_solicitud)
+join estudio_rad_tam_placa ertp on(er.id=ertp.id_estudio_radiologico)
+where so_tipo=2
+group by 1;]]>
+	</queryString>
+	<field name="Servicio" class="java.lang.String"/>
+	<field name="Placas" class="java.lang.Long"/>
+	<field name="Estudios" class="java.lang.Long"/>
+	<variable name="Total" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{Placas}]]></variableExpression>
+	</variable>
+	<variable name="Total1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{Estudios}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<line>
+				<reportElement uuid="4e4abb65-c312-40d9-a3de-e4528841684b" positionType="Float" stretchType="RelativeToBandHeight" x="10" y="55" width="545" height="3" forecolor="#0000FF"/>
+			</line>
+			<staticText>
+				<reportElement uuid="1308754c-7cf7-45c6-930c-1de311a2ffb5" stretchType="RelativeToBandHeight" x="118" y="58" width="337" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Número de placas y estudios por servicio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4cd0dd3e-ebfb-4281-b026-2ab59e7904d5" x="152" y="29" width="264" height="25"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Departamento de Radiología]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2a8fb7d4-fef7-4acd-b2f8-5a1012474b5d" x="127" y="1" width="318" height="38"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="25"/>
+				</textElement>
+				<text><![CDATA[HOSPITAL ROSALES]]></text>
+			</staticText>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement uuid="3f812d9f-1556-4e24-9ba5-1679a0167178" x="455" y="4" width="100" height="50"/>
+				<imageExpression><![CDATA["/home/carlos/NetBeansProjects/sircim/src/hnr/sircimBundle/Resources/reportes/imagenes/logosal.jpg"]]></imageExpression>
+			</image>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement uuid="bcd9b5b2-46d0-4e17-97f5-b42484743caf" x="12" y="4" width="100" height="50"/>
+				<imageExpression><![CDATA["/home/carlos/NetBeansProjects/sircim/src/hnr/sircimBundle/Resources/reportes/imagenes/minsal.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="dced0aea-11a7-463e-9bc8-03c66340d7e5" stretchType="RelativeToBandHeight" x="71" y="1" width="56" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="15" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="MMMMM dd, yyyy">
+				<reportElement uuid="07d81898-5546-425a-806f-5a7f49ffd755" x="127" y="1" width="158" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="15" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="dbbd281a-aa06-4414-bd50-b4b17d9c8b40" stretchType="RelativeToBandHeight" x="71" y="2" width="150" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Servicio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="26787e12-7075-4d75-8d1d-7e3a4b814f4a" stretchType="RelativeToBandHeight" x="221" y="2" width="150" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Placas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="af15c070-fc57-4542-b5e5-eaa1a789e1f8" stretchType="RelativeToBandHeight" x="371" y="2" width="150" height="20"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Estudios]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="49543864-0c08-4855-beff-55fb7f918970" x="71" y="0" width="150" height="20"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Servicio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="464d164e-ec2c-4340-94f2-67c554e6cb51" x="221" y="0" width="150" height="20"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Placas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="dfe3d9c1-e34a-430a-abec-3c596ffe2253" x="371" y="0" width="150" height="20"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Estudios}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="34" splitType="Stretch">
+			<line>
+				<reportElement uuid="f7e1bf53-d595-4cdf-8efb-28011da60ce2" positionType="Float" stretchType="RelativeToBandHeight" x="5" y="11" width="567" height="1" forecolor="#0000FF"/>
+			</line>
+			<textField>
+				<reportElement uuid="6d2ba8f6-8567-4c5d-97d5-19a154fb631b" x="451" y="13" width="80" height="21"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="a72d1bc5-b20d-47e6-8ad0-e1684037466b" x="531" y="13" width="40" height="21"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="c1806019-2e25-4d61-abdc-b1a7f963a3d2" stretchType="RelativeToBandHeight" x="71" y="0" width="150" height="20"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="false" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="01398473-1e58-408a-a844-f3cd73552dd0" x="221" y="0" width="150" height="20"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="false" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="cf2c3757-9f01-4391-a9ec-47295d349350" x="371" y="0" width="150" height="20"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="false" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Total1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

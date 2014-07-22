@@ -1,0 +1,423 @@
+
+    body {
+      -webkit-font-smoothing: antialiased;
+      /*font: normal 15px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+      color: #232525;
+
+    }
+
+    #diagnostico{
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .imagen{
+      float: left;
+
+    }
+
+    .titulo_estudio {
+      width: 500px;
+      height:25px;
+      font-weight: bold;
+      background: #000; 
+      border-bottom: 1px solid #BFBFBF;
+      text-align: left;
+    }
+
+    .titulo_estudio1, .titulo_estudio2 {
+      width: 500px;
+      height:25px;
+      font-weight: bold;
+      background: #000; 
+      border-bottom: 1px solid #BFBFBF;
+      text-align: left;
+    }
+
+      .titulo_estudio2{
+        border-right: 1px solid;
+        width: 499px;
+      }
+
+    .titulo_estudio div{
+      padding-top: 5px;
+    }
+
+    #slidesjs-log div, #slidesjs-log1 div, #slidesjs-log2 div {
+      padding-top: 5px;
+    }
+
+    #nombre_estudio {
+      text-align: left;
+      color: #FFF;
+      margin-left: 5px;
+      width: 500px;
+      position: absolute;
+    }
+
+    #fecha_estudio {
+      text-align: right;
+      color: #FFF;
+      padding-right: 5px;
+      float: right;
+      
+    }
+
+
+    #slides .container{
+      float: left;
+      width: 100%;
+    }
+
+    #slides {
+      display: none;
+      width:100%;
+    }
+
+    #slides .slidesjs-navigation {
+      margin-top:3px;
+    }
+
+    #slides .slidesjs-previous {
+      margin-right: 5px;
+      float: left;
+    }
+
+    #slides .slidesjs-next {
+      margin-right: 5px;
+      float: left;
+    }
+
+
+    #imagen1, #imagen2 {
+    width: 50%;
+    /*height: 100%;*/
+    float: right;
+  }
+
+  
+
+/*  .container1, .container2{
+    width: 450px;
+    height: 450px;
+    float: left;
+  }*/
+
+    .slidesjs-pagination {
+      margin: 6px 0 0;
+      float: right;
+      list-style: none;
+      display: none;
+    }
+
+    .slidesjs-pagination li {
+      float: left;
+      margin: 0 1px;
+    }
+
+    .slidesjs-pagination li a {
+      display: block;
+      width: 13px;
+      height: 0;
+      padding-top: 13px;
+      background-image: url(img/pagination.png);
+      background-position: 0 0;
+      float: left;
+      overflow: hidden;
+    }
+
+    .slidesjs-pagination li a.active,
+    .slidesjs-pagination li a:hover.active {
+      background-position: 0 -13px
+    }
+
+    .slidesjs-pagination li a:hover {
+      background-position: 0 -26px
+    }
+
+    
+
+    #slides a, #slides1 a, #slides2 a{
+      text-align: right;
+      text-decoration: none;
+      color: #BFBFBF;
+    }
+
+    #slides a:link, #slide1  a:link, #slides2 a:link {
+      
+      text-align: right;
+    }
+
+    #slidesjs-log, #slidesjs-log1, #slidesjs-log2{
+      height: 25px;
+      background: black;
+      color: #BFBFBF;
+      font-weight: bold;
+      text-align: right;
+      margin-top: -27px;
+      border-top: 1px solid #BFBFBF;
+      padding-right: 5px;
+    }
+
+    #slidesjs-logNA{
+      height: 24px;
+      background: black;
+      
+    }
+
+    #transcripcionNA div{     
+      text-align: center;
+      height: 525px;
+    }
+
+      #transcripcionNA1 div, #transcripcionNA2 div{
+        text-align: center;
+      }
+
+    #transcripcionNA div label {
+      vertical-align: middle;
+      font-size: 18px;
+      padding-top:45%;
+    }
+
+        #transcripcionNA1 div label, #transcripcionNA2 div label {
+          vertical-align: middle;
+          font-size: 18px;
+          padding-top:45%;
+        }
+
+    #slides a:hover, #slides1 a:hover, #slides2 a:hover {
+      opacity: 0.45;
+    }
+
+    .navbar {
+      overflow: hidden
+    }
+
+    .transcripcion{
+      width:-moz-calc(100% - 501px);
+      width:calc(100% - 501px);
+      float: right;
+    }
+
+    .transcripcion_comparacion{
+      
+      float: right; 
+      position: absolute;
+    }
+
+    .container1 #slidesjs-logNA, .container2 #slidesjs-logNA{
+      height: 22px;
+      background: black;
+      
+    }
+
+    .transcripcion #close {
+      height: 22px;
+      text-align: right;
+      padding-right: 8px;
+      padding-top: 3px;
+      font-size: 20px; 
+      font-size: 17px;
+      font-weight: bold;
+      color: #8F8F8F;
+    }
+
+    .transcripcion div:first-child label:hover {
+      opacity: 0.65;
+      cursor: pointer;
+    }
+
+    .transcripcion #radiologo{
+      height: 50px;
+      overflow: hidden;
+    }
+
+    .transcripcion #radiologo label{
+      padding-left: 20px;
+      padding-top: 10px;
+      vertical-align: middle;
+
+    }
+
+    .transcripcion #resultado {
+      padding-left: 20px;
+      padding-top: 10px;
+      height: 340px;
+      overflow-y: auto;
+      border-top: 1px solid #BFBFBF;
+    }
+
+    .transcripcion #conclusion {
+      padding-left: 20px;
+      padding-top: 10px;
+      height: 113px;
+      border-top: 1px solid #BFBFBF;
+      /*overflow-y: auto;
+      overflow-x:hidden;*/
+      /*width: 90%;*/
+    }
+
+    .transcripcion #radiologo label:first-child, .transcripcion #resultado label, .transcripcion #conclusion label{
+      font-weight: bold;
+    }
+
+    #radiologo {
+      height: 30px;
+      /*float: right;*/
+      width: 100%;
+    }
+
+    
+    #radiologo div:last-child{
+      text-align: justify;
+      width: 96%;
+      font-size: 14px;
+      padding-left: 20px;
+
+     }
+
+    
+
+    /*#resultado div:nth-child(2),*/ /*#conclusion div:last-child{
+      text-align: justify;
+      width: 96%;
+      height: 290px;
+      font-size: 14px;
+      overflow-y: auto; 
+    } */
+
+      #contenido_resultado{
+        text-align: justify;
+        height: 310px;
+        width: calc(100%-450px);
+        width: -moz-calc(100%-450px);
+        font-size: 14px;
+        overflow-y: hidden;
+        overflow-x: hidden;  
+        position: absolute;
+        margin-right: 15px;
+        
+      }
+
+        #contenido_resultado div:nth-child(1){
+          text-align: justify;
+          
+          width: 97%;
+          
+          
+        }
+
+      #contenido_conclusion{
+        text-align: justify;
+        height: 86px;
+        /*background:red;*/
+        width: calc(100%-450px);
+        width: -moz-calc(100%-450px);
+        font-size: 14px;
+        overflow-y: hidden;
+        overflow-x: hidden;  
+        position: absolute;
+        margin-right: 15px;
+        
+      }
+
+        #contenido_conclusion div:nth-child(1){
+          text-align: justify;
+          
+          width: 97%;
+          
+          
+        }
+
+
+     /*#conclusion div:last-child{
+      height: 95px;
+      position: absolute;
+     }*/
+
+     .transcripcion_comparacion{
+      float: right;
+      position: absolute;
+      height: 255px;
+      width: 500px;
+     }
+
+     #imagen1 .transcripcion_comparacion {
+      border-left: 1px solid;
+     
+      margin-left: -1px;
+     }
+
+    .transcripcion_comparacion div:first-child label:hover {
+      opacity: 0.65;
+      cursor: pointer;
+      
+    }
+
+    .transcripcion_comparacion #radiologo{
+      
+      height: 38px;
+      overflow: hidden;
+      float: right;
+      
+
+    }
+
+    .transcripcion_comparacion #radiologo label{
+      padding-left: 20px;
+      padding-top: 10px;
+      vertical-align: middle;
+
+    }
+
+    .transcripcion_comparacion #resultado {
+      padding-left: 20px;
+      padding-top: 10px;
+      height: 120px;
+      overflow: hidden;
+      border-top: 1px solid #BFBFBF;
+    }
+
+      .transcripcion_comparacion #resultado div:nth-child(2){
+        height: 100px;
+        /*max-height:135px;*/
+        margin-left: 0%;
+        overflow-y: hidden;
+      }
+
+    .transcripcion_comparacion #conclusion {
+      padding-left: 20px;
+      padding-top: 10px;
+      height: 80px;
+      overflow: hidden;
+      border-top: 1px solid #BFBFBF;
+    }
+
+      .transcripcion_comparacion #conclusion div:nth-child(2){ 
+        height: 57px;
+        overflow-y: hidden;
+      }
+
+    .transcripcion_comparacion #radiologo label:first-child, .transcripcion_comparacion #resultado label, .transcripcion_comparacion #conclusion label{
+      font-weight: bold;
+    }
+
+#full, #full1, #full2{
+  height: 20px;
+  width: 20px;
+  float: left;
+  margin-left: 40px;
+  margin-top: -3px;
+}
+
+  #full:hover, #full1:hover, #full2:hover{
+    cursor: pointer;
+    opacity: 0.65;
+  }
+
+.slidesjs-slide:hover{
+  cursor: move;
+  
+}

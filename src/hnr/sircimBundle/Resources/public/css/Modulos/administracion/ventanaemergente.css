@@ -1,0 +1,722 @@
+/*
+
+------------------------------------DIV emergente-------------------------------
+
+/*
+
+
+
+/* popup_box DIV-Styles*/
+
+
+@media (max-width: 1400px) {
+ 
+      #popup_box_comparar {
+        top: 0%;
+        bottom: 0%;
+      }
+}
+
+@media (min-width: 1401px) {
+     
+      #popup_box_comparar {
+        top:calc((100% - 828px)/2);
+	  	top:-moz-calc((100% - 828px)/2);
+	  	bottom:calc((100% - 828px)/2);
+	  	bottom:-moz-calc((100% - 828px)/2);
+      }
+}
+
+
+
+#popup_box {
+    
+    display: none;
+    position: absolute;
+    height:500px;  
+    /*min-height: 60%;*/
+    width: 50%;
+    min-width: 550px;
+    background:#FFF;  
+    left: 25%;
+    right:25%;
+    top:-moz-calc((100% - 500px)/2);
+  	bottom:-moz-calc((100% - 500px)/2);
+  	top:calc((100% - 500px)/2);
+  	bottom:calc((100% - 500px)/2);
+    /*margin: 50% auto;*/
+    /*bottom: 20%;*/
+    z-index:1000; /* Layering ( on-top of others), if you have lots of layers: I just maximized, you can change it yourself */
+    
+    color: #888;
+    /* additional features, can be omitted */
+    border:1px solid #797979;
+    
+    font-size:15px;  
+  
+	-webkit-box-shadow: 0px 0px 0px 3px rgba(94,94,94,1);
+	-moz-box-shadow: 0px 0px 0px 3px rgba(94,94,94,1);
+	box-shadow: 0px 0px 0px 3px rgba(94,94,94,1);  
+}
+
+#popup_box_cuenta { 
+    
+    display: none;
+    position: absolute;
+    height:385;  
+    /*min-height: 60%;*/
+    width: 50%;
+    min-width: 550px;
+    background:#FFF;  
+    left: 25%;
+    right:25%;
+    top:-moz-calc((100% - 385px)/2);
+  	bottom:-moz-calc((100% - 385px)/2);
+  	top:calc((100% - 385px)/2);
+  	bottom:calc((100% - 385px)/2);
+    /*margin: 50% auto;*/
+    /*bottom: 20%;*/
+    z-index:1000; /* Layering ( on-top of others), if you have lots of layers: I just maximized, you can change it yourself */
+    
+    color: #888;
+    /* additional features, can be omitted */
+    border:1px solid #797979;
+    
+    font-size:15px;  
+  
+	-webkit-box-shadow: 0px 0px 0px 3px rgba(94,94,94,1);
+	-moz-box-shadow: 0px 0px 0px 3px rgba(94,94,94,1);
+	box-shadow: 0px 0px 0px 3px rgba(94,94,94,1);  
+}
+
+#popup_box_bitacora { 
+    
+
+    display: none;
+    position: absolute;
+     
+    /*min-height: 60%;*/
+    width: 50%;
+    min-width: 550px;
+    background:#FFF;  
+    left: 25%;
+    right:25%;
+    top:-moz-calc((100% - 575px)/2);
+  	bottom:-moz-calc((100% - 575px)/2);
+  	top:calc((100% - 575px)/2);
+  	bottom:calc((100% - 575px)/2);
+    /*margin: 50% auto;*/
+    /*bottom: 20%;*/
+    z-index:1000; /* Layering ( on-top of others), if you have lots of layers: I just maximized, you can change it yourself */
+    
+    color: #888;
+    /* additional features, can be omitted */
+    border:1px solid #797979;
+    
+    font-size:15px;  
+  	
+	-webkit-box-shadow: 0px 0px 0px 3px rgba(94,94,94,1);
+	-moz-box-shadow: 0px 0px 0px 3px rgba(94,94,94,1);
+	box-shadow: 0px 0px 0px 3px rgba(94,94,94,1);  
+}
+
+#popup_box_info { 
+    
+
+    display: none;
+    position: absolute;
+    /*min-height: 60%;*/
+    width: 30%;
+    min-width: 300px;
+    height: 300px;
+    
+    background:#FFF;  
+    left: 35%;
+    right:35%;
+    top:-moz-calc((100% - 300px)/2);
+  	bottom:-moz-calc((100% - 300px)/2);
+  	top:calc((100% - 300px)/2);
+  	bottom:calc((100% - 300px)/2);
+    /*margin: 50% auto;*/
+    /*bottom: 20%;*/
+    z-index:1000; /* Layering ( on-top of others), if you have lots of layers: I just maximized, you can change it yourself */
+    
+    color: #888;
+    /* additional features, can be omitted */
+    border:1px solid #797979;
+    
+    font-size:15px;  
+  	
+	-webkit-box-shadow: 0px 0px 0px 3px rgba(94,94,94,1);
+	-moz-box-shadow: 0px 0px 0px 3px rgba(94,94,94,1);
+	box-shadow: 0px 0px 0px 3px rgba(94,94,94,1);  
+}	
+
+#popup_box_exp { 
+    
+    
+    display: none;
+    position: absolute;
+    width: 80%;
+    
+    height: 575px;
+    min-width: 870px;
+    background:#FFF;  
+    left:10%;
+  	right:10%;
+  	top:-moz-calc((100% - 575px)/2);
+  	bottom:-moz-calc((100% - 575px)/2);
+  	top:calc((100% - 575px)/2);
+  	bottom:calc((100% - 575px)/2);
+    
+    z-index:1000; /* Layering ( on-top of others), if you have lots of layers: I just maximized, you can change it yourself */
+    color: #888;
+    /* additional features, can be omitted */
+    border:1px solid #797979;
+    font-size:15px;
+	-webkit-box-shadow: 0px 0px 0px 3px rgba(94,94,94,1);
+	-moz-box-shadow: 0px 0px 0px 3px rgba(94,94,94,1);
+	box-shadow: 0px 0px 0px 3px rgba(94,94,94,1);
+}
+
+
+
+#popup_box_comparar { 
+    
+    
+    display: none;
+    position: absolute;
+    /*width: 95%;*/
+    width: 1000px;
+    height: 827px;
+    left:-moz-calc((100% - 1000px)/2);
+  	right:-moz-calc((100% - 1000px)/2);
+  	left:calc((100% - 1000px)/2);
+  	right:calc((100% - 1000px)/2);
+    /*min-width: 870px;*/
+    background:#FFF;   
+    z-index:1000; /* Layering ( on-top of others), if you have lots of layers: I just maximized, you can change it yourself */
+    color: #888;
+    /* additional features, can be omitted */
+    border:1px solid #797979;
+    font-size:15px;
+	-webkit-box-shadow: 0px 0px 0px 3px rgba(94,94,94,1);
+	-moz-box-shadow: 0px 0px 0px 3px rgba(94,94,94,1);
+	box-shadow: 0px 0px 0px 3px rgba(94,94,94,1);
+}
+
+
+	
+
+	
+
+#popup_box_rol { 
+    
+    
+    display: none;
+    position: fixed;
+    width: 50%;
+    margin-left: 25%;
+    margin-right:25%;
+    min-height: 492px;
+    
+    background:#FFF;  
+    
+    top:-moz-calc((100% - 492px)/2);
+  	bottom:-moz-calc((100% - 492px)/2);
+  	top:calc((100% - 492px)/2);
+  	bottom:calc((100% - 492px)/2);
+    
+    z-index:1000; /* Layering ( on-top of others), if you have lots of layers: I just maximized, you can change it yourself */
+    color: #888;
+    /* additional features, can be omitted */
+    border:1px solid #797979;
+    font-size:15px;
+	-webkit-box-shadow: 0px 0px 0px 3px rgba(94,94,94,1);
+	-moz-box-shadow: 0px 0px 0px 3px rgba(94,94,94,1);
+	box-shadow: 0px 0px 0px 3px rgba(94,94,94,1);
+}
+
+#popup_box_placa { 
+    
+    
+    display: none;
+    position: fixed;
+    width: 50%;
+    margin-left: 25%;
+    margin-right:25%;
+    height: 230px;
+    /*height: 30%;*/
+    background:#FFF;  
+    
+    top:-moz-calc((100% - 230px)/2);
+  	bottom:-moz-calc((100% - 230px)/2);
+  	top:calc((100% - 230px)/2);
+  	bottom:calc((100% - 230px)/2);
+    
+    z-index:1000; /* Layering ( on-top of others), if you have lots of layers: I just maximized, you can change it yourself */
+    color: #888;
+    /* additional features, can be omitted */
+    border:1px solid #797979;
+    font-size:15px;
+	-webkit-box-shadow: 0px 0px 0px 3px rgba(94,94,94,1);
+	-moz-box-shadow: 0px 0px 0px 3px rgba(94,94,94,1);
+	box-shadow: 0px 0px 0px 3px rgba(94,94,94,1);
+}
+
+
+#popup_box_estudio { 
+    
+    
+    display: none;
+    position: fixed;
+    width: 50%;
+    left: 25%;
+    right:25%;
+    height: 510px;
+    background:#FFF;  
+    top:-moz-calc((100% - 510px)/2);
+  	bottom:-moz-calc((100% - 510px)/2);
+  	top:calc((100% - 510px)/2);
+  	bottom:calc((100% - 510px)/2);
+    
+    z-index:1000; /* Layering ( on-top of others), if you have lots of layers: I just maximized, you can change it yourself */
+    color: #888;
+    /* additional features, can be omitted */
+    border:1px solid #797979;
+    font-size:15px;
+	-webkit-box-shadow: 0px 0px 0px 3px rgba(94,94,94,1);
+	-moz-box-shadow: 0px 0px 0px 3px rgba(94,94,94,1);
+	box-shadow: 0px 0px 0px 3px rgba(94,94,94,1);
+}
+
+
+#popup_box_estudioarea { 
+    
+    
+    display: none;
+    position: fixed;
+    width: 50%;
+    margin-left: 25%;
+    margin-right:25%;
+    height: 475px;
+    
+    background:#FFF;  
+    
+    top:-moz-calc((100% - 475px)/2);
+  	bottom:-moz-calc((100% - 475px)/2);
+  	top:calc((100% - 475px)/2);
+  	bottom:calc((100% - 475px)/2);
+    
+    
+    z-index:1000; /* Layering ( on-top of others), if you have lots of layers: I just maximized, you can change it yourself */
+    color: #888;
+    /* additional features, can be omitted */
+    border:1px solid #797979;
+    font-size:15px;
+	-webkit-box-shadow: 0px 0px 0px 3px rgba(94,94,94,1);
+	-moz-box-shadow: 0px 0px 0px 3px rgba(94,94,94,1);
+	box-shadow: 0px 0px 0px 3px rgba(94,94,94,1);
+}
+
+
+#titulo_barra{
+    font-family: 'Roboto', Arial;
+    height: 25px;
+    padding: 0 1%;
+    border: none;
+    background-color: #555;
+    line-height: 25px;
+    font-size: 15px;
+    color: #fff;
+}
+
+
+
+.cerrar, .cerrar:visited, .cerrar:active{
+    float: right;
+    line-height: 20px;
+    font-size: 20px;
+    color: #fff;
+    text-decoration: none;
+}
+
+
+
+#info_estudio {
+	border-bottom: 1px solid #D8D8D8;
+
+}
+
+#info_estudio { 
+	color: white;
+}
+
+#info_estudio table td:nth-child(1){
+	width: 60%;
+}
+
+
+#imagen_estudio {
+	background: black;
+	width: 45%;
+	min-height: 471px;
+
+	float: left;
+}
+
+#imagen {
+	border-bottom: 1px solid #D8D8D8;
+}
+
+#imagen img {
+	
+	width: 96%;
+	border: 9px solid black;
+	border-bottom: 0px solid white;
+	
+}
+
+#full {
+	margin-top: -10px;
+	height: 23px;
+	width: 23px;
+	margin-left: 2px;
+}
+
+#full img {
+	vertical-align: middle;
+	width: 90%;
+	border: 0px;
+}
+
+#zoom {
+	
+	width: 100%;
+	
+	float: left;
+}
+
+#zoom img {
+	height: 20px;
+	width: 20px;
+	vertical-align: middle;
+}
+
+#zoom table { 
+	width: 100%;
+}
+
+#zoom table td:nth-child(1)  {
+	width: 15%;
+}
+
+#zoom table td:nth-child(2)  {
+	width: 400px;
+	text-align: right;
+}
+
+#transcripcion {
+	float: right;
+	width: 55%;
+	min-width: 430px;
+	
+}
+#transcripcion div {
+	border-bottom: 1px solid #E2E2E2;	
+}
+
+#transcripcion_estudios div:first-child div{
+	background: #555555; 
+	color: white;
+	height: 30px;
+	vertical-align: middle;
+	font-size: 18px;
+}
+
+#transcripcion_estudios div div:first-child {
+	float: left;
+	width: 60%;
+	text-align: left;
+
+}
+
+#transcripcion_estudios_consulta div:nth-child(1) div{
+	background: #555555; 
+	color: white;
+	height: 30px;
+	vertical-align: middle;
+	font-size: 18px;
+}
+
+#transcripcion_estudios_consulta div:first-child div:nth-child(1) {
+	float: left;
+	width: 60%;
+	text-align: left;
+}
+
+#transcripcion_estudios_consulta div:first-child div:nth-child(2) {
+	float: left;
+	width: 38%;
+	text-align: center;
+}
+
+#transcripcion_estudios_consulta div div:nth-child(3){
+	width: 2%;
+	height: 30px;
+	float: right;
+	margin: 0;
+	text-align: center; 
+}
+
+#transcripcion_estudios_consulta div div:nth-child(3) img{
+	vertical-align: middle;
+	margin: 0 auto;
+}
+
+#transcripcionNA1, #transcripcionNA2{
+	/*height: 363px;*/
+}
+
+
+
+#cerrar_exp {
+	text-align: right;
+	padding-right: 5px;
+	padding-top: 5px;
+}
+
+#cerrar_exp img {
+	cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+#deshabilitar{
+	display: none;
+	height: 100%;
+	width: 100%;
+	position: fixed;
+	z-index: 999;
+	top: 0;
+	/*position: absolute;*/
+	background-color:#6D6D6D;
+	opacity:0.85;
+
+}
+
+
+
+
+
+
+/*
+------------------------------------Fin DIV emergente-------------------------------
+
+*/
+
+
+
+#contenido{
+	width: 100%;
+	min-width: 250px;
+	float: left;
+	min-width: 471px;
+	
+}
+
+#formulario{
+	text-align: center;
+	height: 439px;
+	min-height: 270px
+	width: 100%;
+	
+}
+
+#controles {
+	height: 379px;
+	min-height: 210px;
+}
+
+#titulo {
+	width: 100%;
+	margin: 0 auto;
+	border-bottom: 1px solid #D8D8D8;
+	text-align: left;
+}
+
+.titulo2 {
+	border-bottom: 1px solid #D8D8D8;
+}
+
+
+
+
+#botones{
+	border-top:  1px solid #D8D8D8;
+	text-align: right;
+	padding-right: 12px;
+	padding-top: 17px;
+	height: 43px;
+	z-index: 1000;
+
+	
+}
+
+
+#botones_bitacora{
+	border-bottom:  1px solid #D8D8D8;
+	text-align: right;
+	padding-right: 12px;
+	padding-top: -20px;
+	height: 40px;
+	z-index: 1000;
+}
+
+	#botones_bitacora table{
+		text-align: right
+	}
+
+	#botones_bitacora table tr td{
+		padding-right: 12px;
+		padding-top: -20px;
+		vertical-align: middle;
+	}
+
+	#botones_bitacora button{
+		padding-right: 12px;
+		padding-top: -20px;
+	}
+
+	#botones_bitacora select{
+		float: right;
+		padding-right: 12px;
+		height: 23px;
+		padding-top: -20px;
+		width: 200px;
+		background:url(../../../img/desplegable.png) no-repeat right center;
+		border: 1px solid #BFBFBF;
+	}
+
+
+	#botones_bitacora input{
+		float: right;
+		padding-right: 20px;
+		width: 100px;
+		position: relative;
+	}
+
+
+
+
+#titulo_ventana{
+	background: #555555;
+	width: 100%;
+	height: 31px;
+	color: #FFF;
+}
+
+#titulo_ventana p{
+	padding-left: 10px;
+	
+	font-size: 20px;
+}
+
+#cerrar {
+	float: right;
+	margin-top: -25px;
+	margin-right: 5px;
+	cursor: pointer;
+}
+
+#cerrar:hover {
+	filter:alpha(opacity=65); 
+	-moz-opacity: 0.65; 
+	opacity: 0.65;
+	
+	
+}
+
+#error{
+	float: left;
+	width: 499px;
+	height: 524px;
+	border-right: 1px solid #BFBFBF;
+	position: absolute;
+	z-index: 2000;
+}
+
+	#error img{
+		height: 100px;
+		width: 100px;
+		margin-left: 40%;
+	}
+
+	#error div:nth-child(1){
+		
+		width: 500px;
+		margin: 25% auto;
+	}
+
+	#error div:nth-child(2){
+		margin: -50px auto;
+		width: 350px;
+		text-align: center;	
+	}
+
+	#error label{
+
+		font-size: 24px;
+
+	}
+
+#error1, #error2{
+	width: 500px;
+	height: 396px;
+
+}
+
+	#diagnostico1, #diagnostico2 {
+		border-right: 1px solid;
+		border-bottom: 1px solid;
+		/*border: 1px solid;*/
+	
+	}
+
+	
+
+
+	#error1 img, #error2 img{
+		height: 100px;
+		width: 100px;
+		margin-left: 40%;
+	}
+
+	#error1 div:nth-child(1), #error2 div:nth-child(1) {
+		
+		width: 500px;
+		margin: 25% auto;
+	}
+
+	#error1 div:nth-child(2), #error2 div:nth-child(2){
+		margin: -50px auto;
+		width: 350px;
+		text-align: center;	
+	}
+
+	#error1 label, #error2 label{{
+
+		font-size: 24px;
+
+	}
+
+

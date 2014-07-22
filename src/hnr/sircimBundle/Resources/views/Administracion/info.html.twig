@@ -1,0 +1,62 @@
+{% block body -%}
+
+    
+    
+    
+    <div id="titulo_barra">
+        SIRCIM
+        <a class="cerrar" href="#" style="color: white;">
+            x
+        </a>
+    </div>
+
+    <div id="info">
+        <table id="info_tabla">
+            <tr>
+                <td>
+                    <img src="{{ asset('bundles/hnrsircim/img/ROSALES-01.jpg')}}">
+                </td>
+            </tr>
+            <tr>
+
+                <td>
+                    Sistema informático de registro y consulta de imágenes médicas para el departamento de radiología del hospital nacional rosales
+                    
+                    
+                </td>
+
+            </tr>
+
+            <tr>
+                <td>
+                    <footer>
+                        Derechos reservados 2014 ©
+                    </footer>
+                </td>
+            </tr>
+        </table>
+
+
+    </div>
+
+
+{% endblock %}
+
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+
+    $('.cerrar').on('click', function(event) {
+        
+        
+        $('#popup_box_info').fadeOut();
+        $('#deshabilitar').fadeOut();
+        return false;
+
+
+        // event.preventDefault();
+        
+    });
+});
+
+
+</script>

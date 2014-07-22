@@ -1,0 +1,299 @@
+/*********************
+      formularios    
+*********************/
+
+#area_trabajo .form_cita,
+#area_trabajo .form_estudio{
+    width: 55%;
+    margin: 0 auto 0;
+    font-family: 'Roboto', Arial;
+    color: #727272;
+    /*border: solid 1px #ccc;*/
+}
+
+.form_cita table,
+.form_estudio table{
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 3px;
+    /*border: solid 1px #ccc;*/
+}
+
+#citas table td, 
+#estudios table td,
+#citas_paciente table td,
+#estudios_paciente table td,
+.form_cita table td,
+.form_estudio table td{
+    /*border: solid 1px #ccc;*/
+    padding: 5px;
+}
+
+/*#create_cita td{
+    vertical-align: middle;
+}*/
+
+.form_cita td label,
+.form_estudio td label{
+    float: right;
+    font-size: 13px;
+}
+
+.form_cita td.separador,
+.form_estudio td.separador{
+    height: 30px;
+    border-bottom: solid 1px #ccc;
+    vertical-align: bottom;
+    padding-left: 50px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.form_cita td.label,
+.form_estudio td.label{
+    vertical-align: middle;
+}
+
+.form_cita input,
+.form_estudio input.regular,
+#busqueda input{
+    height: 20px;
+    width: 200px;
+    background-color: #fff;
+    border: solid 1px #ccc;
+}
+
+    .form_cita input.nombre_paciente,
+    .form_estudio input.nombre_paciente{
+        width: 300px;        
+    }
+
+#paciente{
+    padding-top: 15px;
+    background: url('../../img/indicador_paciente.png');
+    background-repeat: no-repeat;
+    background-position:  0 80%;        
+}
+
+#estudio{
+    background: url('../../img/indicador_estudio.png');
+    background-repeat: no-repeat;
+    background-position:  0 80%;
+}
+
+#horario{
+    background: url('../../img/indicador_horario.png');
+    background-repeat: no-repeat;
+    background-position:  0 80%;
+}
+
+#peliculas{
+    background: url('../../img/indicador_peliculas.png');
+    background-repeat: no-repeat;
+    background-position:  0 80%;
+}
+
+.form_cita select,
+.form_estudio select.regular,
+#busqueda select{
+    -webkit-appearance: none;  /* Remueve estilo por defecto de chrome y safari */
+       -moz-appearance: none;  /* Remueve estilo por defecto de Firefox */
+    text-indent: 0.01px;
+    text-overflow: "";
+    
+    height: 23px;
+    width: 200px;
+    background-color: #fff;
+    background: url('../../img/flecha_simple.png') no-repeat;
+    background-position: 98% 50%;
+    border: solid 1px #ccc;
+    cursor: pointer;
+    
+    outline: none;    
+}
+
+    #busqueda #busq_modo{
+        width: 150px;
+    }    
+
+td .horas{
+    background: url('../../img/1390961190_clock.png') no-repeat;
+    background-position: 99% 50%;
+}
+td .horas:disabled{
+    background: url('../../img/1390961190_clock_disabled.png') no-repeat;
+    background-position: 99% 50%;
+}
+#hora_content{
+    width: 180px;
+    margin-top: -5px;
+    padding:0;
+    border: solid 1px #ccc;
+    font: Arial;
+    color: #000;
+    font-size: 13px;
+    /*border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;*/
+}
+
+#hora_content li{
+    line-height: 20px;
+    list-style: none;
+    /*border-bottom: solid 1px #ccc;*/
+    padding-left: 3px;
+    background-color: #fff;
+}        
+    #hora_content li:hover{
+        background-color: #43ACE8;
+        cursor: pointer;
+        color: #fff;
+    }
+/************************************************************************/
+
+.tabla_placas{
+    width: 80%;
+    height: auto;
+    margin: 0 auto;
+}
+
+td .encabezado_placas,
+td .cuerpo_placas,
+td .total_placas{
+    width: 90%;
+    height: auto;
+    /*margin: 0 auto;*/
+    float: left;
+    clear:left;
+    font-size: 13px;
+    /*background-color: red;*/
+}
+
+    td .cuerpo_placas{
+        border: 1px solid #d8d8d8;
+    }
+
+.encabezado_placas div,
+.total_placas div,
+div[id^="hnr_sircimbundle_estudioradiologicotype_placas"] div{
+    width: 30%;
+    float: left;
+    text-align: center;
+    line-height: 23px;
+    /*background-color: yellow;*/
+}
+
+.cuerpo_placas li{
+    width: 100%;
+    height: 25px;
+    clear: left;
+    border-bottom: 1px solid #d8d8d8;
+}
+
+    .cuerpo_placas li:last-child{
+        border: none;
+    }
+    
+    .cuerpo_placas li:nth-child(odd){
+        background: #f2f2f2;
+    }
+
+
+td .total_placas {
+    border-top: none;
+    border-left: 1px solid #d8d8d8;
+    border-bottom: 1px solid #d8d8d8;
+    border-right: 1px solid #d8d8d8;
+    height: 25px;
+    background-color: #bfbfbf;
+    color: #fff;
+}
+
+input.placas_aceptadas,
+.placas_descartadas{
+    float: left;
+    width: 100%;
+    height: 23px;
+    border: none;
+    text-align: center;
+    background-color: none;
+} 
+li:nth-child(odd) input.placas_aceptadas,
+li:nth-child(odd) input.placas_descartadas{
+    background-color: #f2f2f2;
+}
+
+select.placas_tamaño{
+    float: left;
+    padding-top: 3px;
+    
+    
+    -webkit-appearance: none;  /* Remueve estilo por defecto de chrome y safari */
+       -moz-appearance: none;  /* Remueve estilo por defecto de Firefox */
+    text-indent: 0.01px;
+    text-overflow: "";
+    text-align: center;
+    
+    height: 23px;
+    width: 100%;
+    background-color: #fff;
+    background: url('../../img/flecha_simple.png') no-repeat;
+    background-position: 98% 50%;
+    border: none;
+    cursor: pointer;
+    
+    outline: none;
+}
+
+.add_placa {
+   float: right;
+   width: auto;
+   height: 15px;
+   
+}
+
+.add_placa_link  {
+    width: 20px;
+    height: 15px;
+    font-size: 23px;
+    color: #3B97DC;
+    text-align: center;
+    text-decoration: none;
+}
+
+a.link, a.link:hover, a.link:visited, a.link:active{
+    float:right;
+    visibility: hidden;
+    color: #999;
+    line-height: 23px;
+    text-decoration: none;
+    font-size: 18px;
+    margin-right: 7px;
+}
+
+a.link_visible{
+    visibility: visible;
+}
+
+    li:nth-of-type(1) .link{
+        visibility: hidden;
+    }
+    
+/**************************************************************/
+
+#busqueda input[type="checkbox"] {
+    display:none;
+}
+
+#busqueda input[type="checkbox"] + label span{
+    display:inline-block;
+    width:19px;
+    height:19px;
+    margin:-1px 4px 0 0;
+    vertical-align:middle;
+    background:url('../../img/check_radio_sheet.png') left top no-repeat;
+    cursor:pointer;    
+}
+
+#busqueda input[type="checkbox"]:checked + label span {
+    background:url('../../img/check_radio_sheet.png') -19px top no-repeat;
+}

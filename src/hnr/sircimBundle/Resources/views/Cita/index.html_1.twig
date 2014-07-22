@@ -1,0 +1,322 @@
+{% extends 'hnrsircimBundle::Layout.html.twig' %}
+
+{% block stylesheets %}
+   {{ parent() }}
+   {# <link href="{{ asset('bundles/hnrsircim/js/jquery-ui-1.10.3.custom/css/custom-theme/jquery-ui-1.10.3.custom.css') }}" rel="stylesheet" type="text/css" /> #}
+   <link href="{{ asset('bundles/hnrsircim/js/Zebra_Datepicker-master/public/css/metallic.css') }}" rel="stylesheet" type="text/css" /> 
+   <link href="{{ asset('bundles/hnrsircim/js/wdContextMenu/css/contextmenu.css') }}" rel="stylesheet" type="text/css" /> 
+{% endblock %}
+
+{% block javascripts %}
+   {{ parent() }}
+   {# <script type="text/javascript" src="{{ asset('bundles/hnrsircim/js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js') }}" ></script> #}
+   <script type="text/javascript" src="{{ asset('bundles/hnrsircim/js/Zebra_Datepicker-master/public/javascript/zebra_datepicker.js') }}" ></script>   
+   <script type="text/javascript" src="{{ asset('bundles/hnrsircim/js/wdContextMenu/src/Plugins/jquery.contextmenu.js') }}" ></script>   
+{% endblock %}
+
+{% block mod_activo %} Programación de citas {% endblock %}   
+   
+{% block botones_modulo %} 
+    <div class="menu_grupo"> 
+        <button class="btn btn_destacado" id="buscar" title="Buscar"></button>
+        <button class="btn btn_destacado" id="nuevo" title="Nueva cita" onclick="location.href='{{ path('cita_new') }}';"></button>       
+        {#<button class="btn btn_destacado" id="nuevo" title="Nueva cita" href="{{ path('cita_new') }}"></button>#}
+    </div>
+
+    <div class="menu_grupo"> 
+        <input type="radio" id="input_mes" name="toggle"/>
+        <label class="btn btn_regular btn_toggle primero" for="input_mes" href="{{ path('cita_mes') }}">Mes</label>
+        
+        <input type="radio" id="input_semana" name="toggle"/>
+        <label class="btn btn_regular btn_toggle medio" for="input_semana" href="{{ path('cita_semana') }}">Semana</label>
+        
+        <input type="radio" id="input_dia" name="toggle" checked="checked"/>
+        <label class="btn btn_regular btn_toggle ultimo" for="input_dia">Día</label>
+    </div>
+
+    <div class="menu_grupo"> 
+        {# <button class="btn btn_regular btn_hoy" title="Hoy" onclick="alert('{{"now"|date('d-m-Y')}}')">Hoy</button> #}       
+        <button class="btn btn_regular btn_hoy" title="Hoy">Hoy</button>    
+    </div>
+{% endblock %}
+
+{% block body -%}
+    <div id="div_left">
+        <input id="cal" type="hidden"></input>
+    </div>
+    
+    <div id="citas">
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Registro</th>
+                    <th>Nombre</th>
+                    <th>Edad</th>
+                    <th>Estudio</th>
+                    <th>Estado</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% set time = '00:00' %}
+            {% for key,entity in entities %}
+                <tr id="{{ entity.id }}">
+                    {# <td><a href="{{ path('cita_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td> #}
+                    {# <td>{{ entity.idSolicitud.soHora|date('H:i') }}</td> #}
+                    {% if entity.idSolicitud.soHora|date('H:i') > time %}
+                        {% set time = entity.idSolicitud.soHora|date('H:i') %}
+                        {% if entity.idSolicitud.soHora|date('H:i')[:2] < '12' %}
+                            <td class="indicador_hora">{{ time }} am</td>
+                        {% elseif entity.idSolicitud.soHora|date('H:i')[:2] == '12' %}
+                            <td class="indicador_hora">{{ time }} pm</td>
+                        {% else %}    
+                            <td class="indicador_hora">{{ time[:2] - 12 }}:{{ time[3:2] }} pm</td>
+                        {% endif %}
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                    
+                    <td>{{ entity.idSolicitud.idMntExpediente }}</td>
+                    <td>{{ attribute(pacientes, key) }}</td>
+                    <td>{{ entity.ciEdadPaciente }} años</td>
+                    <td>{{ entity.idSolicitud.getEstudioArea().getIdEstudio() }}</td>
+                    {% if entity.ciEstado == 'Pendiente' %}
+                        <td class="pendiente">{{ entity.ciEstado }}</td>
+                    {% elseif entity.ciEstado == 'Cancelada' %}
+                        <td class="cancelada">{{ entity.ciEstado }}</td>
+                    {% elseif entity.ciEstado == 'No Asistida' %}
+                        <td class="no_asistida">{{ entity.ciEstado }}</td>
+                    {% else %}
+                        <td class="asistida">{{ entity.ciEstado }}</td>
+                    {% endif %}
+                    <td class="td_list">
+                        <div class="wrapper">
+                            <button class="btn_list edit" title="Editar" onclick="location.href='{{ path('cita_edit', { 'id': entity.id }) }}';"></button>
+                            <button class="btn_list view" title="Consultar" href="{{ path('cita_show', { 'id': entity.id, 'nombre': attribute(pacientes, key) }) }}"></button>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block emergente -%}
+    <div id="deshabilitar"></div>
+    <div id="pop_citas"></div>
+{% endblock %}
+    
+{% block script %}
+    <script>
+        var idtr; 
+        $(document).ready(function() {
+           consultar_cita();
+                      
+           var date = new Date();
+           $('#cal_next').empty();
+           $('#cal_next').append(convertir_dia(date.getUTCDay())+', '+date.getUTCDate()+' '+convertir_mes(date.getUTCMonth())+' '+date.getUTCFullYear());
+           
+           $('#cal').Zebra_DatePicker({
+                format: 'Y-m-d',
+                always_visible: $('#div_left'),
+                show_clear_date: false,
+                show_select_today: false,
+                onSelect: function(dateText,inst) {
+                          var date = new Date(dateText);
+                          $('#cal_next').empty();
+                          $('#cal_next').append(convertir_dia(date.getUTCDay())+', '+date.getUTCDate()+' '+convertir_mes(date.getUTCMonth())+' '+date.getUTCFullYear());
+                          
+                          var href = Routing.generate('cita_dia', {date: date.getUTCFullYear() +'-'+ (date.getUTCMonth()+1) +'-'+ date.getUTCDate()});
+                          $('#citas').load(href);
+                          
+                          consultar_cita();
+                          //alert(date.getUTCDate()-date.getDay());
+                        }
+           });
+           
+           
+           
+           $('tr').mousedown(function(){
+               idtr = $(this);
+               //alert(idtr);
+           });
+           var option = { width: 150, items: [
+                            { text: "Cambiar estado", alias: "1-1", type: "group", width: 170, items: [
+                                { text: "Pendiente", alias: "2-1", action: menuAction},
+                                { text: "Asistida", alias: "2-2", action: menuAction},
+                                { text: "No Asistida", alias: "2-3", action: menuAction},
+                                { text: "Cancelada", alias: "2-4", action: menuAction}
+                            ]},
+                            { type: "splitLine" },
+                            { text: "Editar", alias: "1-2" },
+                            { text: "Eliminar", alias: "1-3" }
+                        ]};
+           $("tbody tr").contextmenu(option);
+           
+           
+           
+           
+        });
+        
+        function menuAction(){
+            switch(this.data.text){
+                case 'Pendiente':  
+                    $.getJSON(Routing.generate('update_estado')+'/'+$(idtr).attr('id')+'/Pendiente',
+                        function(data) { });
+                    $(idtr).find('td:nth-of-type(6)').empty().append('Pendiente').removeAttr('class').addClass('pendiente');
+                break;
+                case 'Asistida':    
+                    $.getJSON(Routing.generate('update_estado')+'/'+$(idtr).attr('id')+'/Asistida',
+                        function(data) { });
+                    $(idtr).find('td:nth-of-type(6)').empty().append('Asistida').removeAttr('class').addClass('asistida');
+                break;
+                case 'No Asistida': 
+                    $.getJSON(Routing.generate('update_estado')+'/'+$(idtr).attr('id')+'/No Asistida',
+                        function(data) { });
+                    $(idtr).find('td:nth-of-type(6)').empty().append('No Asistida').removeAttr('class').addClass('no_asistida');
+                break;
+                case 'Cancelada':   
+                    $.getJSON(Routing.generate('update_estado')+'/'+$(idtr).attr('id')+'/Cancelada',
+                        function(data) { });
+                    $(idtr).find('td:nth-of-type(6)').empty().append('Cancelada').removeAttr('class').addClass('cancelada');
+                break;    
+            }
+        }
+                
+        $(".menu_grupo label:not(.checked)").click(function(){
+            var label = $(this);
+            var input = $('#' + label.attr('for'));
+            var href  = label.attr('href');
+            
+            //alert(href);
+            
+            if(!input.prop('checked')){
+                label.closest('.menu_grupo').find("label").removeClass('checked');
+                label.addClass('checked');
+                input.prop('checked', true);
+                
+                $('#citas').load(href);
+            }
+        });
+        
+        $('.btn_hoy').click(function(){
+            var date = new Date();
+            
+            $('#cal_next').empty()
+                          .append(convertir_dia(date.getUTCDay())+', '+date.getUTCDate()+' '+convertir_mes(date.getUTCMonth())+' '+date.getUTCFullYear());
+            
+            var href = Routing.generate('cita_dia', {date: date.getUTCFullYear() +'-'+ (date.getUTCMonth()+1) +'-'+ date.getUTCDate()});
+            $('#citas').load(href);
+            
+            if( date.getUTCDate() < 10 ){
+                $dia = '0'+ date.getUTCDate();                
+            }
+            else{
+                $dia = date.getUTCDate();
+            }            
+            if( (date.getUTCMonth()+1) < 10 ){
+                $mes = '0' + (date.getUTCMonth()+1);                
+            }
+            else{
+                $mes = date.getUTCMonth()+1;
+            }
+            
+            $("#cal").val(date.getUTCFullYear() +'-'+ $mes +'-'+ $dia).data('Zebra_DatePicker').show();
+            //$("#cal").val('2013-08-04').data('Zebra_DatePicker').show();
+            //consultar_cita();
+        });
+        
+        function consultar_cita(){            
+            $('.wrapper').on('click','.view',function() { 
+                    
+                        //Recuperar el atributo href del enlace actual 
+                        var href = $(this).attr('href'); 
+                        // crear un elemento para colocar la información 
+                        $('#deshabilitar').fadeIn('slow'); 
+                        $('#pop_citas').fadeIn("slow");
+                        // cargar mediante una llamada ajax la dirección que tiene href dentro de resultado 
+                        $('#pop_citas').empty().load(href); 
+                        // Para que no haga el comportamiento normal del enlace y cargue la página 
+                        return false;                        
+                    
+               });
+        }
+        
+        /*            
+        $('#nuevo').click(function() { 
+                    
+            var href = $(this).attr('href');
+            //alert(href);
+            // cargar mediante una llamada ajax la dirección que tiene href dentro de resultado 
+            $('#botones_modulo')
+                    .load(href+' .menu_grupo',function(){
+                        $('#cancelar').click(function(){
+                            $('#botones_modulo').load('/app_dev.php/cita/'+ ' .menu_grupo');
+                        });
+                    }); 
+            $('#area_trabajo')
+                    .load(href+' .form_cita',function(){
+                        $('#hnr_sircimbundle_citatype_idSolicitud_idMntExpediente').keyup(function(){
+                            $parameters = '?numExpediente=' + $(this).val();
+            
+                            $.getJSON(Routing.generate('get_infopaciente')+$parameters,
+                                    function(data) {
+                                        $.each(data.regs, function(indice, reg) {
+                                            $('#hnr_sircimbundle_citatype_idSolicitud_Nombre').val( reg.Nombre );
+                                            $('#hnr_sircimbundle_citatype_ciEdadPaciente').val( reg.Edad );                            
+                                        });
+                                    });
+                        })
+                    });
+                    /*.delegate('#hnr_sircimbundle_citatype_idSolicitud_idMntExpediente','keyup',function(){
+                        alert('funca');
+                    });*/
+            // Para que no haga el comportamiento normal del enlace y cargue la página 
+           // return false;                        
+                    
+        //});
+       
+        
+        function convertir_dia($dia){            
+            switch($dia){
+                case 0: $dia = 'Domingo';   break;
+                case 1: $dia = 'Lunes';     break;
+                case 2: $dia = 'Martes';    break;
+                case 3: $dia = 'Miercoles'; break;
+                case 4: $dia = 'Jueves';    break;
+                case 5: $dia = 'Viernes';   break;
+                case 6: $dia = 'Sábado';    break;    
+            }
+            return $dia;
+        }
+        function convertir_mes($mes){            
+            switch($mes){
+                case 0:  $mes = 'Enero';      break;
+                case 1:  $mes = 'Febrero';    break;
+                case 2:  $mes = 'Marzo';      break;
+                case 3:  $mes = 'Abril';      break;
+                case 4:  $mes = 'Mayo';       break;
+                case 5:  $mes = 'Junio';      break;
+                case 6:  $mes = 'Julio';      break;
+                case 7:  $mes = 'Agosto';     break;
+                case 8:  $mes = 'Septiembre'; break;
+                case 9:  $mes = 'Octubre';    break;
+                case 10: $mes = 'Noviembre';  break;
+                case 11: $mes = 'Diciembre';  break;    
+            }
+            return $mes;
+        }
+                
+        /*$('tbody')
+            .on('mouseover','tr', function(){
+                $(this).find('div.wrapper').css('visibility','visible');
+            })
+            .on('mouseout','tr', function(){ 
+                $(this).find('div.wrapper').css('visibility','hidden'); 
+            });*/
+        
+        
+    </script>
+{% endblock %}

@@ -1,0 +1,207 @@
+
+ 
+    
+
+
+
+{% block body %}
+{% if expediente %}
+
+    <div id="paciente_tabla">
+                       
+                            <table>
+                                <tr>
+                                    <td colspan="2">
+                                        <img src={{ asset('bundles/hnrsircim/imagenes/paciente.png') }} />
+                                        
+                                        Información del paciente
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                </tr>
+                                <tr>
+
+                                    <td colspan="2">
+                                        
+                                        Registro:    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                     {% for entity in expediente %}
+                                      {{ entity.NumExpediente }}
+                                    
+                                    
+                                    </td>
+                                </tr>
+                                <tr>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        Nombre:    
+                                    </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                       {{ entity.Nombre }}
+                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        Edad:    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                    {{ entity.Edad }}
+                                        
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                <tr>
+                                </tr>
+                                <tr>
+                                    <td colspan=2>
+                                       
+                                            {{ entities3|length }}  <br> Estudios                        
+                                    </td>
+                                    
+                                    
+                                </tr>
+                                
+                            </table>
+                        </div>
+               
+<div class="paciente_historial">
+ 
+    <table align="center" class="paciente_estudios">
+       
+            <tr>
+                <td>Estudio</td>
+                <td>Fecha</td>
+                <td>Hora</td>
+                <td>  </td>
+            </tr>
+       
+            {% for entity in entities3  %} {# mostrar todos los estudios del paciente #}
+           
+                     <tr>
+                         <td>{{entity.getIdSolicitud().getEstudioArea().getIdEstudio().getEsNombre}} </td> 
+                         <td> {{ entity. getIdSolicitud().getsoFecha|date('d/m/Y')}} </td>
+                         {% if entity.getIdSolicitud().getsoHora|date('H') <= 12 %} 
+                         <td> {{ entity.getIdSolicitud().getsoHora|date('H:i') }} a.m. </td>
+                         {% else %}
+                         <td> {{ entity.getIdSolicitud().getsoHora|date('H:i')-12 }}{{entity.getIdSolicitud().getsoHora|date(':i')}} p.m </td>
+                         {% endif %}
+                         
+                         <td>
+                             {% set cont = 0 %}
+                             {% set id_di = 0 %}
+                             {% set estudio_di = 0 %}
+                             {% for enti_di in entity_di %} {# acceder a todos los estudios con transcripcion #}
+                                 {%if entity.getId() == enti_di.getIdEstudioRadiologico().getId() %}
+                                  {% set cont=1 %} 
+                                  {% set id_di=enti_di.getId %}
+                                 
+                  
+                                 {% endif %}
+    
+                             {% endfor %}
+                             {% if cont==1 %} {# el estudio ya tiene transcripcion #}
+                                 
+                                  <ul>
+                                       <li>
+                                          <a href="{{ path('diagnostico_show', { 'id': id_di }) }}"><img src={{ asset('bundles/hnrsircim/imagenes/detalle.png') }} /></a>
+                                       </li>
+                                    </ul> 
+                                    <ul>
+                                       <li>
+                                          <a href="{{ path('diagnostico_edit', { 'id': id_di }) }}"><img src={{ asset('bundles/hnrsircim/imagenes/edit.png') }} /></a>
+                                       </li>
+                                    </ul> 
+                                 {% else %}
+                                    <ul>
+                                      <li>
+                                          <a href="{{ path('diagnostico_new', { 'id': entity.getId }) }}"><img src={{ asset('bundles/hnrsircim/imagenes/agregar.png') }} /></a>
+                                      </li>
+                                    </ul>
+                                    
+                               {% endif %}                                  
+                         </td>
+             
+                   </tr>
+                {% endfor %}    
+            
+                </table>
+
+
+    </div>      
+
+    {% else %}
+        El paciente no tiene historial radiológico
+    {% endif %}
+
+
+    {% endblock %}
+
+
+
+
+{% block script %}
+<script type="text/javascript">
+
+
+    $('.paciente_estudios a').click(function(){
+        
+        //Verificar si existe el elemento 'resultado' creado de alguna llamada anterior, y lo borra
+        ($('#popup_box_exp')) ? $('#popup_box_exp').remove():'';
+ 
+        // crear un elemento para colocar la información
+        var elem = $("<div id='popup_box_exp'></div>");
+        
+        
+        elem.insertAfter($("#deshabilitar"));
+
+        //Recuperar el atributo href del enlace actual
+        var href = $(this).attr('href');
+        // crear un elemento para colocar la información
+        $('#popup_box_exp').fadeIn('slow');
+        $('#popup_box_exp').html('<div id="cargando"><img src={{ asset('bundles/hnrsircim/img/loading.gif') }}><div>');
+        $('#deshabilitar').fadeIn('slow');
+        // cargar mediante una llamada ajax la dirección que tiene href dentro de resultado 
+        $('#popup_box_exp').load(href);
+        
+        // Para que no haga el comportamiento normal del enlace y cargue la página
+        return false;
+
+        });
+    
+
+   
+       $('#expediente').keyup(function(){
+            
+            var parameters = $(this).val();
+            $('.primero').removeClass('checked');    
+            $('.ultimo').removeClass('checked');    
+
+            // $.getJSON(Routing.generate('diagnostico_exp', { exp: $parameters }), function(data) { 
+                // $('#paciente_historial').html('<div id="cargando"><img src="'+$('#exp_label').attr('href')+'"><div>');
+                $('#paciente_historial').html('<div id="cargando"><img src={{ asset('bundles/hnrsircim/img/loading.gif') }}><div>');
+
+                $('#paciente_historial').load(Routing.generate('diagnostico_exp', { exp: parameters }));
+                // $.each(data.regs, function(indice, reg) { 
+                //     alert(reg.Edad);
+                //     $('#expediente').val( reg.Edad ); 
+                // }); 
+            // }); 
+        });
+
+
+
+</script>
+{% endblock %}

@@ -1,0 +1,193 @@
+{#cupo : {{ cupo[0]["arCupo"] }} <br/>#}
+
+<div id="cal">
+
+    <div class="tabla-nomdias">
+        <table>
+            <tr>
+                <td>Lunes</td>
+                <td>Martes</td>
+                <td>Miércoles</td>
+                <td>Jueves</td>
+                <td>Viernes</td>
+                <td>Sábado</td>
+                <td>Domingo</td>
+            </tr>
+        </table>
+    </div>
+    
+</div>
+                    
+{% block script %}
+    
+    <script>
+        
+        $(document).ready(function() {
+            var estado_dia = new Array();
+            {% set i = 1 %}
+            {% for dia in dias %}                    
+              estado_dia["{{ i }}"] ="{{ dia }}";
+              {% set i = i+1 %}
+            {% endfor %}
+               
+            var fecha_cal = new Date(fecha_mes.substring(0,4),(fecha_mes.substring(5,7)-1),fecha_mes.substring(8)),
+                fecha_actual = new Date(),
+                dia_actual = fecha_actual.getDate(), mes_actual = fecha_actual.getMonth(), año_actual = fecha_actual.getFullYear(),
+                m = fecha_mes.substring(5,7), y = fecha_mes.substring(0,4),
+                primer_dia = new Date(y, m-1, 1).getDay();
+            
+            $('#cal_next').empty()
+                                .append('<button class="desplazar" id="prev" title="Anterior"/>'+
+                                         convertir_mes(fecha_cal.getMonth())+' '+fecha_cal.getFullYear()+
+                                         '<button class="desplazar" id="next" title="Siguiente"/>');
+                        
+            var k = 0;
+            primer_dia = (primer_dia == 0 ? 7:primer_dia);
+            
+            for(var i=1; i<=weekCount(m,y); i++){
+                $('#cal').append('<div class="tabla-semana '+i+'"><table><tr></tr></table></div>');
+                
+                if(i == 1){
+                    for(var j=1; j<=7; j++){
+                        if(j >= primer_dia){
+                            if(++k == dia_actual && (m-1) == mes_actual && y == año_actual){
+                                if( estado_dia[k] == "lleno" )
+                                    $('.'+i+' tr').append('<td id="dia-hoy">'+(k)+'<div class="indicador-lleno"/></td>');
+                                else
+                                    $('.'+i+' tr').append('<td id="dia-hoy">'+(k)+'</td>');
+                            }    
+                            else{
+                                if( estado_dia[k] == "lleno" )
+                                    $('.'+i+' tr').append('<td>'+(k)+'<div class="indicador-lleno"/></td>');
+                                else
+                                    $('.'+i+' tr').append('<td>'+(k)+'</td>');
+                            }    
+                        }
+                        else
+                            $('.'+i+' tr').append('<td></td>');                        
+                    }
+                }
+                else if(i == weekCount(m,y)){
+                    for(var j=1; j<=7; j++){
+                        if(++k <= daysInMonth(m,y)){
+                            if(k == dia_actual && (m-1) == mes_actual && y == año_actual){
+                                if( estado_dia[k] == "lleno" )
+                                    $('.'+i+' tr').append('<td id="dia-hoy">'+(k)+'<div class="indicador-lleno"/></td>');
+                                else
+                                    $('.'+i+' tr').append('<td id="dia-hoy">'+(k)+'</td>');
+                            }    
+                            else{
+                                if( estado_dia[k] == "lleno" )
+                                    $('.'+i+' tr').append('<td>'+(k)+'<div class="indicador-lleno"/></td>');
+                                else
+                                    $('.'+i+' tr').append('<td>'+(k)+'</td>');
+                            }    
+                        }    
+                        else
+                            $('.'+i+' tr').append('<td></td>');
+                    }
+                }
+                else{
+                    for(var j=1; j<=7; j++){
+                        if(++k == dia_actual && (m-1) == mes_actual && y == año_actual){
+                            if( estado_dia[k] == "lleno" )
+                                $('.'+i+' tr').append('<td id="dia-hoy">'+(k)+'<div class="indicador-lleno"/></td>');
+                            else
+                                $('.'+i+' tr').append('<td id="dia-hoy">'+(k)+'</td>');
+                        }    
+                        else{
+                            if( estado_dia[k] == "lleno" )
+                                $('.'+i+' tr').append('<td>'+(k)+'<div class="indicador-lleno"/></td>');
+                            else
+                                $('.'+i+' tr').append('<td>'+(k)+'</td>');
+                        }    
+                    }
+                    
+                }
+            }
+            
+            switch(weekCount(m,y)){
+                case 4: $('.tabla-semana').css('height',(90/4)+'%'); 
+                        $('#dia-hoy').css('background-position', '50% 13%');
+                break;
+                case 5: $('.tabla-semana').css('height',(90/5)+'%'); break;
+                case 6: $('.tabla-semana').css('height',(90/6)+'%'); 
+                        $('#dia-hoy').css('background-position', '50% 30%');
+                break;
+            }
+            
+            $('.desplazar').click(function(){
+                
+                if( $(this).attr('id') == 'next'){
+                    var mes = (fecha_mes.substring(5,7) == '08' || fecha_mes.substring(5,7) == '09' ? fecha_mes.substring(6,7) : fecha_mes.substring(5,7));
+                    
+                    if(mes == 12)
+                        fecha_mes = (parseInt(y)+1)+'-01-01';                                        
+                    else if(mes >= 9)
+                        fecha_mes = y+'-'+(parseInt(mes)+1)+'-01';                    
+                    else
+                        fecha_mes = y+'-0'+(parseInt(mes)+1)+'-01';
+                    
+                }
+                else{
+                    if(m == '01')
+                        fecha_mes = (y-1)+'-12-01';
+                    else if(m >10)
+                        fecha_mes = y+'-'+(m-1)+'-01';
+                    else
+                        fecha_mes = y+'-0'+(m-1)+'-01';
+                }
+                
+                m = fecha_mes.substring(5,7), y = fecha_mes.substring(0,4);
+                ult_dia = new Date(y, m, 0).getDate();
+                    
+                var href = Routing.generate('cita_mes', {f_inicio: y+'-'+m+"-01", f_fin: y+'-'+m+'-'+ult_dia});
+                    //alert(href);
+                $('#area_trabajo').load(href);
+                //$('#area_trabajo').load(Routing.generate('cita_mes'));
+            });
+            
+            $('.tabla-semana td').click(function(){
+                if( $(this).html() ){
+                    var date = new Date(y, m-1, $(this).text());
+                    formato_fecha(date);
+                    $('#cal_next').empty()
+                                .append(convertir_dia(date.getDay())+', '+date.getDate()+' '+convertir_mes(date.getMonth())+' '+date.getFullYear());
+                          
+                    var href = Routing.generate('cita_dia', {date: fecha,login:login});
+                    $('#area_trabajo').load(href);
+                    
+                    var label = $('.menu_grupo .ultimo');
+                    var input = $('#' + label.attr('for'));
+                    label.closest('.menu_grupo').find("label").removeClass('checked');
+                    label.addClass('checked');
+                    input.prop('checked', true);
+                }
+                    
+            });
+        
+        });
+        
+        function daysInMonth(m,y) {
+            return new Date(y, m, 0).getDate();
+        }
+        
+        function weekCount(m,y) {
+            var complemento = [ 6, 0, 1, 2, 3, 4, 5 ];
+            var primerdia = new Date(y, m-1, 1).getDay(), ultimodia = new Date(y, m, 0).getDate();
+                        
+            var numfilas = (complemento[primerdia]+ultimodia)/7;
+            
+            if( numfilas == 4 ){
+                return 4;
+            }
+            else if( numfilas > 4 && numfilas <= 5){
+                return 5;
+            }
+            else if( numfilas > 5 ){
+                return 6;
+            }
+        }
+        
+    </script>
+{% endblock %}

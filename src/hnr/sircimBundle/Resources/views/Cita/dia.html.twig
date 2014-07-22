@@ -1,0 +1,210 @@
+<link href="{{ asset('bundles/hnrsircim/js/Zebra_Datepicker-master/public/css/metallic.css') }}" rel="stylesheet" type="text/css" /> 
+
+<div id="div_left">
+    <input id="cal" type="hidden"></input>
+</div>
+
+<div id="citas">
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Registro</th>
+                <th>Nombre</th>
+                <th>Edad</th>
+                <th>Estudio</th>
+                <th>Estado</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+           {% set time = '00:00' %}
+           {% for key,entity in entities %}
+               <tr id="{{ entity.id }}">
+                 {# <td><a href="{{ path('cita_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td> #}
+                 {# <td>{{ entity.idSolicitud.soHora|date('H:i') }}</td> #}
+                 {% if entity.idSolicitud.soHora|date('H:i') > time %}
+                    {% set time = entity.idSolicitud.soHora|date('H:i') %}
+                    {% if entity.idSolicitud.soHora|date('H:i')[:2] < '12' %}
+                        <td class="indicador_hora">{{ time }} am</td>
+                    {% elseif entity.idSolicitud.soHora|date('H:i')[:2] == '12' %}
+                        <td class="indicador_hora">{{ time }} pm</td>
+                    {% else %}    
+                        <td class="indicador_hora">{{ time[:2] - 12 }}:{{ time[3:2] }} pm</td>
+                    {% endif %}
+                 {% else %}
+                    <td></td>
+                 {% endif %}
+
+                 <td>{{ entity.idSolicitud.idMntExpediente }}</td>
+                 <td>{{ attribute(pacientes, key) }}</td>
+                 <td>{{ entity.ciEdadPaciente }} años</td>
+                 <td>{{ entity.idSolicitud.getEstudioArea().getIdEstudio() }}</td>
+                 {% if entity.ciEstado == 'Pendiente' %}
+                    <td class="pendiente">{{ entity.ciEstado }}</td>
+                 {% elseif entity.ciEstado == 'Cancelada' %}
+                    <td class="cancelada">{{ entity.ciEstado }}</td>
+                 {% elseif entity.ciEstado == 'No Asistida' %}
+                    <td class="no_asistida">{{ entity.ciEstado }}</td>
+                 {% else %}
+                    <td class="asistida">{{ entity.ciEstado }}</td>
+                 {% endif %}
+                 <td class="td_list">
+                    <div class="wrapper">
+                        {% if update == 1 %}
+                            <button class="btn_list edit" title="Editar" onclick="location.href='{{ path('cita_edit', { 'id': entity.id,'login':login}) }}';"></button>
+                        {% endif %}    
+                        <button class="btn_list view" title="Consultar" href="{{ path('cita_show', { 'id': entity.id, 'nombre': attribute(pacientes, key) }) }}"></button>
+                    </div>
+                 </td>
+               </tr>
+           {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% block script %}
+    
+    <script>
+        
+        $(document).ready(function() {
+            consultar_cita();
+            menu();
+            var login = $('#nombre_usr label').attr('id');
+
+
+            //alert('dia-fecha:'+fecha);
+            //alert('dia-dia: '+fecha.substring(8));
+            //alert('dia-mes: '+(fecha.substring(5,7)-1));
+            //alert('dia-año: '+fecha.substring(0,4));
+            //alert(fecha);
+            var date = new Date(fecha.substring(0,4),(fecha.substring(5,7)-1),fecha.substring(8));
+            var fecha_actual = new Date();
+            
+                //date.setDate(fecha.substring(8));
+                //date.setMonth((fecha.substring(5,7)-1));
+                //date.setFullYear(fecha.substring(0,4));
+            //alert('dia-date: '+date);
+            //alert('date:'+date);
+            $('#cal_next').empty()
+                                .append(convertir_dia(date.getDay())+', '+date.getDate()+' '+convertir_mes(date.getMonth())+' '+date.getFullYear());
+            
+            $('#cal').Zebra_DatePicker({
+                format: 'Y-m-d',
+                always_visible: $('#div_left'),
+                show_clear_date: false,
+                show_select_today: false,
+                onSelect: function(dateText,inst) {
+                            //alert('cal-dateText: '+dateText);
+                            //alert('cal-dateText-dia: '+dateText.substring(8));
+                            //alert('cal-dateText-mes: '+(dateText.substring(5,7)-1));
+                            //alert('cal-dateText-año: '+dateText.substring(0,4));
+                            var date = new Date(dateText.substring(0,4),(dateText.substring(5,7)-1),dateText.substring(8));
+                                //date.setDate(dateText.substring(8));
+                                //date.setMonth((dateText.substring(5,7)-1));
+                                //date.setFullYear(dateText.substring(0,4));
+                            //alert('date-cal: '+date);
+                            formato_fecha(date);
+                            $('#cal_next').empty()
+                                .append(convertir_dia(date.getDay())+', '+date.getDate()+' '+convertir_mes(date.getMonth())+' '+date.getFullYear());
+                          
+                            var href = Routing.generate('cita_dia', {date: fecha,login:login});
+                            $('#citas').load(href+' #citas>*', function(){
+                                consultar_cita();
+                                menu();
+                                //btns();
+                            });                          
+                          }
+            });
+            
+            updatecal();
+        });
+        
+        function menu(){
+            $('tr').mousedown(function(){
+                idtr = $(this);
+                //alert(idtr);
+            });
+            
+            var option = { width: 150, items: [
+              { text: "Cambiar estado", alias: "1-1", type: "group", width: 140, items: [
+                  { text: "Pendiente", icon: "{{ asset('bundles/hnrsircim/img/pendiente_contextmenu.png') }}", alias: "2-1", action: menuAction},
+                  { text: "Asistida", icon: "{{ asset('bundles/hnrsircim/img/asistida_contextmenu.png') }}", alias: "2-2", action: menuAction},
+                  { text: "No Asistida", icon: "{{ asset('bundles/hnrsircim/img/no_asistida_contextmenu.png') }}", alias: "2-3", action: menuAction},
+                  { text: "Cancelada", icon: "{{ asset('bundles/hnrsircim/img/cancelada_contextmenu.png') }}", alias: "2-4", action: menuAction}
+              ]},
+              { type: "splitLine" },
+              { text: "Editar", alias: "1-2" },
+              { text: "Eliminar", alias: "1-3" }
+            ],
+            onShow: applyrule,}; 
+            
+            function applyrule(menu) {
+              var date_aux = new Date(fecha.substring(0,4),(fecha.substring(5,7)-1),fecha.substring(8));
+              var fecha_actual = new Date();  
+                
+              if(date_aux.getDate() >= fecha_actual.getDate() && date_aux.getMonth() >= fecha_actual.getMonth() && date_aux.getFullYear() >= fecha_actual.getFullYear()){  
+                menu.applyrule({ name: "target1",
+                  disable: true,
+                  items: []
+                });
+              }
+              else{
+                menu.applyrule({ name: "target2",
+                  disable: true,
+                  items: ["2-1","1-2","1-3"]
+                });
+              }    
+            }
+            
+            $("#citas tbody tr").contextmenu(option);
+            
+        }
+        
+        function menuAction(){
+            $opc = this.data.text;
+            $('#deshabilitar').fadeIn('slow'); 
+            alertify.confirm("¿ Está seguro de realizar esta operación ?", function (e) { 
+                if (e) { 
+                    switch($opc){
+                        case 'Pendiente':  
+                            $.getJSON(Routing.generate('update_estado')+'/'+$(idtr).attr('id')+'/Pendiente',
+                                function(data) { });
+                            $(idtr).find('td:nth-of-type(6)').empty().append('Pendiente').removeAttr('class').addClass('pendiente');
+                        break;
+                        case 'Asistida':    
+                            $.getJSON(Routing.generate('update_estado')+'/'+$(idtr).attr('id')+'/Asistida',
+                                function(data) { });
+                            $(idtr).find('td:nth-of-type(6)').empty().append('Asistida').removeAttr('class').addClass('asistida');
+                        break;
+                        case 'No Asistida': 
+                            $.getJSON(Routing.generate('update_estado')+'/'+$(idtr).attr('id')+'/No Asistida',
+                                function(data) { });
+                            $(idtr).find('td:nth-of-type(6)').empty().append('No Asistida').removeAttr('class').addClass('no_asistida');
+                        break;
+                        case 'Cancelada':   
+                            $.getJSON(Routing.generate('update_estado')+'/'+$(idtr).attr('id')+'/Cancelada',
+                                function(data) { });
+                            $(idtr).find('td:nth-of-type(6)').empty().append('Cancelada').removeAttr('class').addClass('cancelada');
+                        break;    
+                    }
+                    mensaje_exito('La operación fue realizada con éxito');     
+                    $('#deshabilitar').fadeOut('slow'); 
+                } 
+                else { 
+                    $('#deshabilitar').fadeOut('slow'); 
+                } 
+            });
+        }
+        
+        function updatecal(){
+            //alert('fecha-dia2: '+fecha);
+            $("#cal").val(fecha).data('Zebra_DatePicker').show();
+        }
+        
+        
+        
+        
+        
+    </script>
+{% endblock %}

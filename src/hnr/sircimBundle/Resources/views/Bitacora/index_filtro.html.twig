@@ -1,0 +1,36 @@
+{% if entities %}
+<table class="listados" id="tabla_bitacora">
+                
+                <tbody>
+                {% for key, entity in entities %}
+                    <tr>
+                        <td>  {{ entities|length - key }}</td>
+                        <td>{{ entity.biAccion }}</td>
+                        <td>
+                            {% if entity.biFecha %}
+                                {{ entity.biFecha|date('d/m/Y') }}
+                                {% if entity.biFecha|date('H') <= 12 %} 
+                                    {{ entity.biFecha|date('H:i:s') }} a.m.
+                                {% else %}
+                                    {{ entity.biFecha|date('H')-12 }}{{entity.biFecha|date(':i:s')}} p.m.
+                            {% endif %}
+
+                                {# {{ entity.biFecha|date('H:i:s') }} #}
+                            {% endif %}</td>
+                        
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+{% else %}
+<table class="listados" id="tabla_bitacora">
+            
+            <tbody>
+            
+                <tr>
+                    <td colspa="3"> No se encontraron acitividades para los parámetros seleccionados</td>
+                </tr>
+            </tbody>
+</table>
+
+{% endif %}

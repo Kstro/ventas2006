@@ -1,0 +1,94 @@
+li .add_placa_link  {
+    /*background: red;*/
+    font-size: 25px;
+    color: #3B97DC;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    text-decoration: none;
+}
+
+ul.placas{
+    width: 300px;
+    margin-left: 145px;
+}
+
+.placas {
+    border-top: 1px solid #BFBFBF;
+    width: 45%;
+    margin: auto;
+}
+
+.placas li{
+    border: 1px solid #BFBFBF;
+    height: 25px;
+    text-decoration: none;
+    list-style: none;
+    border-left: 1px solid #BFBFBF; 
+    border-top: 1px solid #BFBFBF;
+    border-bottom: 1px solid #BFBFBF;
+}
+
+.placas li a{
+    visibility: hidden;
+    text-decoration: none;
+    padding-top: 5px;
+    margin-right: 4px;
+}
+.placas li:hover a{
+    visibility: visible;
+    padding-top: 5px;
+    margin-right: 4px;
+    vertical-align: middle;
+}
+
+.placas li:last-child a{
+    visibility: visible;
+
+}
+
+.placas li:nth-child(2) a{
+    visibility: hidden;
+}
+
+.placas li:last-child a:hover{
+    opacity: 0.75;
+
+}
+
+
+
+.placas li:first-child a{
+    visibility: hidden;
+}
+
+
+.placas li:nth-child(even){
+    background: #F2F2F2;
+}
+
+.placas li:nth-child(n){
+    border-top: 0px;
+}
+
+.placas li:first-child {
+    border-top: 1px solid #BFBFBF;
+}
+
+.placas li:last-child{
+    border: 0px;
+    border-top: 0px;
+    background: white; 
+    margin-top: 2px;
+}
+
+
+
+#listado_rol{
+    height: 155px;
+    width: 493px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin: auto;
+    
+}

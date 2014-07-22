@@ -1,0 +1,20 @@
+{% extends ajax ? 'hnrsircimBundle::blank.html.twig':'hnrsircimBundle::Layout_login.html.twig' %}
+{% block body %}
+	{% if ajax %}
+	<div id="sesion_mensaje">
+		<div>
+			<input type="button" value="Iniciar sesión" onClick="location.reload();" id="boton_iniciar_sesion"/><br><br>
+			La sesión ha finalizado, para continuar inicie sesión nuevamente
+			{# <a id="boton_iniciar_sesion" href="javascript:location.reload()">Iniciar sesión</a> #}
+			
+		</div>
+	</div>
+	{% else %}
+	<div id="sesion_mensaje">
+		<div>
+			Acceso denegado
+		</div>
+	</div>
+
+	{% endif %}
+{% endblock %}

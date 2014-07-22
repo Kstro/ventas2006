@@ -1,0 +1,12 @@
+{% extends 'hnrsircimBundle::Layout_login.html.twig' %}
+{# {% extends '::frontend.html.twig' %} #}
+
+{% block title %}Página no encontrada{% endblock %}
+
+{% block content %}    
+     <div id="error_html">
+     	<div><img src="{{ asset('bundles/hnrsircim/img/error404.png')}}"><br>Lo sentimos, no encontramos la página que buscas. <br>
+     		Puede que la dirección esté mal escrita o que la página que buscas ya no esté disponible
+     	</div>
+     </div>
+{% endblock %}

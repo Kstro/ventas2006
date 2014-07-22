@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="638a182c-cb73-4f21-a359-58d6a5cedd14">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="547"/>
+	<style name="Heading 4" fontSize="12" isBold="true" isItalic="true"/>
+	<style name="Heading 1" fontSize="16" isBold="true"/>
+	<style name="Heading 2" fontSize="14" isBold="true" isItalic="true"/>
+	<style name="Heading 3" fontSize="14" isBold="true"/>
+	<scriptlet name="estudio" class="net.sf.jasperreports.engine.JRDefaultScriptlet"/>
+	<parameter name="registro" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="estudio_radiologico" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select so.id_mnt_expediente, er.er_edad_paciente, di.di_resultado, di.di_conclusion, em.nom, es.es_nombre, so_region, pa.nom_pa, so.id_mnt_aten_area_mod_estab
+from diagnostico di
+join estudio_radiologico er on di.id_estudio_radiologico = er.id
+join solicitud so on er.id_solicitud = so.id
+join estudio_area ea on so.id_estudio_area = ea.id
+join estudio es on ea.id_estudio = es.id
+join dblink('dbname=siap port=5432 host=localhost user=hnr_sircim password=Sircim2013*', 'select "Nombre", "Idempleado" from vw_empleado_info') 
+as em(nom text, id text) on di.idempleado=em.id
+join dblink('dbname=siap port=5432 host=localhost user=hnr_sircim password=Sircim2013*', 'select "Nombre", "NumExpediente" from vw_paciente_info')
+as pa(nom_pa text, id_pa text) on so.id_mnt_expediente=pa.id_pa
+where so.id_mnt_expediente =$P{registro} and di.id_estudio_radiologico=$P{estudio_radiologico};]]>
+	</queryString>
+	<field name="id_mnt_expediente" class="java.lang.String"/>
+	<field name="er_edad_paciente" class="java.lang.Integer"/>
+	<field name="di_resultado" class="java.lang.String"/>
+	<field name="di_conclusion" class="java.lang.String"/>
+	<field name="nom" class="java.lang.String"/>
+	<field name="es_nombre" class="java.lang.String"/>
+	<field name="so_region" class="java.lang.String"/>
+	<field name="nom_pa" class="java.lang.String"/>
+	<field name="id_mnt_aten_area_mod_estab" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="7" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="92" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="783e0087-dbf4-454d-a317-16b6c45e476c" style="Heading 1" x="177" y="65" width="215" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Reporte de Diagnostico]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="17dd6e9d-338b-4871-9610-55f5071ea552" x="5" y="57" width="550" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="ca78ba02-dee0-40cb-84f1-c401158f6ab1" style="Heading 1" x="83" y="7" width="403" height="46"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[HOSPITAL NACIONAL ROSALES SERVICIO DE RADIOLOGIA E IMAGENES]]></text>
+			</staticText>
+			<image>
+				<reportElement uuid="f33c9c38-8e90-48d2-9caa-b53779f023b1" x="497" y="8" width="50" height="46"/>
+				<imageExpression><![CDATA["/home/carlos/NetBeansProjects/sircim/src/hnr/sircimBundle/Resources/reportes/reportediagnostico/Coats_of_arms_of_El_Salvador.svg.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="cc611b9f-9e07-4057-b2c9-8860d2dcd05a" positionType="Float" x="15" y="9" width="60" height="48"/>
+				<imageExpression><![CDATA["/home/carlos/NetBeansProjects/sircim/src/hnr/sircimBundle/Resources/reportes/reportediagnostico/ROSALES-01.jpg"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement uuid="17dd6e9d-338b-4871-9610-55f5071ea552" x="3" y="3" width="550" height="1"/>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="218" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="fafce816-9e47-4624-9841-0cd907141d40" style="Heading 3" x="424" y="9" width="48" height="20"/>
+				<textElement/>
+				<text><![CDATA[Edad:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="26336442-3c4f-4bd1-9b16-67abd9e69cb3" style="Heading 3" x="5" y="34" width="78" height="20"/>
+				<textElement/>
+				<text><![CDATA[Registro:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="26336442-3c4f-4bd1-9b16-67abd9e69cb3" style="Heading 3" x="5" y="8" width="78" height="20"/>
+				<textElement/>
+				<text><![CDATA[Nombre:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="b318bb35-9253-4bbe-af85-11ee5dd36b97" style="Heading 3" x="473" y="9" width="28" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{er_edad_paciente}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="53287964-10db-4cb7-8b6d-8580291ecccc" style="Heading 4" stretchType="RelativeToBandHeight" x="5" y="184" width="541" height="30"/>
+				<textElement textAlignment="Justified">
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{di_resultado}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="26336442-3c4f-4bd1-9b16-67abd9e69cb3" style="Heading 3" x="6" y="154" width="95" height="20"/>
+				<textElement/>
+				<text><![CDATA[Resultado:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="577f617f-f7b9-42b5-9dfb-fa86db74cfc3" style="Heading 4" x="88" y="35" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{registro}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="26336442-3c4f-4bd1-9b16-67abd9e69cb3" style="Heading 3" x="5" y="61" width="70" height="20"/>
+				<textElement/>
+				<text><![CDATA[Estudio:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="a188d3dc-efe4-46b2-8c8a-c46ffd544840" style="Heading 4" stretchType="RelativeToTallestObject" x="79" y="61" width="239" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{es_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8681e5a2-d821-48fb-a4b0-63c842779a6d" style="Heading 4" x="89" y="10" width="327" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{nom_pa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="61d328cb-7d1c-4a60-8075-c102a6d7c6a0" style="Heading 4" x="501" y="10" width="33" height="18"/>
+				<textElement/>
+				<text><![CDATA[años]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="a1af29cc-5dc6-4611-b761-337d5167e1d8" style="Heading 4" stretchType="RelativeToTallestObject" x="79" y="87" width="224" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{so_region}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="26336442-3c4f-4bd1-9b16-67abd9e69cb3" style="Heading 3" x="5" y="87" width="70" height="20"/>
+				<textElement/>
+				<text><![CDATA[Region:]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="17dd6e9d-338b-4871-9610-55f5071ea552" x="3" y="140" width="550" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="4e36c3cb-afe0-4174-9828-fc8d26b07f37" style="Heading 3" x="5" y="113" width="70" height="20"/>
+				<textElement/>
+				<text><![CDATA[Servicio:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="829a7777-8149-4254-bbd4-ded4d19f5180" style="Heading 4" stretchType="RelativeToTallestObject" x="80" y="113" width="157" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{id_mnt_aten_area_mod_estab}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="64">
+			<staticText>
+				<reportElement uuid="26336442-3c4f-4bd1-9b16-67abd9e69cb3" style="Heading 3" x="7" y="4" width="95" height="20"/>
+				<textElement/>
+				<text><![CDATA[Conclusion:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="bfffabdb-5a75-488e-9aff-fbbe9acd3854" style="Heading 4" stretchType="RelativeToBandHeight" x="7" y="27" width="541" height="30"/>
+				<textElement textAlignment="Justified">
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{di_conclusion}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="89">
+			<staticText>
+				<reportElement uuid="26336442-3c4f-4bd1-9b16-67abd9e69cb3" style="Heading 3" positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" x="195" y="69" width="144" height="17"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Medico Radiologo]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="dd4041b4-9a91-49bb-992d-9fa7077540e7" style="Heading 3" positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" x="81" y="53" width="391" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nom}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="95576be5-43c4-44f9-a693-ef30da6b0403" positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" x="163" y="51" width="202" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="26336442-3c4f-4bd1-9b16-67abd9e69cb3" style="Heading 3" positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" x="145" y="33" width="18" height="17"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[F.]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="55">
+			<textField>
+				<reportElement uuid="44ce995a-9882-4eeb-8276-f0ae32b11d0a" x="451" y="6" width="70" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="6a3dc4c9-e559-445e-82c8-72f7f9021f72" x="522" y="6" width="28" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="4b020775-d4ce-4a21-8e76-9e39d25015ff" x="75" y="34" width="405" height="16"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Calle Arce #827, San Salvador, El Salvador. Tel: 2205-7184/85. Fax: 2221-5008]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

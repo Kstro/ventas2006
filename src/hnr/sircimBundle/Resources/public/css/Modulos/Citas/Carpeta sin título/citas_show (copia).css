@@ -1,0 +1,29 @@
+/******************************************
+    citas show
+*******************************************/
+
+#exit_bar{
+    font-family: 'Roboto', Arial;
+    height: 25px;
+    width: 98%;
+    padding: 0 1%;
+    border: none;
+    background-color: #555;
+    line-height: 25px;
+    font-size: 15px;
+    color: #fff;
+}
+
+.close_show, .close_show:visited, .close_show:active{
+    float: right;
+    line-height: 20px;
+    font-size: 20px;
+    color: #fff;
+    text-decoration: none;
+}
+
+#div_consultar_cita{
+    width: 80%;
+    margin: 0 auto;
+    /*background-color: #009933;*/
+}

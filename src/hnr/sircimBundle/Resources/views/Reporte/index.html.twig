@@ -1,0 +1,222 @@
+{#{% extends '::base.html.twig' %}#}
+{% extends 'hnrsircimBundle::Layout.html.twig' %}
+
+{% block lista_modulos %}
+    {% for modulo in modulos %}
+        <li><a href="{{ path(modulo.osUrl, { 'login': usuario.usLogin }) }}">{{modulo}}</a></li>
+    {% endfor %}
+{% endblock %}
+
+{% block nombre_usr %}
+    <label id="{{ usuario.usLogin }}">
+        {{ usuario.usLogin }}
+    </label> 
+{% endblock %} 
+
+{% block mod_activo %} 
+    
+    Informes
+
+{% endblock %} 
+
+
+{% block stylesheets %}
+   {{ parent() }}
+   {# <link href="{{ asset('bundles/hnrsircim/js/jquery-ui-1.10.3.custom/css/custom-theme/jquery-ui-1.10.3.custom.css') }}" rel="stylesheet" type="text/css" /> #}
+  <link href="{{ asset('bundles/hnrsircim/js/Zebra_Datepicker-master/public/css/metallic.css') }}" rel="stylesheet" type="text/css" /> 
+{% endblock %}
+
+{# bloque para los controlar los input de calendarios #}
+{% block script %}
+<script>
+    $(document).ready(function(){
+        $('#datepicker-example7-start').Zebra_DatePicker({
+  direction: false
+    {#pair: $('#datepicker-example7-end')#}
+});
+
+$('#datepicker-example7-end').Zebra_DatePicker({
+  direction: [false,$('#datepicker-example7-start').val()]
+});
+    });
+</script>
+
+{% endblock %}
+
+{#bloque para llamar el javascript de los calendaros #}
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript" src="{{ asset('bundles/hnrsircim/js/Zebra_Datepicker-master/public/javascript/zebra_datepicker.js') }}" ></script>    
+   
+{#bloque que controla la seleccion de todos los checkbox de las areas#}
+<script type="text/javascript">
+function habilitaDeshabilita(form)
+{
+    if (form.opcion1.checked == true)
+    {
+    form.opcion[0].checked= true;
+    form.opcion[1].checked= true;
+    form.opcion[2].checked = true;
+    form.opcion[3].checked = true;
+    }
+ 
+    if (form.opcion1.checked == false)
+    {
+    form.opcion[0].checked = false;
+    form.opcion[1].checked = false;
+    form.opcion[2].checked = false;
+    form.opcion[3].checked = false;
+    }
+ 
+}
+</script>
+
+
+<script type="text/javascript"> 
+$(document).ready(function()
+{
+    $("#generar").click(function (){
+        captura();
+    });
+});
+</script>
+
+<script type="text/javascript">
+/**
+ * Funcion para cambiar el color de fondo
+ * Tiene que recibir el objeto "this"
+ */
+function changeColor()
+{
+    if(td.style.background=="rgb(247, 211, 88)")
+    {
+        td.style.background="#fff";
+    }else{
+        td.style.background="#F7D358";
+    }
+    return false;
+}
+</script>
+
+<script>
+   function cambiar_color(celda){ 
+   celda.style.backgroundColor="#000000"; 
+} 
+function cambiar_color_out(celda){ 
+   celda.style.backgroundColor="#ffffff"; 
+} 
+ 
+</script>
+{#bloque utilizado para la funcion de captura de los parametros que se envian al reporte#}
+<script>
+    function captura(){    
+    //$("#fechainicio").datepicker-example7-start().mask("99-99-9999");
+    //$("#fechafin").datepicker-example7-end().mask("99-99-9999");
+
+    // var fechainicio= $("#datepicker-example7-start").val();
+    // var fechafin= $("#datepicker-example7-end").val();
+    
+    var emergencia= $("#emergencia:checked").val();
+    var central= $("#central:checked").val();
+    var especialidades= $("#especialidades:checked").val();
+    var resonancia= $("#resonancia:checked").val();
+    // alert(resonancia);
+        if(emergencia !=1) {
+         emergencia=0;  
+        }
+        if(central !=2) {
+          central=0;  
+        }
+        if(especialidades !=3) {
+          especialidades=0;  
+        }
+        if(resonancia !=4) {
+          resonancia=0;  
+        }
+    
+   // alert("fecha de inicio:" + fechainicio +" "+"fecha de fin:" + fechafin +" "+emergencia+" "+central+" "+especialidades+" "+resonancia);
+   //url = Routing.generate('mostrar_reporte',{'report_name': 'libro_de_censo' , 'report_format': 'pdf', 'fechainicio':fechainicio, 'fechafin':fechafin, central:central, especialidades:especialidades, resonancia:resonancia});
+   //var url = Routing.generate('_report_mostrar',{'report_name': 'libro_de_censo' , 'report_format': 'pdf', fechainicio:fechainicio, fechafin:fechafin , emergencia:emergencia, central:central, especialidades:especialidades, resonancia:resonancia});
+   // url = Routing.generate('mostrar_reporte') + '/libro_de_censo/pdf?&fechainicio=' + $('#fechainicio').val() + '&fechafin=' + $('#fechafin').val()+ '&emergencia=' + $('#emergencia').val()+ 'central=' + $('#central').val()+ '&especialidades=' + $('#especialidades').val()+ '&resonancia=' + $('#resonancia').val();
+   var url = Routing.generate('_report_mostrar') + 
+   "/fechainicio='"+$('#datepicker-example7-start').val()+"'&fechafin='"+ $('#datepicker-example7-end').val() +"'&emergencia="+emergencia+"&central="+central +"&especialidades=" +especialidades +"&resonancia="+ resonancia;
+   alert(url);
+   // $('#generar').attr('href', url);
+   window.open(url,'_blank');
+   return false;
+}
+</script>    
+
+{% endblock %}
+
+{% block body -%}
+<div id="div_left" >
+{#bloque para los menus de seleccionde  los diferentes reportes#}
+<table class="menu"> 
+       <tr align=center>
+           <td  >{# <a id="celda1" href="" onClick="cambiar_color(this);" onmouseout="cambiar_color_out(this)" >
+               <input id="boton" type="button" value="toggle()" >     
+                    <h2>Libro de Censo</h2>
+                </a>   #}
+                    <h2>Libro de Censo</h2>
+
+                    
+           </td>
+                  {#<a href="{{ path('mostrar_reporte', { 'report_name': 'libro_de_censo' , 'report_format': 'PDF' }) }}" >#} 
+            
+       </tr>
+       <tr align=center>
+            <td ><a id="celda2" href="" onClick="cambiar_color(this);" onmouseout="cambiar_color_out(this)"  > 
+                    <h2>Placas y estudios por servicios</h2>
+                    </a>
+                    {#<a href="{{ path('mostrar_reporte', { 'report_name': 'placas_y_estudios' , 'report_format': 'PDF' }) }}" >#}
+            </td>
+       </tr> 
+       <tr align=center>
+            <td><a href="{{ path('mostrar_reporte', { 'report_name': 'servicio_y_tamano' , 'report_format': 'PDF' }) }}"> 
+                    <h2>Peliculas por servicio y tamaño</h2>
+                    </a>
+            </td>
+       </tr>
+       <tr align=center>
+            <td><a href="{{ path('mostrar_reporte', { 'report_name': 'tomadas_y_descartadas' , 'report_format': 'PDF' }) }}"> 
+                    <h2>Placas tomadas y descartadas diariamente</h2>
+                    </a>
+            </td>
+       </tr>
+       <tr align=center>
+            <td><a href="{{ path('mostrar_reporte', { 'report_name': 'servicios_tecnicos' , 'report_format': 'PDF' }) }}"> 
+                    <h2>Tabulador de servicios técnicos generales</h2>
+                    </a>
+            </td> 
+       </tr> 
+</table>   
+</div>
+
+{#bloque para introducir los parametros a enviar#}
+<div id="div_right"  >
+<form>
+<table class="div_right" >  
+        <tr>
+            <td>Seleccione áreas:</td>
+            <td>Seleccione rango de fechas:</td>
+        </tr>
+    <tr>
+        <td><input type="checkbox" name="opcion1" value="todo" onClick="habilitaDeshabilita(this.form)"> Seleccionar todo</td>
+        <td>Fecha incio: <input  type="text" name="fechainicio" id="datepicker-example7-start" readonly="readonly" size="12"></td>
+        <td>Fecha fin: <input  type="text" name="fechafin" id="datepicker-example7-end" readonly="readonly" size="12"></td>
+    </tr>
+    <tr><td><input type="checkbox" name="opcion" id="emergencia" value="1"/> Emergencia</td></tr>
+    <tr><td><input type="checkbox" name="opcion" id="central" value="2" checked/> Rayos X Central </td> </tr>
+    <tr><td><input type="checkbox" name="opcion" id="especialidades" value="3"/> Especialidades</td></tr>
+    <tr><td><input type="checkbox" name="opcion" id="resonancia" value="4"/> Resonancia </td></tr>
+  
+    </table>
+       </form>  
+</div>
+ <div class="botones">
+         <p><button  class="guardar" id="generar"  title="Generar"> Generar</button></p>
+         {#<p><button  class="cancelar" id="cancelar"  title="Cancelar" >Cancelar</button></p>#}     
+</div>
+
+ {% endblock %}

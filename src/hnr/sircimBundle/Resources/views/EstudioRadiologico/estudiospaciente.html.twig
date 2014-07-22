@@ -1,0 +1,74 @@
+<div id="div_left">
+    <table id="citas_info_paciente">
+        <tr> 
+	  <td colspan="2"> <img src="{{ asset('bundles/hnrsircim/img/paciente.png') }}"> Información del paciente </td> 
+        </tr> 
+        <tr> 
+	  <td colspan="2"> Registro: </td> 
+	</tr>
+        <tr> 
+	  <td colspan="2"> {{ paciente[0]["NumExpediente"] }} </td> 
+        </tr>
+        <tr> 
+	  <td colspan="2"> Nombre: </td> 
+	</tr> 
+	<tr> 
+	  <td colspan="2"> {{ paciente[0]["Nombre"] }} </td> 
+	</tr>
+        <tr> 
+	  <td colspan="2"> Edad: </td> 
+	</tr> 
+        <tr> 
+	  <td colspan="2"> {{paciente[0]['Edad']}} </td> 
+	</tr>
+    </table>
+</div>
+
+<div id="estudios_paciente">
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Estudio</th>
+                <th>Servicio</th>
+                <th>Técnico</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+           {% for key,entity in entities %}
+               <tr id="{{ entity.id }}">
+                 <td></td>  
+                 <td>{{ entity.idSolicitud.getEstudioArea().getIdEstudio() }}</td>
+                 <td>{{ entity.idSolicitud.idMntAtenAreaModEstab }}</td>
+                 
+                 {% if attribute(empleados, key)|length > 26 %} 
+                    <td>{{ attribute(empleados, key)[:26] }}...</td>
+                 {% else %}    
+                    <td>{{ attribute(empleados, key) }}</td>
+                 {% endif %}
+                 
+                 <td>{{ entity.idSolicitud.soFecha|date('Y-m-d') }}</td>   
+                 
+                 {% if entity.idSolicitud.soHora|date('H:i')[:2] < '12' %}
+                    <td>{{ entity.idSolicitud.soHora|date('H:i') }} am</td>
+                 {% elseif entity.idSolicitud.soHora|date('H:i')[:2] == '12' %}
+                    <td>{{ entity.idSolicitud.soHora|date('H:i') }} pm</td>
+                 {% else %}    
+                    <td>{{ entity.idSolicitud.soHora|date('H:i')[:2] - 12 }}:{{ entity.idSolicitud.soHora|date('H:i')[3:2] }} pm</td>
+                 {% endif %}
+                    
+                 <td class="td_list">
+                    <div class="wrapper">
+                        <button class="btn_list edit" title="Editar" onclick="location.href='{{ path('estudioradiologico_edit', { 'id': entity.id ,'login':login}) }}';"></button>
+                        <button class="btn_list view" title="Consultar" onclick="location.href='{{ path('estudioradiologico_show', { 'id': entity.id, 'nombre':  paciente[0]["Nombre"], 'tecnico': attribute(empleados, key) ,'login':login}) }}'"></button>
+                    </div>
+                 </td>
+               </tr>
+           {% endfor %}
+        </tbody>
+    </table>
+</div>
+

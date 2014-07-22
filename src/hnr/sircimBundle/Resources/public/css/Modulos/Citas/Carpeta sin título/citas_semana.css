@@ -1,0 +1,70 @@
+.semana-nomdias{
+    width: 100%;    
+    min-width: 80%;
+    height: 5%;     /* altura para los nombres de los dias */
+}
+
+.semana-nomdias td{
+    width: 14.2857142857%;
+    
+    vertical-align: bottom;
+    text-align: center;    
+    color: #727272;    
+}
+
+#citas_semana .tabla-dia{
+    width: 14.2857142857%;
+    float: left;    
+}
+
+    #citas_semana .tabla-dia td{
+        height: 25px;
+        /*padding-left: 7px;*/
+        border: 1px solid #ccc;
+        border-right: none;
+        line-height: 25px;
+        font-size: 11px;
+        color: #727272;
+    }
+    
+    #citas_semana .tabla-dia:last-child td{
+        border-right: 1px solid #ccc;
+    }
+    
+    .tabla-dia td.pendiente{
+        background: -webkit-linear-gradient(to right, #3B97D6 2%, #fff 0%);
+        background:    -moz-linear-gradient(to right, #3B97D6 2%, #fff 0%);
+        background:      -o-linear-gradient(to right, #3B97D6 2%, #fff 0%);
+        background:     -ms-linear-gradient(to right, #3B97D6 2%, #fff 0%);
+        background:         linear-gradient(to right, #3B97D6 2%, #fff 0%);
+    }
+    
+    .tabla-dia td.cancelada{
+        background: -webkit-linear-gradient(to right, #ED6859 2%, #fff 0%);
+        background:    -moz-linear-gradient(to right, #ED6859 2%, #fff 0%);
+        background:      -o-linear-gradient(to right, #ED6859 2%, #fff 0%);
+        background:     -ms-linear-gradient(to right, #ED6859 2%, #fff 0%);
+        background:         linear-gradient(to right, #ED6859 2%, #fff 0%);
+    }
+    
+    .tabla-dia td.asistida{
+        background: -webkit-linear-gradient(to right, #21A438 2%, #fff 0%);
+        background:    -moz-linear-gradient(to right, #21A438 2%, #fff 0%);
+        background:      -o-linear-gradient(to right, #21A438 2%, #fff 0%);
+        background:     -ms-linear-gradient(to right, #21A438 2%, #fff 0%);
+        background:         linear-gradient(to right, #21A438 2%, #fff 0%);
+    }
+    
+    .tabla-dia td.no_asistida{
+        background: -webkit-linear-gradient(to right, #FFFF3B 2%, #fff 0%);
+        background:    -moz-linear-gradient(to right, #FFFF3B 2%, #fff 0%);
+        background:      -o-linear-gradient(to right, #FFFF3B 2%, #fff 0%);
+        background:     -ms-linear-gradient(to right, #FFFF3B 2%, #fff 0%);
+        background:         linear-gradient(to right, #FFFF3B 2%, #fff 0%);
+    }
+    
+    .tabla-dia td table td{
+        padding: 0;
+        padding-left: 2px;
+        border: none !important;
+    }

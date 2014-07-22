@@ -1,0 +1,152 @@
+#area_trabajo #div_left{
+    float: left;
+    display: block;
+    width: 25%;
+    height: 98%;
+    padding-top: 2%;
+    /*background-color: #666;*/
+}
+
+#area_trabajo #citas, 
+#area_trabajo #estudios{
+    float: right;
+    display: block;
+    width: 75%;
+    height: 98%;
+    /*background-color: #ccc;*/
+    padding-top: 2%;
+}
+
+#citas table,
+#estudios table{
+    width: 100%;
+}
+
+#citas table th,
+#estudios table th{
+    /*width: 20%;*/
+    font-size: 14px;
+    color: #fff;
+    text-align: left;
+    line-height: 27px;
+    background-color: #3B97D6;
+}
+
+#citas table th:nth-of-type(n+1),
+#estudios table th:nth-of-type(n+1){
+    padding-left: 5px;
+}
+
+#citas table th:first-child,
+#estudios table th:first-child{
+    background-color: #fff;
+}
+
+#citas table th:nth-of-type(2),
+#estudios table th:nth-of-type(2){
+    width: 8%;
+    padding-left: 5px;
+}
+
+#citas table th:nth-of-type(3){
+    width: 33%;
+}
+
+    #estudios table th:nth-of-type(3){
+        width: 30%;
+    }
+
+#citas table th:nth-of-type(4),
+#estudios table th:nth-of-type(4){
+    width: 8%;
+}
+
+#citas table th:nth-of-type(5){
+    width: 25%;
+}
+
+    #estudios table th:nth-of-type(5){
+        width: 20%;
+    }
+
+#estudios table th:nth-of-type(6){
+    width: 20%;
+}
+
+#citas table td,
+#estudios table td{
+    /*width: 20%;*/
+    font-size: 14px;
+    color: #727272;
+    text-align: left;
+    line-height: 18px;
+    border-bottom: 1px solid #ccc;   
+}
+
+#citas table tr:hover,
+#estudios table tr:hover{
+    background-color: #F2F2F2;
+}
+
+#citas table tr:hover td:first-child,
+#estudios table tr:hover td:first-child{
+    background-color: #fff;
+}
+
+#citas table td:first-child,
+#estudios table td:first-child{
+    border: none;
+}
+
+#citas table td.indicador_hora,
+#estudios table td.indicador_hora{
+    border-top: 1px solid #ccc;
+}
+    
+    #citas tr:first-child td:first-child,
+    #estudios tr:first-child td:first-child{
+        border: none;
+    }
+
+#citas table .pendiente{
+    background-image: url('../../../img/pendiente.png');
+    background-repeat: no-repeat;
+    background-position:  100% 55%;
+}
+
+#citas table .asistida{
+    background-image: url('../../../img/asistida.png');
+    background-repeat: no-repeat;
+    background-position:  100% 55%;
+}
+
+#citas table .no_asistida{
+    background-image: url('../../../img/no_asistida.png');
+    background-repeat: no-repeat;
+    background-position:  100% 55%;
+}
+
+#citas table .cancelada{
+    background-image: url('../../../img/cancelada.png');
+    background-repeat: no-repeat;
+    background-position:  100% 55%;
+}
+
+table .td_list{
+    position: relative;
+    vertical-align: middle;
+    /*background-color: green;*/
+}
+
+.td_list .wrapper{
+    visibility: hidden;
+    position: inherit; 
+    height: 100%;
+    width: 50px;
+    margin: 0 auto;
+    background-color: blue;   
+}
+
+tr:hover .wrapper{
+    visibility: visible;
+}

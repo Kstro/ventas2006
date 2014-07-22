@@ -1,0 +1,15 @@
+#pagina_noencontrada{
+	/*background: red;*/
+	margin: 0 auto;
+	height: 500px;
+	/*margin-top: 5%;*/
+
+}
+
+#pagina_noencontrada table {
+	text-align: center;
+	width: 70%;
+	margin: 0 auto;
+	/*vertical-align: middle;*/
+}
+

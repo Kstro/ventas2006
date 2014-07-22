@@ -1,0 +1,87 @@
+{#{% extends '::base.html.twig' %}#}
+{% extends 'hnrsircimBundle::Layout.html.twig' %}
+ 
+
+
+
+{% block lista_modulos %}
+    {% for modulo in modulos %}
+        <li><a href="{{ path(modulo.osUrl, { 'login': usuario.usLogin }) }}">{{modulo}}</a></li>
+    {% endfor %}
+{% endblock %}
+
+{% block nombre_usr %}
+    <label id="{{ usuario.usLogin }}">
+        {{ usuario.usLogin }}
+    </label> 
+{% endblock %} 
+
+{% block mod_activo %} 
+    
+    Informes
+
+{% endblock %} 
+{% block body -%}
+<div id="div_left">
+<table class="reporte"> 
+       <tr align=center> 
+            <td><a href="{{ path('mostrar_reporte', { 'report_name': 'libro_de_censo' , 'report_format': 'PDF' }) }}" > 
+                    <h2>Libro de Censo</h2>
+
+                    </a>
+                 </td>
+       </tr>
+       
+       <tr align=center>
+            <td><a href="{{ path('mostrar_reporte', { 'report_name': 'placas_y_estudios' , 'report_format': 'PDF' }) }}"> 
+                    <h2>Placas y estudios por servicio</h2>
+                    </a>
+            </td>
+       </tr>
+       
+</table>    
+</div>
+<div id="div_right">
+
+</div>
+
+
+
+            {#<tr><td colspan = 2 align = "center">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+           <input id = "exportar_pdf" type="submit" value="Generar" /></td>
+            </tr>
+            
+            <button id="exportar_pdf" type="submit" >placas y servicios</button>#}
+          
+
+{% endblock %}
+
+{% block script %}
+
+        <script type="text/javascript">
+
+        jQuery(document).ready(function($) {
+            
+            
+
+            $('.sign_out a').click(function(event) {
+                var login = $('#nombre_usr label').attr('id');;
+                // alert(Routing.generate('logout', { login: login }));
+                $.getJSON(Routing.generate('logout', { login: login }), function(data) { 
+                
+                }); 
+                        
+                
+            });
+
+
+
+
+            
+
+
+        });
+
+        </script>
+
+    {% endblock %} 

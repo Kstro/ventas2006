@@ -1,0 +1,685 @@
+./*
+-----------------------------Tabla--------------------------------
+*/
+
+.div_left{
+width:40%;
+float:left;
+}
+.menu tr a{
+text-decoration:none;
+}
+
+a:link { 
+text-decoration: none; 
+color: #000000; 
+} 
+
+a:active {
+    color: #FFFFFF;
+    background: #000000;
+}
+
+a:hover {
+    color: #000000;
+}
+
+a:visited {
+    color: #000000;
+}
+.menu{
+    
+    width:350px;
+    /*border-collapse:collapse;*/
+    margin: left;
+    color: #000000;
+    border: 1px solid #E2E2E2;
+    vertical-align: middle;
+}
+
+
+.menu th{
+    padding-left: 10px;
+    text-align: right;
+}
+
+/*.menu th:nth-child(3), th:nth-child(4) {
+    text-align: center;
+}
+
+.menu tr td {
+    text-align: center;
+vertical-align: middle;
+}*/
+
+.menu td{
+    padding-left: 10px;
+    /*width: 350px;*/
+    text-align: middle;
+    vertical-align: middle;
+}
+
+/*ancho de filas menu*/
+.menu tr{
+    height: 35px;
+    text-align: middle;
+    margin: 0 auto;
+}
+
+
+/*.menu td:nth-child(2) {
+    padding-left: 30px;
+}
+
+
+.menu th:nth-child(2) {
+    padding-left: 30px;
+    width: 415px;
+}
+
+.menu th:nth-child(3) {
+    width: 245px;
+}
+
+.menu th:nth-child(4) {
+    width: 162px;
+    text-align: center; 
+}
+
+.menu th:nth-child(5) {
+    width: 81px;
+}
+
+.menu td:nth-child(3), .menu td:nth-child(4) {
+    text-align: middle;
+    padding-top: 1px;
+    padding-bottom: 1px;
+
+}
+
+.menu th:nth-child(3) {
+    width: 245px;
+}*/
+
+td .menu {
+    text-align: middle;
+}
+
+
+/*.menu img {
+
+    height: 15px; 
+    width: 15px; 
+    
+    visibility: hidden;
+}
+*/
+.menu tbody tr:hover{
+    background: #FFFFFF;
+    border-bottom: 1px solid #FF0000;
+    border-top: 1px solid #FF0000;
+}
+
+.menu tbody tr:hover a{
+    color: #000000;
+}
+
+.menu tbody tr:active{
+    background: #000000;
+    
+}
+
+.menu tbody tr:active a{
+    color: #FFFFFF;
+}
+
+.menu tbody tr:visited{
+    background: #000000;
+    /*background-image: url('/../../../../img/cancelada.png');*/
+}
+
+.menu tbody tr:visited a{
+    color: #FFFFFF;
+}
+
+.menu tbody tr:link{
+    background: #000000;
+}
+
+.menu tbody tr:link a{
+    background: #FFFFFF;
+}
+/*.menu tr:nth-child(1) {
+    background: white;
+}*/
+
+/*.menu tbody tr:nth-child(even) {
+    background: #F2F2F2;
+}*/
+
+/*.menu tr:hover img {
+    
+    visibility: visible;
+
+}*/
+
+/*.acciones {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/*
+-----------------------------FIN tabla--------------------------------
+*/
+
+.div_right {
+
+    /*width:500px;
+    border-collapse:collapse;
+    color: #000000;
+    border: 5px solid #E2E2E2;
+    vertical-align: middle;
+    float:left;
+    padding-top: 10%;
+    padding-left: 340px;*/
+    float: right;
+    /*display: block;*/
+    width: 68%;
+    /*height: 98%;*/
+    padding-top: 3%;
+    border: 1px solid #E2E2E2;
+    text-align: middle;
+    margin-top: 2%;
+    /*background-color: #666;*/
+}
+
+.div_right td{
+height: 25px;
+    text-align: middle;
+    padding-left:1%;
+/*border: 1px solid #E2E2E2;*/
+}
+
+.div_right tr{
+    height: 10px;
+    text-align: middle;
+/*border: 1px solid #E2E2E2;*/
+}
+/*
+-------------------------------Inputs---------------------------------
+*/
+
+/*textos*/
+/*#expediente {
+    height: 19px;
+    width: 120px;
+    border: 1px solid #BFBFBF;
+    background: #F2F2F2;
+    vertical-align: middle;
+}
+
+#exp_label {
+    font-size: 16px;
+    
+    vertical-align: middle;
+}
+
+
+
+.textos {
+    height: 19px;
+    width: 300px;
+    border: 1px solid #BFBFBF;
+    background: #F2F2F2;
+}*/
+
+
+
+/*listas*/
+
+
+
+/*.desplegable {
+    height: 25px;
+    width: 302px;
+    border: 1px solid #BFBFBF;
+    background: #F2F2F2;
+    -webkit-appearance: none;  /*Removes default chrome and safari style*/
+    /*-moz-appearance: none;  /*Removes default style Firefox*/
+    /*text-indent: 0.01px;
+    text-overflow: "";
+    background:url(../../../img/desplegable.png) no-repeat right center;
+    cursor: pointer;
+
+}*/
+
+/*div>.desplegable{
+    width: 87%;
+    float: left;
+    border: 0px;
+    background:none;
+}
+
+div>.desplegable:hover{
+    background:url(../../../img/desplegable.png) no-repeat right center;
+    
+}
+
+select:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #000;
+}
+
+/*slides, checkboxs*/
+input[type=checkbox] {
+    visibility: visible;
+}
+
+
+/* SLIDE THREE */
+/*.slideThree {
+    width: 68px;
+    height: 25px;
+    background: url(../../../img/states2.png);    
+    border: 1px solid #CECECE;
+    /*
+    -webkit-border-radius:50px;
+    -moz-border-radius:50px;
+    border-radius:50px;*/
+   /* position: relative;
+    margin: auto;
+    
+}
+
+.slideThree:after {
+    /*content: 'OFF';*/
+    
+ /*   font: 12px/26px Arial, sans-serif;
+    color: #000;
+    position: absolute;
+    right: 0px;
+    z-index: 0;
+    font-weight: bold;
+    text-shadow: 1px 1px 0px rgba(255,255,255,.15);
+}
+
+.slideThree:before {
+    
+    font: 12px/26px Arial, sans-serif;
+    color: #00bf00;
+    position: absolute;
+    left: 0px;
+    z-index: 0;
+    font-weight: bold;
+}
+
+.slideThree label {
+    display: block;
+    width: 34px;
+    height: 25px;
+    background: url(../../../img/boton.png);
+    /*-webkit-border-radius:50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;*/
+
+  /*  -webkit-transition: all .4s ease;
+    -moz-transition: all .4s ease;
+    -o-transition: all .4s ease;
+    -ms-transition: all .4s ease;
+    transition: all .4s ease;
+    cursor: pointer;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+
+    /*-webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
+    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
+    background: #fcfff4;
+
+    background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    background: -moz-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    background: -o-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    background: -ms-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    background: linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfff4', endColorstr='#b3bead',GradientType=0 );*/
+}
+
+/*.slideThree input[type=checkbox]:checked + label {
+    left: 34px;
+}*/
+
+
+
+
+
+/*
+-----------------------------Fin Inputs-------------------------------
+*/
+
+
+
+/*
+-------------------------------Forms----------------------------------
+*/
+
+
+
+/*form div { 
+    padding: 1px;
+}
+form label {    
+    float: left; 
+    text-align: right;
+    width: 150px;
+    padding-right: 5px;   
+}
+*/
+
+/*#cargando {
+    height: 450px;
+    width: 100%;
+    text-align: center;
+    
+}
+
+#cargando img{
+    margin-top: 18%;
+    height: 20px;
+    width: 20px;
+
+}
+
+
+
+
+#listado_rol li .add_placa_link  {
+    /*background: red;*/
+   /* font-size: 25px;
+    color: #3B97DC;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    text-decoration: none;
+}
+
+#listado_rol ul.placas{
+    width: 310px;
+    margin-left: 145px;
+}
+
+#listado_rol .placas {
+    border-top: 1px solid #BFBFBF;
+    width: 45%;
+    margin: auto;
+}
+
+#listado_rol .placas li{
+    border: 1px solid #BFBFBF;
+    height: 25px;
+    text-decoration: none;
+    list-style: none;
+    border-left: 1px solid #BFBFBF; 
+    border-top: 1px solid #BFBFBF;
+    border-bottom: 1px solid #BFBFBF;
+}
+
+#listado_rol .placas li a{
+    visibility: hidden;
+    text-decoration: none;
+    padding-top: 0px;
+    margin-right: 4px;
+    float: left;
+}
+
+#listado_rol .placas .btn_radio{
+    float: left;
+    margin-top: 6px;
+}
+#listado_rol .placas li:hover a{
+    visibility: visible;
+    padding-top: 0px;
+    vertical-align: middle;
+    float: left;
+}
+
+#listado_rol .placas li:last-child a{
+    visibility: visible;
+    float: right;
+}
+
+#listado_rol .placas li:nth-child(2) a{
+    visibility: hidden;
+}
+
+#listado_rol .placas li:last-child a{
+    visibility: visible;
+}
+
+#listado_rol .placas li:last-child a:hover{
+    opacity: 0.75;
+
+}
+
+
+
+#listado_rol .placas li:first-child a{
+    visibility: hidden;
+}
+
+
+#listado_rol .placas li:nth-child(even){
+    background: #F2F2F2;
+}
+
+#listado_rol .placas li:nth-child(n){
+    border-top: 0px;
+}
+
+#listado_rol .placas li:first-child {
+    border-top: 1px solid #BFBFBF;
+}
+
+#listado_rol .placas li:last-child{
+    border: 0px;
+    border-top: 0px;
+    background: white; 
+    margin-top: 2px;
+}
+
+
+
+
+
+#tbl_nuevo_usuario { 
+    width: 95%;
+    margin: auto;
+}
+
+#tbl_nuevo_usuario tr td {
+    width: 15%;
+    height: 26px;
+    
+}
+
+
+
+#tbl_nuevo_usuario td:first-child {
+    text-align: right;
+    padding-right: 5px;
+}
+
+#tbl_nuevo_usuario .required {
+    top: 50%;
+    display: none;
+}
+
+.formularios{
+    margin: 0px auto;
+}
+
+.botones{
+    border-top:  1px solid #D8D8D8;
+    text-align: right;
+    padding-right: 12px;
+    padding-top: 15px;
+    height: 43px;
+    z-index: 3000;
+}
+
+.guardar{
+    background: #3B97D6;
+    height: 31px;
+    width: 130px;
+    border:0px;
+    color:white;
+    cursor: pointer;
+    margin-bottom: 0px;
+}
+
+.guardar:hover{
+    opacity: 0.75;
+}
+
+.cancelar{
+    background: #555555;
+    height: 31px;
+    width: 130px;
+    border:0px;
+    color:white;    
+    cursor: pointer;
+}
+
+.cancelar:hover{
+    opacity: 0.75;
+}
+
+#listado_rol{
+    height: 155px;
+    width: 493px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin: auto;
+    padding-top: 5px;
+    
+}
+
+
+
+
+/*
+-----------------------------Fin Forms-------------------------------
+*/
+
+/*
+
+#atras{
+    color:white;
+    margin-right: -3px;
+}
+
+
+
+
+
+.paciente_historial table .pendiente{ 
+    background-image: url('../../../img/pendiente.png'); 
+    background-repeat: no-repeat; 
+    background-position: 100% 55%; 
+} 
+
+.paciente_historial table .asistida{ 
+    background-image: url('../../../img/asistida.png'); 
+    background-repeat: no-repeat; 
+    background-position: 100% 55%;
+}
+
+.paciente_historial table .no_asistida{ 
+    background-image: url('../../../img/no_asistida.png'); 
+    background-repeat: no-repeat; 
+    background-position: 100% 55%; 
+} 
+
+.paciente_historial table .cancelada{ 
+    background-image: url('../../../img/cancelada.png'); 
+    background-repeat: no-repeat; 
+    background-position: 100% 55%; 
+}
+*/
+
+
+
+
+
+
+
+
+
+
+/*#vertical-scrollbar-demo {
+            height: 100px;
+            width: 400px;
+        }
+
+            /*Horizontal scrollbar - set width and height of a div you want to add a scrollbar to*/
+   /*     #horizontal-scrollbar-demo {
+            width: 400px;
+            height: 200px;
+        }
+
+            /*Horizontal scrollbar - set width of overview or make it expand horizontal like below*/
+     /*   #horizontal-scrollbar-demo .overview {
+            /*width: 1836px;*/
+            /* or */
+ /*           white-space: nowrap;
+        }
+
+        #horizontal-scrollbar-demo img {
+            height: 180px;
+            width: 180px;
+        }
+
+            /*Vertical and horizontal scrollbar - set width and height of a div you want to add a scrollbar to*/
+  /*      #vertical-horizontal-scrollbar-demo {
+            width: 400px;
+            height: 200px;
+        }
+
+        #vertical-horizontal-scrollbar-demo .overview {
+            width: 600px;
+        }
+
+            /* Vertical and horizontal scrollbar - one extra step required - add width of overview - overall width of scrolled content*/
+    /*    #min-thumb-size-demo .overview {
+            width: 600px;
+        }
+
+            /*Vertical and horizontal scrollbar - set width and height of a div you want to add a scrollbar to*/
+  /*      #min-thumb-size-demo {
+            width: 400px;
+            height: 200px;
+        }
+
+            /* Vertical and horizontal scrollbar - one extra step required - add width of overview - overall width of scrolled content*/
+    /*    #min-thumb-size-demo .overview {
+            width: 600px;
+        }
+
+        #min-thumb-size-demo .vertical .thumb {
+            min-height: 150px;
+        }
+
+        #min-thumb-size-demo .horizontal .thumb {
+            min-width: 300px;
+        }
+
+        #fixed-thumb-size-demo {
+            width: 400px;
+            height: 200px;
+        }
+
+            /* Vertical and horizontal scrollbar - one extra step required - add width of overview - overall width of scrolled content*/
+   /*     #fixed-thumb-size-demo .overview {
+            width: 600px;
+        }

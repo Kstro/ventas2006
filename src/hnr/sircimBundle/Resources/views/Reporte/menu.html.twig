@@ -1,0 +1,64 @@
+{# empty Twig template #}
+{#{% extends '::base.html.twig' %}#}
+{% extends 'hnrsircimBundle::Layout.html.twig' %}
+ 
+{% block javascripts %}
+  {#  {{parent()}#}
+{#<script type="text/javascript" src="{{ asset('bundles/minsalacademicaan/js/Estudiante/index.js') }}" ></script>#}
+{#<script type="text/javascript">$(document).ready(function(){
+    $('#exportar_pdf').click(function() {
+
+          url = Routing.generate('_exportar_reporte') + '/CensoDonante/pdf?fechai=' + $('#fechai').val() + '&fechaf=' + $('#fechaf').val()+ '&id=' + $('#id').val()+ '&nombre=' + $('#nombre').val();
+        window.open(url, '_blank');
+           return false;       
+   });
+   });
+</script>#}
+
+{% endblock %}
+
+{% block body -%}
+</br>
+<table class="reporte"> 
+       <tr align=center> 
+            <td><a href="{{ path('mostrar_reporte', { 'report_name': 'libro_de_ceso' , 'report_format': 'PDF' }) }}"> 
+                    <h2>Libro de Censo</h2>
+                    </a>
+            </td>
+       </tr>
+       <tr align=center>
+            <td><a href="{{ path('mostrar_reporte', { 'report_name': 'placas_y_estudios' , 'report_format': 'PDF' }) }}"> 
+                    <h2>Placas y estudios por servicios</h2>
+                    </a>
+            </td>
+       </tr> 
+       <tr align=center>
+            <td><a href="{{ path('mostrar_reporte', { 'report_name': 'servicio_y_tamano' , 'report_format': 'PDF' }) }}"> 
+                    <h2>Peliculas por servicio y tamaño</h2>
+                    </a>
+            </td>
+       </tr>
+       <tr align=center>
+            <td><a href="{{ path('mostrar_reporte', { 'report_name': 'tomadas_y_descartadas' , 'report_format': 'PDF' }) }}"> 
+                    <h2>Placas tomadas y descartadas diariamente</h2>
+                    </a>
+            </td>
+       </tr>
+       <tr align=center>
+            <td><a href="{{ path('mostrar_reporte', { 'report_name': 'servicios_tecnicos' , 'report_format': 'PDF' }) }}"> 
+                    <h2>Tabulador de servicios técnicos generales</h2>
+                    </a>
+            </td>
+       </tr>  
+</table>
+
+
+
+            {#<tr><td colspan = 2 align = "center">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+           <input id = "exportar_pdf" type="submit" value="Generar" /></td>
+            </tr>
+            
+            <button id="exportar_pdf" type="submit" >placas y servicios</button>#}
+          
+
+{% endblock %}
