@@ -22,6 +22,9 @@ use Symfony\Component\HttpFoundation\Session\Session;
  */
 class SecurityController extends Controller
 {
+
+    protected $url_archivo = "bundles/hnrsircim/Archivos/";
+    
     /**
      * Definimos las rutas para el login
      * @Route("/", name="login")
@@ -150,6 +153,9 @@ class SecurityController extends Controller
                 // var_dump($bitacora);
                 // $bitacora->escribirbitacora("Inicio sesión",$login);
                 $this->get('mi_bitacora')->escribirbitacora("'".$login."' inicio sesión",$login);
+                $file = fopen($this->url_archivo.$login.".txt", "w");
+                fwrite($file, "0". PHP_EOL);
+                fclose($file);
                 if($modulo[0]['osUrl']=='administracion'){
                     return $this->redirect($this->generateUrl(''.$modulo[0]['osUrl'],array('login'=>$login,'login'=>$login )));
                 }
@@ -188,11 +194,14 @@ class SecurityController extends Controller
      * @Template()
      */
     public function logoutAction(){
+        
         $session = new Session();
         $session->start();
+        
         // $session->remove($login);
         // $this->get('mi_bitacora')->escribirbitacora($login.' finalizó sesión',$login);
         $session->clear();
+        
         // session_destroy();
         // $bitacora = new BitacoraController();
         // $bitacora->escribirbitacora("Finalizó sesión",$login);

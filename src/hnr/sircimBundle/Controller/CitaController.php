@@ -37,6 +37,18 @@ class CitaController extends Controller
     public function indexAction($login)
     {
         $permisos = $this->get('mi_sesion')->verificar_sesion($login,'cita');
+        $this->get('mi_sesion')->asignar_area_usuario(0,$login);
+        
+        
+        
+        
+        
+        
+
+        
+        //setcookie('area',5);
+        
+
         // return $this->render('hnrsircimBundle:Cita:index.html.twig');
          return array(
             'login'  => $login,

@@ -23,7 +23,10 @@ class SesionUsuario
     protected $em;
     protected $route;
     protected $tmp;
-    
+    protected $area;
+    protected $session_area;
+    protected $url_archivo = "bundles/hnrsircim/Archivos/";
+
     public function __construct(EntityManager $em, Router $route,$templateEngine){
         $this->em=$em;
         $this->route=$route;
@@ -37,6 +40,7 @@ class SesionUsuario
         $session->start();
         $usuario = $session->get($login_viejo);
         var_dump($usuario);
+
         // $usuario->setUsLogin(''.$login);
         // var_dump($usuario);die;
         $opc="";
@@ -61,7 +65,8 @@ class SesionUsuario
         $session->start();
         $usuario = $session->get($login);
         // var_dump($login);
-
+        
+        
         $opc="";
         if(isset($usuario)){
             
@@ -244,29 +249,54 @@ class SesionUsuario
         return 1; 
     }       
 
-    public function asignar_area_usuario($area) {
-        $session = new Session();
-        $session->start();
-        $area = $session->set('area',$area);
+    public function asignar_area_usuario($area,$login) {
+        //$session = new Session();
+        //$session->start();
+        //$area = $session->set('area',$area);
+        
+        $file = fopen($this->url_archivo.$login.".txt", "w");
+        fwrite($file, $area ."". PHP_EOL);
+        fclose($file);
+             
+        //$_COOKIE['area']=$area;
+        //$_COOKIE['area']=$area;
+        //$this->area = $area;
         return 0;
     }    
 
-    public function recuperar_area_usuario() {
-        $session = new Session();
-        $session->start();
-        $area = $session->get('area');
+    public function recuperar_area_usuario($login) {
+        //$session = new Session();
+        //$session->start();
+        //$area = $session->get('area');
+        //$area = $_COOKIE['area'];
+        
+        //return $this->area;
+        $lineas = file($this->url_archivo.$login.".txt");
+        $area=$lineas[0];
+        //while(!feof($file)-1) {
+          //  $area = fgets($file);
+        //}
+        
+
         return $area;
+
     }
 
-    public function verificar_area_usuario() {
-        $session = new Session();
-        $session->start();
-        $area = $session->get('area');
-        if( $area == 0 ){ 
+    public function verificar_area_usuario($login) {
+        //$session = new Session();
+        //$session->start();
+        $lineas = file($this->url_archivo.$login.".txt");
+        $area=$lineas[0];
+        if ($area==0 )
             return true;
-        } 
-        else 
+        else
             return false;
+        //$area = $session->get('area');
+        # code...
+        
+        //$this->session_area->start();
+        //$area = $session_area->get('area');
+        
     }
 
 }
