@@ -149,8 +149,9 @@
         }
         
         function asd(dias){
+            
             $('.tabla-hora table').empty();
-            $.getJSON(Routing.generate('ci_consultar_num')+'/'+dias[0]+'/'+dias[6],
+            $.getJSON(Routing.generate('ci_consultar_num')+'/'+dias[0]+'/'+dias[6]+'/'+login,
                 function(data) {
                     if(data.success){
                         $.each(data.cnt, function(indice, reg) {

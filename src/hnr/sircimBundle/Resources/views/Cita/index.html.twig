@@ -181,7 +181,7 @@
                     m = fecha_mes.substring(5,7), y = fecha_mes.substring(0,4);
                     ult_dia = new Date(y, m, 0).getDate();
                     
-                    var href = Routing.generate('cita_mes', {f_inicio: y+'-'+m+"-01", f_fin: y+'-'+m+'-'+ult_dia});
+                    var href = Routing.generate('cita_mes', {f_inicio: y+'-'+m+"-01", f_fin: y+'-'+m+'-'+ult_dia,login:login});
                     //alert(href);
                     $('#area_trabajo').load(href);
                 }
@@ -217,7 +217,7 @@
                 m = fecha_mes.substring(5,7), y = fecha_mes.substring(0,4);
                 ult_dia = new Date(y, m, 0).getDate();
                     
-                var href = Routing.generate('cita_mes', {f_inicio: y+'-'+m+"-01", f_fin: y+'-'+m+'-'+ult_dia});
+                var href = Routing.generate('cita_mes', {f_inicio: y+'-'+m+"-01", f_fin: y+'-'+m+'-'+ult_dia,login:login});
                     //alert(href);
                 $('#area_trabajo').load(href);
             }    

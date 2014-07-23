@@ -1,5 +1,5 @@
  
-    <form id="crear_cita" class="form_cita" action="{{ path('cita_create',{'login':'wantonio'})}}" method="post" {{ form_enctype(form) }}>                 
+    <form id="crear_cita" class="form_cita" action="{{ path('cita_create',{'login':login})}}" method="post" {{ form_enctype(form) }}>                 
         {# form_widget(form) #}
         {{ form_errors(form) }}
         <table>
@@ -58,7 +58,7 @@
 
 {% block script %}
     <script>
-        
+        var login = $('#nombre_usr label').attr('id');
     $(document).ready( function(){
         document.getElementById("hnr_sircimbundle_citatype_idSolicitud_soRegion").disabled = true;
         document.getElementById("hnr_sircimbundle_citatype_idSolicitud_soPosicion").disabled = true;
@@ -199,7 +199,7 @@
                                             });
                                         });
                                     
-                                    $.getJSON(Routing.generate('get_estado_cupos')+'/'+dateText,
+                                    $.getJSON(Routing.generate('get_estado_cupos')+'/'+dateText+'/'+login,
                                             function(data) {
                                                 $.each(data.regs, function(indice, reg) {
                                                     estado_cupo = reg;

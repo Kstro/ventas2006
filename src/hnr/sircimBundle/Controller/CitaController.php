@@ -122,11 +122,11 @@ class CitaController extends Controller
     
     /**
      *
-     * @Route("/mes/{f_inicio}/{f_fin}", name="cita_mes", options={"expose"=true})
+     * @Route("/mes/{f_inicio}/{f_fin}/{login}", name="cita_mes", options={"expose"=true})
      * @Method("GET")
      * @Template("hnrsircimBundle:Cita:mes.html.twig")
      */
-    public function CitaMesAction($f_inicio, $f_fin)
+    public function CitaMesAction($f_inicio, $f_fin,$login)
     {
         $em = $this->getDoctrine()->getManager();
         
@@ -178,16 +178,17 @@ class CitaController extends Controller
         //var_dump($entities);
         return array(
             'dias' => $dias,
+            'login'=> $login,
         );
     }
     
     /**
      *
-     * @Route("/citaspaciente/{query}/{registro}", name="citas_paciente", options={"expose"=true})
+     * @Route("/citaspaciente/{query}/{registro}/{login}", name="citas_paciente", options={"expose"=true})
      * @Method("GET")
      * @Template("hnrsircimBundle:Cita:cipaciente.html.twig")
      */
-    public function CitasPaciente($query,$registro)
+    public function CitasPaciente($query,$registro,$login)
     {
         $em = $this->getDoctrine()->getManager();
         
@@ -199,6 +200,7 @@ class CitaController extends Controller
             'entities'  => $entities,
             'paciente'  => $this->extraerPacientes($registro),
             'fecha_actual' => date('Y-m-d'),
+            'login' => $login,
         );
     }
     
@@ -584,10 +586,10 @@ class CitaController extends Controller
     }
     
     /**
-     * @Route("/estado_cupos/get/{dia}", name="get_estado_cupos", options={"expose"=true})
+     * @Route("/estado_cupos/get/{dia}/{login}", name="get_estado_cupos", options={"expose"=true})
      * @Method("GET")
      */
-    public function getEstadoCuposAction($dia) {
+    public function getEstadoCuposAction($dia,$login) {
         
         $em = $this->getDoctrine()->getManager();
 
@@ -649,10 +651,10 @@ class CitaController extends Controller
      * Consultar el número de citas mayor por cada media hora. 
      * 
      * 
-     * @Route("/consultarcinum/{fecha_inicio}/{fecha_fin}", name="ci_consultar_num", options={"expose"=true}) 
+     * @Route("/consultarcinum/{fecha_inicio}/{fecha_fin}/{login}", name="ci_consultar_num", options={"expose"=true}) 
      * @Method("GET")
      */ 
-    public function consultarcinumAction($fecha_inicio,$fecha_fin) { 
+    public function consultarcinumAction($fecha_inicio,$fecha_fin,$login) { 
          
         $em = $this->getDoctrine()->getManager(); 
         
